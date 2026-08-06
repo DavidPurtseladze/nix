@@ -41,8 +41,12 @@
 
     programs.git = {
         enable = true;
-        userName = "David Purtseladze";
-        userEmail = "dphurtseladze@gmail.com";
+        settings = {
+            user = {
+                name = "David Purtseladze";
+                email = "dphurtseladze@gmail.com";
+            };
+        };
     };
 
     home.packages = with pkgs; [
