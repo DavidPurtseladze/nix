@@ -16,6 +16,7 @@
             fastfetch.enable = true;
             lazygit.enable = true;
             lazydocker.enable = true;
+            claude-code.enable = true;
         };
         desktop = {
             wayland.enable = true;
