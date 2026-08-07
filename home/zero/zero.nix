@@ -1,5 +1,7 @@
-{ config, ... }: { 
-    imports = [ 
+{ config, ... }: {
+    hostId = "zero";
+
+    imports = [
         ./home.nix 
         ../common
         ../features/cli
