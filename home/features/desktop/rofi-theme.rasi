@@ -1,0 +1,88 @@
+/*
+ * Rofi visual layout — structure only.
+ * Colors come from ~/.config/rofi/colors.rasi, which matugen (re)generates
+ * from your wallpaper. See ../matugen.nix and ../matugen/defaults/rofi-colors.rasi
+ * for the fallback used before matugen has run once.
+ */
+
+@import "~/.config/rofi/colors.rasi"
+
+* {
+    font: "FiraCode Nerd Font 11";
+}
+
+window {
+    transparency:   "real";
+    location:       center;
+    width:          600px;
+    border:         2px solid;
+    border-color:   @secondary-container;
+    border-radius:  15px;
+    background-color: @on-primary-fixed;
+}
+
+mainbox {
+    spacing:          0px;
+    padding:          20px;
+    background-color: transparent;
+    children:         [ "inputbar", "listview" ];
+}
+
+inputbar {
+    spacing:          10px;
+    padding:          15px;
+    border-radius:    10px;
+    background-color: @on-primary;
+    text-color:       @on-surface;
+    children:         [ "textbox-prompt-colon", "entry" ];
+}
+
+textbox-prompt-colon {
+    expand:           false;
+    str:              "  ";
+    background-color: inherit;
+    text-color:       inherit;
+}
+
+entry {
+    background-color: inherit;
+    text-color:        inherit;
+    placeholder:        "Search";
+    placeholder-color:  inherit;
+}
+
+listview {
+    columns:           1;
+    lines:             8;
+    cycle:             true;
+    dynamic:           true;
+    scrollbar:         false;
+    fixed-height:      true;
+    spacing:           10px;
+    margin:            15px 0px 0px 0px;
+    background-color:  transparent;
+}
+
+element {
+    spacing:           15px;
+    padding:           8px;
+    border-radius:     10px;
+    background-color:  transparent;
+    text-color:        @on-surface;
+}
+
+element selected.normal {
+    background-color: @primary;
+    text-color:       @on-secondary;
+}
+
+element-icon {
+    size:              28px;
+    background-color:  transparent;
+}
+
+element-text {
+    background-color:  transparent;
+    text-color:        inherit;
+    vertical-align:    0.5;
+}

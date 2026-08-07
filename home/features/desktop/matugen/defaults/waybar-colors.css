@@ -1,0 +1,11 @@
+/*
+ * Fallback palette used until matugen has generated one from a wallpaper.
+ * Copied to ~/.config/waybar/colors.css by the activation script in
+ * ../../matugen.nix — a REAL file, not a Nix store symlink, so matugen
+ * is free to overwrite it later.
+ */
+@define-color background #1e1e2e;
+@define-color foreground #f8f8f2;
+@define-color primary #bd93f9;
+@define-color on-primary #1e1e2e;
+@define-color urgent #ff5555;

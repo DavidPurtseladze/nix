@@ -22,6 +22,9 @@
             wayland.enable = true;
             hyprland.enable = true;
             fonts.enable = true;
+            rofi.enable = true;
+            swaync.enable = true;
+            matugen.enable = true;
         };
     };
 }

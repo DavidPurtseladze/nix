@@ -1,0 +1,15 @@
+/*
+ * Fallback palette used until matugen has generated one from a wallpaper.
+ * Copied to ~/.config/rofi/colors.rasi by the activation script in
+ * ../../matugen.nix — a REAL file, not a Nix store symlink, so matugen
+ * is free to overwrite it later. Loosely matches the purple accent used
+ * elsewhere (hyprland.nix col.active_border, GTK_THEME Dracula).
+ */
+* {
+    primary:            #bd93f9;
+    on-primary:         #1e1e2e;
+    on-primary-fixed:   #16161e;
+    secondary-container: #44475a;
+    on-secondary:       #f8f8f2;
+    on-surface:         #f8f8f2;
+}
