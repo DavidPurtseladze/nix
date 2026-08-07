@@ -5,7 +5,9 @@
  * is free to overwrite it later.
  */
 @define-color background #1e1e2e;
-@define-color foreground #f8f8f2;
 @define-color primary #bd93f9;
-@define-color on-primary #1e1e2e;
-@define-color urgent #ff5555;
+@define-color primary_fixed #9580ff;
+@define-color secondary #f8f8f2;
+@define-color outline #6272a4;
+@define-color surface_container #282a36;
+@define-color inverse_surface #f8f8f2;

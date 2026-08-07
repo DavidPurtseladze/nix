@@ -44,42 +44,69 @@ in {
           sensitivity = 0;
         };
 
+        # Touchpad 3-finger workspace swipe. Off before, on to match upstream.
+        gestures = {
+          workspace_swipe = true;
+        };
+
         general = {
           gaps_in = 5;
-          gaps_out = 5;
-          border_size = 1;
+          gaps_out = 10;
+          border_size = 2;
           "col.active_border" = "rgba(9742b5ee) rgba(9742b5ee) 45deg";
           "col.inactive_border" = "rgba(595959aa)";
           layout = "dwindle";
         };
 
         decoration = {
-          "col.shadow" = "rgba(1E202966)";
-          drop_shadow = true;
-          shadow_range = 60;
-          shadow_offset = "1 2";
-          shadow_render_power = 3;
-          shadow_scale = 0.97;
-          rounding = 8;
+          rounding = 10;
+          rounding_power = 2;
+          active_opacity = 1.0;
+          inactive_opacity = 0.8;
+
+          shadow = {
+            enabled = false;
+            range = 4;
+            render_power = 3;
+            color = "rgba(1a1a1aee)";
+          };
+
           blur = {
             enabled = true;
-            size = 3;
+            size = 5;
             passes = 3;
+            ignore_opacity = true;
+            new_optimizations = true;
+            special = false;
+            popups = true;
+            xray = true;
+            vibrancy = 0.1696;
           };
-          active_opacity = 0.9;
-          inactive_opacity = 0.5;
         };
 
         animations = {
           enabled = true;
-          bezier = "myBezier, 0.05, 0.9, 0.1, 1.05";
+          bezier = [
+            "myBezier, 0.05, 0.9, 0.1, 1.05"
+            "been, 0.24, 0.9, 0.25, 0.91"
+            "been2, 0, .94, .5, .99"
+            "menu_decel, 0.1, 1, 0, 1"
+            "linear, 0.0, 0.0, 1.0, 1.0"
+            "wind, 0.05, 0.9, 0.1, 1.05"
+            "winIn, 0.1, 1.1, 0.1, 1.1"
+            "winOut, 0.3, -0.3, 0, 1"
+            "slow, 0, 0.85, 0.3, 1"
+            "overshot, 0.7, 0.6, 0.1, 1.1"
+            "bounce, 1.1, 1.6, 0.1, 0.85"
+          ];
           animation = [
-            "windows, 1, 7, myBezier"
-            "windowsOut, 1, 7, default, popin 80%"
-            "border, 1, 10, default"
-            "borderangle, 1, 8, default"
-            "fade, 1, 7, default"
-            "workspaces, 1, 6, default"
+            "windowsIn, 1, 5, slow, popin"
+            "windowsOut, 1, 7, been, popin 70%"
+            "windowsMove, 1, 5, wind, slide"
+            "border, 1, 1, linear"
+            "fade, 1, 5, overshot"
+            "workspaces, 1, 5, wind"
+            "windows, 1, 5, bounce, popin"
           ];
         };
 
@@ -88,12 +115,18 @@ in {
           preserve_split = true;
         };
 
-        master = {};
-
-        gestures = {
-          workspace_swipe = false;
+        master = {
+          new_status = "master";
         };
 
+        misc = {
+          force_default_wallpaper = 0;
+          disable_hyprland_logo = true;
+          vfr = true;
+        };
+
+        # windowrule/windowrulev2 both accepted (v2 is the modern syntax; kept
+        # separate below only where the older short form was already in use).
         windowrule = [
           "float, file_progress"
           "float, confirm"
@@ -106,9 +139,7 @@ in {
           "float, title:Open File"
           "float, title:branchdialog"
           "float, Lxappearance"
-          "float, Wofi"
           "float, dunst"
-          "animation none,Wofi"
           "float,viewnior"
           "float,feh"
           "float, pavucontrol-qt"
@@ -124,22 +155,57 @@ in {
           "float, title:^(Picture-in-Picture)$"
           "size 800 600, title:^(Volume Control)$"
           "move 75 44%, title:^(Volume Control)$"
+
+          # Popups/dialogs
+          "float, title:^(Save As|Save a File|Pick Files)$"
+          "size 50% 60%, title:^(Save As|Save a File|Pick Files)$"
+          "center, title:^(Save As|Save a File|Pick Files)$"
+          "float, initialTitle:(Open Files)"
+          "size 70% 60%, initialTitle:(Open Files)"
+
+          # Ignore maximize requests from apps
+          "suppressevent maximize, class:.*"
+          # Fix XWayland drag-and-drop focus stealing
+          "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+        ];
+
+        layerrule = [
+          "blur, waybar"
+          "ignorealpha 0.5, waybar"
+          "blur, logout_dialog"
+          "blur, swaync-control-center"
+          "blur, swaync-notification-window"
+          "ignorezero, swaync-control-center"
+          "ignorezero, swaync-notification-window"
+          "ignorealpha 0.5, swaync-control-center"
+          "ignorealpha 0.5, swaync-notification-window"
+          "xray 0, swaync-control-center"
+          "xray 0, swaync-notification-window"
         ];
 
         "$mainMod" = "SUPER";
 
         bind = [
           "$mainMod, return, exec, kitty -e zellij-ps"
+          "$mainMod SHIFT, return, exec, [float; size 800 550] kitty"
           "$mainMod, t, exec, kitty -e zsh -c 'fastfetch; exec zsh'"
           "$mainMod SHIFT, e, exec, kitty -e zellij_nvim"
           "$mainMod, o, exec, thunar"
           "$mainMod, Escape, exec, wlogout -p layer-shell"
           "$mainMod, Space, togglefloating"
           "$mainMod, q, killactive"
+          "CTRL ALT, Delete, exec, hyprctl dispatch exit 0"
+          "$mainMod SHIFT, q, exec, hyprctl kill"
           "$mainMod, M, exit"
           "$mainMod, F, fullscreen"
           "$mainMod, V, togglefloating"
           "$mainMod, D, exec, rofi -show drun"
+          "$mainMod, B, exec, xdg-open \"https://\""
+          "$mainMod, L, exec, hyprlock"
+          "$mainMod, C, exec, hyprpicker -a"
+          "$mainMod, R, exec, pkill waybar; waybar &"
+          "$mainMod, H, exec, pkill -SIGUSR1 waybar"
+          "$mainMod, S, exec, mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | wl-copy"
           "$mainMod SHIFT, T, exec, matugen-apply"
           "$mainMod SHIFT, S, exec, bemoji"
           "$mainMod, P, exec, wofi-pass"
@@ -149,6 +215,10 @@ in {
           "$mainMod, right, movefocus, r"
           "$mainMod, up, movefocus, u"
           "$mainMod, down, movefocus, d"
+          "$mainMod CTRL, left, movewindow, l"
+          "$mainMod CTRL, right, movewindow, r"
+          "$mainMod CTRL, up, movewindow, u"
+          "$mainMod CTRL, down, movewindow, d"
           "$mainMod, 1, workspace, 1"
           "$mainMod, 2, workspace, 2"
           "$mainMod, 3, workspace, 3"
@@ -173,15 +243,49 @@ in {
           "$mainMod, mouse_up, workspace, e-1"
         ];
 
+        binde = [
+          "$mainMod SHIFT, left, resizeactive, -50 0"
+          "$mainMod SHIFT, right, resizeactive, 50 0"
+          "$mainMod SHIFT, up, resizeactive, 0 -50"
+          "$mainMod SHIFT, down, resizeactive, 0 50"
+        ];
+
         bindm = [
           "$mainMod, mouse:272, movewindow"
           "$mainMod, mouse:273, resizewindow"
+        ];
+
+        # ,-prefixed = no modifier: laptop multimedia keys.
+        bindel = [
+          ",XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
+          ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+          ",XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+          ",XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+          ",XF86MonBrightnessUp, exec, brightnessctl set 5%+"
+          ",XF86MonBrightnessDown, exec, brightnessctl set 5%-"
+        ];
+
+        # bindl = fires on both press and release; used for media keys so they
+        # still work while a lockscreen/inhibitor eats normal binds.
+        bindl = [
+          ", XF86AudioNext, exec, playerctl next"
+          ", XF86AudioPause, exec, playerctl play-pause"
+          ", XF86AudioPlay, exec, playerctl play-pause"
+          ", XF86AudioPrev, exec, playerctl previous"
         ];
 
         windowrulev2 = [
           "workspace 1,class:(Emacs)"
           "workspace 3,opacity 1.0, class:(brave-browser)"
           "workspace 4,class:(com.obsproject.Studio)"
+
+          # Tag-then-rule pairs ported from the source repo (Hyprland doesn't
+          # have "tags" here so these just match by class directly)
+          "noblur, class:^([Mm]pv|vlc)$"
+          "opacity 1.0, class:^([Mm]pv|vlc)$"
+          "float, class:^([Mm]pv|vlc)$"
+          "size 900 506, class:^([Mm]pv|vlc)$"
+          "opacity 0.9, class:^(kitty)$"
         ];
       };
     };
