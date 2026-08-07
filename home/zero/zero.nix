@@ -27,6 +27,7 @@
             rofi.enable = true;
             swaync.enable = true;
             matugen.enable = true;
+            hyprpaper.enable = true;
         };
     };
 }

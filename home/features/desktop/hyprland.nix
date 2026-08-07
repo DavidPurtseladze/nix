@@ -212,7 +212,7 @@ in {
           "$mainMod SHIFT, S, exec, bemoji"
           "$mainMod, P, exec, wofi-pass"
           "$mainMod SHIFT, P, pseudo"
-          "$mainMod, J, togglesplit"
+          "$mainMod, J, layoutmsg, togglesplit"
           "$mainMod, left, movefocus, l"
           "$mainMod, right, movefocus, r"
           "$mainMod, up, movefocus, u"

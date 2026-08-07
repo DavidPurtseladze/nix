@@ -114,7 +114,7 @@ config = mkIf cfg.enable {
         }
       '';
       settings = [{
-        height = 30;
+        height = 38;
         layer = "top";
         position = "top";
         spacing = 3;
@@ -205,7 +205,7 @@ config = mkIf cfg.enable {
         "custom/swaync" = {
           tooltip = true;
           tooltip-format = "Left click: notification center\nRight click: do not disturb";
-          format = "{icon} {}";
+          format = "{icon} {text}";
           format-icons = {
             notification = " ";
             none = " ";

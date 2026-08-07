@@ -6,6 +6,7 @@
       ./rofi.nix
       ./swaync.nix
       ./matugen.nix
+      ./hyprpaper.nix
     ];
 
     home.packages = with pkgs; [
