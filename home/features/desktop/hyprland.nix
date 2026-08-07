@@ -16,8 +16,10 @@ in {
           force_zero_scaling = true;
         };
 
+        # waybar is intentionally NOT here: programs.waybar.systemd.enable = true
+        # (wayland.nix) already starts it as a systemd user service. Having it
+        # in both places spawns two competing waybar processes / two bars.
         exec-once = [
-          "waybar"
           "hyprpaper"
           "hypridle"
           "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""
@@ -203,7 +205,7 @@ in {
           "$mainMod, B, exec, xdg-open \"https://\""
           "$mainMod, L, exec, hyprlock"
           "$mainMod, C, exec, hyprpicker -a"
-          "$mainMod, R, exec, pkill waybar; waybar &"
+          "$mainMod, R, exec, systemctl --user restart waybar.service"
           "$mainMod, H, exec, pkill -SIGUSR1 waybar"
           "$mainMod, S, exec, mkdir -p ~/Pictures/Screenshots && grim -g \"$(slurp)\" - | tee ~/Pictures/Screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | wl-copy"
           "$mainMod SHIFT, T, exec, matugen-apply"
