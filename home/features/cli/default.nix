@@ -7,6 +7,7 @@
         ./tmux.nix
         ./fastfetch.nix
         ./lazygit.nix
+        ./claude-code.nix
     ];
 
     programs.kitty = {
