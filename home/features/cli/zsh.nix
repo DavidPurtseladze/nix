@@ -32,7 +32,7 @@ in {
 
                 zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
 
-                source ${pkgs.zsh-abbr}/share/zsh/zsh-abbr/abbr.plugin.zsh
+                source ${pkgs.zsh-abbr}/share/zsh/zsh-abbr/zsh-abbr.plugin.zsh
 
                 abbr -f grep='rg' >/dev/null
                 abbr -f ls='eza --icons' >/dev/null
