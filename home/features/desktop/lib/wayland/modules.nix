@@ -47,7 +47,7 @@
 "backlight#2" = {
   "device" = "intel_backlight";
   "format" = "{icon} {percent}%";
-  "format-icons" = ["", ""];
+  "format-icons" = ["" ""];
 };
 
 "battery" = {
