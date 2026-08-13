@@ -11,6 +11,7 @@ in {
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       enable = true;
+      configType = "hyprlang";
       settings = {
         xwayland = {
           force_zero_scaling = true;
@@ -126,7 +127,6 @@ in {
         };
 
         dwindle = {
-          pseudotile = true;
           preserve_split = true;
         };
 
@@ -157,6 +157,7 @@ in {
           # Handle Applications & Default
           "$mainMod, t, exec, kitty -e zsh -c 'fastfetch; exec zsh'"
           "$mainMod, K, killactive"
+          "$mainMod, P, pseudo"
           "$mainMod, M, exit"
           "$mainMod, D, exec, wofi --show drun --allow-images"
           "$mainMod, Escape, exec, wlogout -p layer-shell"
