@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib; let
@@ -10,6 +11,8 @@ in {
   options.features.desktop.hyprpaper.enable = mkEnableOption "hyprpaper wallpaper daemon";
 
   config = mkIf cfg.enable {
+    home.packages = [pkgs.hyprpaper];
+
     xdg.configFile."hypr/hyprpaper.conf".text = ''
       preload = ${wallpaper}
       wallpaper = ,${wallpaper}
