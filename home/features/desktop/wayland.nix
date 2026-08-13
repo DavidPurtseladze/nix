@@ -61,6 +61,8 @@ config = mkIf cfg.enable {
   home.packages = with pkgs; [
     grim
     hyprlock
+    pavucontrol
+    playerctl
     qt6.qtwayland
     slurp
     waypipe
