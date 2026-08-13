@@ -73,10 +73,12 @@ in {
           active_opacity = 1.0;
           inactive_opacity = 0.8;
 
-          drop_shadow = false;
-          shadow_range = 4;
-          shadow_render_power = 3;
-          "col.shadow" = "rgba(1a1a1aee)";
+          shadow = {
+            enabled = false;
+            range = 4;
+            render_power = 3;
+            color = "0xee1a1a1a";
+          };
 
           blur = {
             enabled = true;
@@ -128,26 +130,25 @@ in {
           preserve_split = true;
         };
 
-        gestures = {
-          workspace_swipe = true;
-        };
+        gesture = [
+          "3, horizontal, workspace"
+        ];
 
         windowrule = [
-          "opacity 0.9, class:^(kitty)$"
-          "opacity 0.85 override 0.7 override 1 override, class:^(discord|vesktop|org.telegram.desktop)$"
-          "opacity 0.9 override 0.7 override 1 override, class:^(zen)$"
-          "float, class:^(org.pulseaudio.pavucontrol)$"
-          "size 50% 60%, class:^(org.pulseaudio.pavucontrol)$"
-
-          # XWayland dragging fix
-          "nofocus, class:^$, title:^$, xwayland:1, floating:1, fullscreen:0, pinned:0"
+          "opacity 0.9, match:class ^(kitty)$"
+          "opacity 0.85 0.7 1, match:class ^(discord|vesktop|org.telegram.desktop)$"
+          "opacity 0.9 0.7 1, match:class ^(zen)$"
+          "float on, match:class ^(org.pulseaudio.pavucontrol)$"
+          "no_focus on, match:class ^$, match:title ^$, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
+          "workspace 1, match:class ^(kitty)$"
+          "workspace 2, match:class ^(zen)$"
+          "workspace 4, match:class ^(org.telegram.desktop|Slack|discord|vesktop)$"
         ];
 
         layerrule = [
-          "blur, waybar"
-          "ignorealpha 0.5, waybar"
-          "ignorealpha 0.5, tag:notif*"
-          "blur, logout_dialog"
+          "blur on, match:namespace waybar"
+          "ignore_alpha 0.5, match:namespace waybar"
+          "blur on, match:namespace logout_dialog"
         ];
 
         "$mainMod" = "SUPER";
@@ -223,15 +224,6 @@ in {
           ", XF86AudioPause, exec, playerctl play-pause"
           ", XF86AudioPlay, exec, playerctl play-pause"
           ", XF86AudioPrev, exec, playerctl previous"
-        ];
-
-        windowrulev2 = [
-          # Terminal
-          "workspace 1, class:^(kitty)$"
-          # Browser
-          "workspace 2, class:^(zen)$"
-          # Chat applications
-          "workspace 4, class:^(org.telegram.desktop|Slack|discord|vesktop)$"
         ];
       };
     };
