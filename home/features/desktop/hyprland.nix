@@ -156,6 +156,7 @@ in {
         bind = [
           # Handle Applications & Default
           "$mainMod, t, exec, kitty -e zsh -c 'fastfetch; exec zsh'"
+          "$mainMod, K, killactive"
           "$mainMod, M, exit"
           "$mainMod, D, exec, wofi --show drun --allow-images"
           "$mainMod, Escape, exec, wlogout -p layer-shell"
