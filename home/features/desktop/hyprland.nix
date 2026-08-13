@@ -23,7 +23,6 @@ in {
         # exec-once = swaync
         # exec-once = systemctl --user start hyprpolkitagent
         # exec-once = hypridle
-        # "hyprpaper"
         # "hypridle"
         # "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""
 
