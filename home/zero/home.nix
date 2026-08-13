@@ -23,7 +23,6 @@
   # environment.
   home.packages = [
     pkgs.vivid
-    pkgs.wofi 
 
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.

@@ -159,7 +159,7 @@ in {
           "$mainMod, K, killactive"
           "$mainMod, P, pseudo"
           "$mainMod, M, exit"
-          "$mainMod, D, exec, wofi --show drun --allow-images"
+          "$mainMod, D, exec, rofi -show drun"
           "$mainMod, Escape, exec, wlogout -p layer-shell"
           "$mainMod, Space, togglefloating"
           "$mainMod, F, fullscreen"

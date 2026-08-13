@@ -5,6 +5,7 @@
       ./fonts.nix
       ./hyprpaper.nix
       ./wlogout.nix
+      ./rofi.nix
     ];
 
     home.packages = with pkgs; [

@@ -24,6 +24,7 @@
             fonts.enable = true;
             hyprpaper.enable = true;
             wlogout.enable = true;
+            rofi.enable = true;
         };
     };
 }
