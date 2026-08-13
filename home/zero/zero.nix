@@ -23,6 +23,7 @@
             hyprland.enable = true;
             fonts.enable = true;
             hyprpaper.enable = true;
+            wlogout.enable = true;
         };
     };
 }

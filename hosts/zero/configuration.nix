@@ -77,6 +77,12 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # Swap file on / (NVMe SSD per hardware-configuration.nix) - sized to RAM
+  # (16GB) so hibernate has somewhere to write the memory snapshot.
+  swapDevices = [
+    { device = "/swapfile"; size = 16384; }
+  ];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."zero" = {
     isNormalUser = true;

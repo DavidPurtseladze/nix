@@ -4,6 +4,7 @@
       ./hyprland.nix
       ./fonts.nix
       ./hyprpaper.nix
+      ./wlogout.nix
     ];
 
     home.packages = with pkgs; [

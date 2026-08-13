@@ -69,7 +69,6 @@ config = mkIf cfg.enable {
     wf-recorder
     wl-mirror
     wl-clipboard
-    wlogout
     wtype
     ydotool
   ] ++ import ./lib/scripts { inherit pkgs; };
