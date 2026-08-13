@@ -10,10 +10,19 @@ in {
 options.features.desktop.wayland.enable = mkEnableOption "wayland extra tools and config";
 
 config = mkIf cfg.enable {
+  xdg.configFile."waybar/colors.css".text = ''
+    @define-color background #1e1e2e;
+    @define-color primary #bd93f9;
+    @define-color primary_fixed #9580ff;
+    @define-color secondary #f8f8f2;
+    @define-color outline #6272a4;
+    @define-color surface_container #282a36;
+    @define-color inverse_surface #f8f8f2;
+  '';
+
   programs.waybar = {
     enable = true;
-    style = ''
-    '';
+    style = ./lib/wayland/style/islands.css;
 
     settings = {
       mainbar = {
