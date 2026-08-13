@@ -29,6 +29,7 @@ in {
 
         exec-once = [
           "waybar"
+          "hyprpaper"
         ];
 
         input = {
