@@ -15,7 +15,11 @@ in {
 
     xdg.configFile."hypr/hyprpaper.conf".text = ''
       preload = ${wallpaper}
-      wallpaper = ,${wallpaper}
+      wallpaper {
+        monitor =
+        fit_mode = cover
+        path = ${wallpaper}
+      }
       splash = false
     '';
   };
