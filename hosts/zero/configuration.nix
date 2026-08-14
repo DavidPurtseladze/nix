@@ -88,11 +88,15 @@
   # service file for hyprlock to validate against).
   security.pam.services.hyprlock = {};
 
+  # Enable Docker   
+  virtualisation.docker.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."zero" = {
     isNormalUser = true;
     description = "Zero";
-    extraGroups = [ "networkmanager" "wheel" ];
+    # "docker" lets zero run docker commands without sudo.
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
     #  thunderbird
     ];
