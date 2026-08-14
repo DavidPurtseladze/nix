@@ -26,5 +26,8 @@
             wlogout.enable = true;
             rofi.enable = true;
         };
+        apps = {
+            kitty.enable = true;
+        };
     };
 }

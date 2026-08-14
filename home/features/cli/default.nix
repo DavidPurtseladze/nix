@@ -10,14 +10,6 @@
         ./claude-code.nix
     ];
 
-    programs.kitty = {
-        enable = true;
-
-        extraConfig = ''
-            include ${pkgs.kitty-themes}/share/kitty-themes/themes/Catppuccin-Mocha.conf
-        '';
-    };
-
     programs.zoxide = {
         enable = true;
         enableZshIntegration = true;
