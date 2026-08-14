@@ -1,0 +1,89 @@
+{
+  config,
+  lib,
+  ...
+}:
+with lib; let
+  cfg = config.features.desktop.swaync;
+in {
+  options.features.desktop.swaync.enable = mkEnableOption "swaync notification center";
+
+  config = mkIf cfg.enable {
+    services.swaync = {
+      enable = true;
+      style = ./lib/swaync/style.css;
+
+      settings = {
+        positionX = "right";
+        positionY = "top";
+        layer = "overlay";
+        control-center-layer = "top";
+        layer-shell = true;
+        cssPriority = "user";
+        control-center-margin-top = 5;
+        control-center-margin-bottom = 0;
+        control-center-margin-right = 0;
+        control-center-margin-left = 0;
+        notification-2fa-action = true;
+        notification-inline-replies = false;
+        notification-icon-size = 24;
+        notification-body-image-height = 100;
+        notification-body-image-width = 100;
+        notification-window-width = 300;
+        timeout = 6;
+        timeout-low = 3;
+        timeout-critical = 0;
+        fit-to-screen = false;
+        control-center-width = 380;
+        control-center-height = 800;
+        keyboard-shortcuts = true;
+        image-visibility = "when available";
+        transition-time = 200;
+        hide-on-clear = false;
+        hide-on-action = true;
+        script-fail-notify = true;
+
+        widgets = ["buttons-grid" "mpris" "dnd" "title" "notifications"];
+
+        widget-config = {
+          title = {
+            text = "Notifications";
+            clear-all-button = true;
+            button-text = "󰎟";
+          };
+          dnd = {
+            text = "Do Not Disturb";
+          };
+          label = {
+            max-lines = 1;
+            text = "Notification";
+          };
+          mpris = {
+            image-size = 50;
+            image-radius = 12;
+          };
+          buttons-grid = {
+            actions = [
+              {
+                label = "󰐥";
+                command = "wlogout -p layer-shell";
+              }
+              {
+                label = "󰌾";
+                command = "hyprlock";
+              }
+              {
+                label = "󰍃";
+                command = "hyprctl dispatch exit";
+              }
+              {
+                label = "󰝟";
+                command = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+              }
+            ];
+          };
+        };
+      };
+    };
+  };
+}

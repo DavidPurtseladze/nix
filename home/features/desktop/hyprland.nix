@@ -149,6 +149,8 @@ in {
           "blur on, match:namespace waybar"
           "ignore_alpha 0.5, match:namespace waybar"
           "blur on, match:namespace logout_dialog"
+          "blur on, match:namespace swaync-control-center"
+          "blur on, match:namespace swaync-notification-window"
         ];
 
         "$mainMod" = "SUPER";

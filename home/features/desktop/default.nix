@@ -6,6 +6,8 @@
       ./hyprpaper.nix
       ./wlogout.nix
       ./rofi.nix
+      ./hyprlock.nix
+      ./swaync.nix
     ];
 
     home.packages = with pkgs; [

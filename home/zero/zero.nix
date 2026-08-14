@@ -26,6 +26,7 @@
             wlogout.enable = true;
             rofi.enable = true;
             hyprlock.enable = true;
+            swaync.enable = true;
         };
         apps = {
             kitty.enable = true;
