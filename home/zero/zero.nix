@@ -25,6 +25,7 @@
             hyprpaper.enable = true;
             wlogout.enable = true;
             rofi.enable = true;
+            hyprlock.enable = true;
         };
         apps = {
             kitty.enable = true;

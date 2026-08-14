@@ -83,6 +83,11 @@
     { device = "/swapfile"; size = 16384; }
   ];
 
+  # Required for hyprlock to actually authenticate - without this, typing
+  # your password on the lock screen never unlocks anything (PAM has no
+  # service file for hyprlock to validate against).
+  security.pam.services.hyprlock = {};
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."zero" = {
     isNormalUser = true;
