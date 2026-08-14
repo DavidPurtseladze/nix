@@ -7,6 +7,7 @@
       ./wlogout.nix
       ./rofi.nix
       ./hyprlock.nix
+      ./hypridle.nix
       ./swaync.nix
     ];
 
