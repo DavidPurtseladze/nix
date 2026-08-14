@@ -164,6 +164,8 @@ in {
           "$mainMod, Space, togglefloating"
           "$mainMod, F, fullscreen"
           "$mainMod, B, exec, zen"
+          "$mainMod, W, exec, wallpaper-select"
+          "$mainMod SHIFT, W, exec, wallpaper-random"
 
           # Moving between workspaces
           "$mainMod, 1, workspace, 1"
