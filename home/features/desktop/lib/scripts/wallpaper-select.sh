@@ -12,10 +12,10 @@ selected=$(find "$WALLPAPER_DIR" -maxdepth 1 -type f \
 [ -z "$selected" ] && exit 0
 path="$WALLPAPER_DIR/$selected"
 
-hyprctl hyprpaper preload "$path"
+hyprctl hyprpaper preload "$path" || true
 # Empty monitor name = apply to every connected output.
 hyprctl hyprpaper wallpaper ",$path"
-hyprctl hyprpaper unload unused
+hyprctl hyprpaper unload unused || true
 
 if command -v matugen >/dev/null 2>&1; then
   matugen image "$path"
