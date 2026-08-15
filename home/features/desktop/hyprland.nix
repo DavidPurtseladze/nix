@@ -165,7 +165,7 @@ in {
           "$mainMod, Escape, exec, wlogout -p layer-shell"
           "$mainMod, Space, togglefloating"
           "$mainMod, F, fullscreen"
-          "$mainMod, B, exec, zen"
+          "$mainMod, B, exec, zen-beta"
           "$mainMod, W, exec, wallpaper-select"
           "$mainMod SHIFT, W, exec, wallpaper-random"
 
