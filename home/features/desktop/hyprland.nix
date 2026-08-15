@@ -137,11 +137,11 @@ in {
         windowrule = [
           "opacity 0.9, match:class ^(kitty)$"
           "opacity 0.85 0.7 1, match:class ^(discord|vesktop|org.telegram.desktop)$"
-          "opacity 0.9 0.7 1, match:class ^(zen)$"
+          "opacity 0.9 0.7 1, match:class ^(zen-beta)$"
           "float on, match:class ^(org.pulseaudio.pavucontrol)$"
           "no_focus on, match:class ^$, match:title ^$, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
           "workspace 1, match:class ^(kitty)$"
-          "workspace 2, match:class ^(zen)$"
+          "workspace 2, match:class ^(zen-beta)$"
           "workspace 4, match:class ^(org.telegram.desktop|Slack|discord|vesktop)$"
         ];
 

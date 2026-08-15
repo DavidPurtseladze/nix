@@ -134,7 +134,7 @@
       "title<.*amazon.*>" = " ";
 
       "class<firefox|org.mozilla.firefox|librewolf|floorp|mercury-browser|[Cc]achy-browser>" = " ";
-      "class<zen>" = "󰰷 ";
+      "class<zen-beta>" = "󰰷 ";
       "class<waterfox|waterfox-bin>" = " ";
       "class<microsoft-edge>" = " ";
       "class<Chromium|Thorium|[Cc]hrome>" = " ";
