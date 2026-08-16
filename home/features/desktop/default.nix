@@ -9,6 +9,8 @@
       ./hyprlock.nix
       ./hypridle.nix
       ./swaync.nix
+      ./thunar.nix
+      ./gtk.nix
     ];
 
     home.packages = with pkgs; [

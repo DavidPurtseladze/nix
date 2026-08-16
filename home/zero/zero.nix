@@ -28,6 +28,8 @@
             hyprlock.enable = true;
             hypridle.enable = true;
             swaync.enable = true;
+            thunar.enable = true;
+            gtk.enable = true;
         };
         apps = {
             kitty.enable = true;
