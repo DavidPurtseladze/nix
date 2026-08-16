@@ -166,6 +166,7 @@ in {
           "$mainMod, Space, togglefloating"
           "$mainMod, F, fullscreen"
           "$mainMod, B, exec, zen-beta"
+          "$mainMod, L, exec, pidof hyprlock || hyprlock"
           "$mainMod, W, exec, wallpaper-select"
           "$mainMod SHIFT, W, exec, wallpaper-random"
 
