@@ -5,6 +5,7 @@
 }:
 with lib; let
   cfg = config.features.desktop.hyprland;
+  defaultWallpaper = config.features.desktop.awww.defaultWallpaper;
 in {
   options.features.desktop.hyprland.enable = mkEnableOption "hyprland config";
 
@@ -18,20 +19,21 @@ in {
         };
 
         # exec-once = nm-applet
-        # exec-once = waybar  
-        # exec-once = swww-daemon
+        # exec-once = waybar
         # exec-once = blueman-applet
         # exec-once = swaync
         # exec-once = systemctl --user start hyprpolkitagent
         # exec-once = hypridle
         # "hypridle"
 
-        exec-once = [
-          "waybar"
-          "hyprpaper"
-          "wl-paste --type text --watch cliphist store"
-          "wl-paste --type image --watch cliphist store"
-        ];
+        exec-once =
+          [
+            "waybar"
+            "awww-daemon"
+            "wl-paste --type text --watch cliphist store"
+            "wl-paste --type image --watch cliphist store"
+          ]
+          ++ optional (defaultWallpaper != null) "sleep 1 && awww img ${defaultWallpaper}";
 
         input = {
           kb_layout = "us";

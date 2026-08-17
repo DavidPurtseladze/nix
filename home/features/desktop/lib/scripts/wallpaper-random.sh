@@ -11,9 +11,10 @@ mapfile -t files < <(find "$WALLPAPER_DIR" -maxdepth 1 -type f \
 [ ${#files[@]} -eq 0 ] && exit 0
 path="${files[RANDOM % ${#files[@]}]}"
 
-hyprctl hyprpaper preload "$path" || true
-hyprctl hyprpaper wallpaper ",$path"
-hyprctl hyprpaper unload unused || true
+awww img "$path" \
+  --transition-type grow \
+  --transition-pos top-left \
+  --transition-duration 1
 
 if command -v matugen >/dev/null 2>&1; then
   matugen image "$path"

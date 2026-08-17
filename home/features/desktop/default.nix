@@ -3,7 +3,7 @@
       ./wayland.nix
       ./hyprland.nix
       ./fonts.nix
-      ./hyprpaper.nix
+      ./awww.nix
       ./wlogout.nix
       ./rofi.nix
       ./hyprlock.nix
