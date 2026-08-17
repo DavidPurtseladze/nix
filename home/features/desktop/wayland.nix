@@ -69,10 +69,11 @@ config = mkIf cfg.enable {
 
   home.packages = with pkgs; [
     grim
+    slurp
+
     pavucontrol
     playerctl
     qt6.qtwayland
-    slurp
     waypipe
     wf-recorder
     wl-mirror

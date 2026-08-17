@@ -9,4 +9,6 @@ in [
     export WALLPAPER_DIR="${wallpaperDir}"
     ${builtins.readFile ./wallpaper-random.sh}
   '')
+  (pkgs.writeShellScriptBin "screenshot-region" (builtins.readFile ./screenshot-region.sh))
+  (pkgs.writeShellScriptBin "screenshot-full" (builtins.readFile ./screenshot-full.sh))
 ]

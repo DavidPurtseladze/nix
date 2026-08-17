@@ -168,6 +168,8 @@ in {
           "$mainMod, B, exec, zen-beta"
           "$mainMod, L, exec, pidof hyprlock || hyprlock"
           "$mainMod, E, exec, thunar"
+          "$mainMod SHIFT, S, exec, screenshot-region"
+          ", Print, exec, screenshot-full"
           "$mainMod, W, exec, wallpaper-select"
           "$mainMod SHIFT, W, exec, wallpaper-random"
 
