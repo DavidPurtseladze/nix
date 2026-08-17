@@ -1,11 +1,11 @@
 {
-  pkgs,
   inputs,
   ...
 }: {
   imports = [
     inputs.zen-browser.homeModules.beta
     ./kitty.nix
+    ./misc.nix
   ];
 
   programs.zen-browser = {

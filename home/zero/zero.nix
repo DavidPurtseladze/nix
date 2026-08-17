@@ -34,6 +34,9 @@
         };
         apps = {
             kitty.enable = true;
+            telegram.enable = true;
+            slack.enable = true;
+            obsidian.enable = true;
         };
     };
 }
