@@ -51,6 +51,7 @@ in {
         procs
         ripgrep
         tldr
+        unzip
         zip
       ];
     })

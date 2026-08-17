@@ -8,7 +8,10 @@
 with lib; let
   cfg = config.features.cli.neovim;
 in {
-  imports = [inputs.nixvim.homeManagerModules.nixvim];
+  imports = [
+    inputs.nixvim.homeManagerModules.nixvim
+    ./lib/neovim/plugins
+  ];
 
   options.features.cli.neovim.enable = mkEnableOption "Neovim (nixvim)";
 
@@ -20,28 +23,19 @@ in {
       defaultEditor = true;
 
       # Default/active colorscheme. Others below are just installed so the
-      # runtime picker (<leader>th) can switch to them.
+      # runtime picker (<leader>tt) can switch to them.
       colorschemes.catppuccin = {
         enable = true;
         settings.flavour = "mocha";
       };
+
+      globals.mapleader = " ";
 
       extraPlugins = with pkgs.vimPlugins; [
         tokyonight-nvim
         gruvbox-nvim
         kanagawa-nvim
         rose-pine
-      ];
-
-      plugins.telescope.enable = true;
-
-      keymaps = [
-        {
-          mode = "n";
-          key = "<leader>th";
-          action = "<cmd>Telescope colorscheme enable_preview=true<CR>";
-          options.desc = "pick colorscheme";
-        }
       ];
 
       extraConfigLua = ''
