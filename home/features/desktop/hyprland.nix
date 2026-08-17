@@ -30,11 +30,11 @@ in {
           ++ optional (defaultWallpaper != null) "sleep 1 && awww img ${defaultWallpaper}";
 
         input = {
-          kb_layout = "us";
+          kb_layout = "us,ge";
           kb_variant = "";
           kb_model = "";
           kb_rules = "";
-          kb_options = "ctrl:nocaps";
+          kb_options = "ctrl:nocaps,grp:alt_shift_toggle";
           follow_mouse = 1;
 
           touchpad = {
