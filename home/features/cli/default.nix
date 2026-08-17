@@ -10,5 +10,6 @@
         ./claude-code.nix
         ./git.nix
         ./misc.nix
+        ./neovim.nix
     ];
 }

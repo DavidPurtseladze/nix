@@ -17,6 +17,7 @@
             lazygit.enable = true;
             lazydocker.enable = true;
             claude-code.enable = true;
+            neovim.enable = true;
             git = {
                 enable = true;
                 userName = "David Purtseladze";
