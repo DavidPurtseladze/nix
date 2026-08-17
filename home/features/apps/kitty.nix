@@ -37,7 +37,7 @@ in {
 
         enable_audio_bell = false;
 
-        window_padding_width = 4;
+        window_padding_width = 0;
       };
     };
   };
