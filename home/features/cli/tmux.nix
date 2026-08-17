@@ -43,9 +43,6 @@ in {
                 set -g window-status-format "#I:#W"
                 set -g window-status-current-format "#[fg=#89b4fa,bold] #I:#W "
 
-                # Better yank/copy
-                bind -T copy-mode-vi y send-keys -X copy-pipe-and-cancel "xclip -selection clipboard -in"
-
                 # Pane movement (Colemak)
                 bind n select-pane -L
                 bind e select-pane -D

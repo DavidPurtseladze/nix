@@ -68,6 +68,7 @@ config = mkIf cfg.enable {
   };
 
   home.packages = with pkgs; [
+    cliphist
     grim
     slurp
 

@@ -25,11 +25,12 @@ in {
         # exec-once = systemctl --user start hyprpolkitagent
         # exec-once = hypridle
         # "hypridle"
-        # "wl-paste -p -t text --watch clipman store -P --histpath=\"~/.local/share/clipman-primary.json\""
 
         exec-once = [
           "waybar"
           "hyprpaper"
+          "wl-paste --type text --watch cliphist store"
+          "wl-paste --type image --watch cliphist store"
         ];
 
         input = {
@@ -158,7 +159,7 @@ in {
         bind = [
           # Handle Applications & Default
           "$mainMod, t, exec, kitty -e zsh -c 'fastfetch; exec zsh'"
-          "$mainMod, K, killactive"
+          "$mainMod, W, killactive"
           "$mainMod, P, pseudo"
           "$mainMod, M, exit"
           "$mainMod, D, exec, rofi -show drun"
@@ -170,8 +171,9 @@ in {
           "$mainMod, E, exec, thunar"
           "$mainMod SHIFT, S, exec, screenshot-region"
           ", Print, exec, screenshot-full"
-          "$mainMod, W, exec, wallpaper-select"
-          "$mainMod SHIFT, W, exec, wallpaper-random"
+          "$mainMod, R, exec, wallpaper-select"
+          "$mainMod SHIFT, R, exec, wallpaper-random"
+          "$mainMod, V, exec, clipboard-history"
 
           # Moving between workspaces
           "$mainMod, 1, workspace, 1"
