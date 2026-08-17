@@ -11,6 +11,7 @@
       ./swaync.nix
       ./thunar.nix
       ./gtk.nix
+      ./media.nix
     ];
 
     home.packages = with pkgs; [

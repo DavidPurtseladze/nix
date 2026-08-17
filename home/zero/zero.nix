@@ -30,6 +30,7 @@
             swaync.enable = true;
             thunar.enable = true;
             gtk.enable = true;
+            media.enable = true;
         };
         apps = {
             kitty.enable = true;
