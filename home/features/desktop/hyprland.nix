@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib; let
@@ -18,18 +19,11 @@ in {
           force_zero_scaling = true;
         };
 
-        # exec-once = nm-applet
-        # exec-once = waybar
-        # exec-once = blueman-applet
-        # exec-once = swaync
-        # exec-once = systemctl --user start hyprpolkitagent
-        # exec-once = hypridle
-        # "hypridle"
-
         exec-once =
           [
             "waybar"
             "awww-daemon"
+            "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "wl-paste --type text --watch cliphist store"
             "wl-paste --type image --watch cliphist store"
           ]

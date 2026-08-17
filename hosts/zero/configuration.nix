@@ -141,6 +141,13 @@
     xwayland.enable = true;
   };
 
+  # Enables screen sharing and file picker dialogs under Hyprland.
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
+    config.common.default = ["hyprland" "gtk"];
+  };
+
   programs.zsh.enable = true;
 
   # Open ports in the firewall.
