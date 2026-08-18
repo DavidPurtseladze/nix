@@ -42,13 +42,32 @@
     LC_TIME = "ka_GE.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
-
-  # Configure keymap in X11
-  services.xserver.xkb = {
-    layout = "us";
-    variant = "";
+  # Wayland-native greeter (greetd + tuigreet).
+  #
+  # Previously this host set services.xserver.enable, which pulled in LightDM
+  # and Xorg as the default display manager. That bought nothing: the only
+  # session installed here is hyprland.desktop under share/wayland-sessions,
+  # and share/xsessions is empty - so Xorg existed purely to hand off to a
+  # Wayland compositor.
+  #
+  # That handoff raced with udev. display-manager.service was ordered only
+  # after systemd-user-sessions.service (reached at ~3s), while the USB
+  # keyboard and mouse do not finish enumerating and get their ID_INPUT_*
+  # udev tags until ~5.7s. Nothing forced the greeter to wait for them, so a
+  # session could come up with libinput binding no input devices at all
+  # ("not using input device '/dev/input/event0'"), leaving keyboard and
+  # mouse dead until they were physically replugged - a replug re-emits the
+  # udev add events that the running compositor then picks up.
+  #
+  # greetd starts the compositor directly on a VT with no Xorg in between,
+  # and Hyprland is launched only after a human has logged in, by which point
+  # udev has long since settled.
+  services.greetd = {
+    enable = true;
+    settings.default_session = {
+      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
+      user = "greeter";
+    };
   };
 
   # Enable CUPS to print documents.
