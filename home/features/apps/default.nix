@@ -5,6 +5,7 @@
   imports = [
     inputs.zen-browser.homeModules.beta
     ./kitty.nix
+    ./phpstorm.nix
     ./misc.nix
   ];
 
