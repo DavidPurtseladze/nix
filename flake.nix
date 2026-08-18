@@ -72,7 +72,7 @@
       "nik-a73@nik-a73" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
-        modules = [./home/zero/zero.nix];
+        modules = [./home/nik-a73/nik-a73.nix];
       };
     };
   };

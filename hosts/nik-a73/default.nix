@@ -48,6 +48,6 @@
     useGlobalPkgs = true;
     backupFileExtension = "hm-backup";
     extraSpecialArgs = {inherit inputs outputs;};
-    users.nik-a73 = import ../../home/zero/zero.nix;
+    users.nik-a73 = import ../../home/nik-a73/nik-a73.nix;
   };
 }

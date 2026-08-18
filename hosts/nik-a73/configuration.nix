@@ -121,6 +121,22 @@
     ];
   };
 
+  # 1Password (GUI + `op` CLI).
+  #
+  # These have to be NixOS options rather than a home-manager package: the
+  # desktop app ships a setuid-root helper (1Password-BrowserSupport) and
+  # relies on a /etc/1password/custom_allowed_browsers list, neither of which
+  # a user-profile install can create. Without the module you get an app that
+  # refuses to talk to the browser extension and can't unlock via polkit.
+  #
+  # polkitPolicyOwners is who may authenticate to 1Password with their system
+  # password / fingerprint instead of retyping the master password.
+  programs._1password.enable = true;
+  programs._1password-gui = {
+    enable = true;
+    polkitPolicyOwners = [ "nik-a73" ];
+  };
+
   # Install firefox.
   programs.firefox.enable = true;
 
