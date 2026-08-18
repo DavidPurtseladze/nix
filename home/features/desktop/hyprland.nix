@@ -6,9 +6,44 @@
 }:
 with lib; let
   cfg = config.features.desktop.hyprland;
+  ptt = cfg.pushToTalk;
+  wpctl = "${pkgs.wireplumber}/bin/wpctl";
   defaultWallpaper = config.features.desktop.awww.defaultWallpaper;
 in {
-  options.features.desktop.hyprland.enable = mkEnableOption "hyprland config";
+  options.features.desktop.hyprland = {
+    enable = mkEnableOption "hyprland config";
+
+    pushToTalk = {
+      enable =
+        mkEnableOption ''
+          compositor-level push-to-talk. Holds the default PipeWire source
+          muted and unmutes it only while the bound key is held.
+
+          This has to live in the compositor rather than in Discord (or any
+          other app): Wayland gives no client a way to grab a key globally,
+          so an app's own push-to-talk hotkey only ever fires while that app
+          is focused - useless the moment you tab into a game. Hyprland sees
+          every key before any client does, so a bind here works everywhere.
+
+          The app must then be set to voice-activity mode, since the gating
+          is happening below it at the device level
+        '';
+
+      key = mkOption {
+        type = types.str;
+        default = "mouse:276";
+        example = "F13";
+        description = ''
+          Hyprland bind key held to talk. Defaults to the forward thumb
+          button: nothing else here binds it, and a 60% keyboard has no
+          spare key to give up. Override per host if the mouse lacks one.
+
+          The bind consumes the button, so it stops reaching applications
+          (no more "forward" in the browser). Use a key nothing else wants.
+        '';
+      };
+    };
+  };
 
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
@@ -27,7 +62,10 @@ in {
             "wl-paste --type text --watch cliphist store"
             "wl-paste --type image --watch cliphist store"
           ]
-          ++ optional (defaultWallpaper != null) "sleep 1 && awww img ${defaultWallpaper}";
+          ++ optional (defaultWallpaper != null) "sleep 1 && awww img ${defaultWallpaper}"
+          # Start muted, or push-to-talk would be push-to-mute on a fresh
+          # login: the key only ever unmutes while held.
+          ++ optional ptt.enable "${wpctl} set-mute @DEFAULT_SOURCE@ 1";
 
         input = {
           kb_layout = "us,ge";
@@ -47,7 +85,32 @@ in {
         env = [
           "XCURSOR_SIZE,32"
           "WLR_NO_HARDWARE_CURSORS,1"
-          "GTK_THEME=Catppuccin-Mocha-Standard-Blue-Dark"
+
+          # Was "GTK_THEME=Catppuccin-..." - Hyprland's env syntax splits on
+          # the first comma, so a line with no comma set nothing at all
+          # (confirmed: no GTK_THEME in the environment of anything Hyprland
+          # spawned). The value was also a theme name this config never
+          # builds; gtk.nix installs "catppuccin-mocha-blue-standard".
+          #
+          # Setting it here rather than relying on the home.sessionVariables
+          # entry in gtk.nix, because those land in hm-session-vars.sh, which
+          # only login shells source - greetd execs Hyprland directly, so
+          # apps launched from rofi or a keybind never saw them.
+          "GTK_THEME,catppuccin-mocha-blue-standard:dark"
+
+          # Native Wayland for Electron/Chromium apps (discord, slack,
+          # obsidian) instead of XWayland. On the 3440x1440 panel XWayland
+          # costs sharpness and gives these apps a stale idea of scale;
+          # native also fixes fractional-scale blur and IME.
+          #
+          # Two variables because the two families of app read different
+          # things: NIXOS_OZONE_WL is a nixpkgs convention that wrappers
+          # translate into --ozone-platform=wayland, while AppImages like
+          # hydralauncher have no such wrapper and only respond to Electron's
+          # own hint. "auto" rather than "wayland" so an app still starts on
+          # X11 if it is ever run outside a Wayland session.
+          "NIXOS_OZONE_WL,1"
+          "ELECTRON_OZONE_PLATFORM_HINT,auto"
         ];
 
         general = {
@@ -137,9 +200,21 @@ in {
           "opacity 0.9 0.7 1, match:class ^(zen-beta)$"
           "float on, match:class ^(org.pulseaudio.pavucontrol)$"
           "no_focus on, match:class ^$, match:title ^$, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
-          "workspace 1, match:class ^(kitty)$"
-          "workspace 2, match:class ^(zen-beta)$"
-          "workspace 4, match:class ^(org.telegram.desktop|Slack|discord|vesktop)$"
+
+          # No "workspace N" rules here on purpose.
+          #
+          # Pinning apps to fixed workspaces (kitty -> 1, zen-beta -> 2,
+          # telegram/slack/discord -> 4) fights multi-monitor use: workspaces
+          # are claimed by whichever monitor is focused when they are first
+          # opened, so a rule sending kitty to workspace 1 drags it onto
+          # whatever monitor happens to own workspace 1 - not the one the
+          # cursor is on. Since those rules covered nearly every app that
+          # gets launched here, new windows almost always landed on the
+          # wrong screen.
+          #
+          # Without them a window opens on the active workspace, which
+          # follows the cursor via input.follow_mouse and
+          # misc.mouse_move_focuses_monitor.
         ];
 
         layerrule = [
@@ -210,6 +285,14 @@ in {
           # Switch workspaces with Super + mouse wheel
           "$mainMod, mouse_down, workspace, e+1"
           "$mainMod, mouse_up, workspace, e-1"
+        ]
+        # Push-to-talk, press half: unmute the default source. This gates the
+        # microphone device itself, so it covers whatever is listening -
+        # Discord, a browser call, OBS - rather than one app. That is the
+        # point: on Wayland the compositor is the only thing that sees the
+        # key regardless of what has focus. Release half is in bindr below.
+        ++ optionals ptt.enable [
+          ", ${ptt.key}, exec, ${wpctl} set-mute @DEFAULT_SOURCE@ 0"
         ];
 
         binde = [
@@ -232,6 +315,13 @@ in {
           ", XF86AudioPause, exec, playerctl play-pause"
           ", XF86AudioPlay, exec, playerctl play-pause"
           ", XF86AudioPrev, exec, playerctl previous"
+        ];
+
+        # Push-to-talk, release half. bindr fires on key up, so this re-mutes
+        # the moment the key is let go; the press half lives at the end of
+        # the bind list above.
+        bindr = optionals ptt.enable [
+          ", ${ptt.key}, exec, ${wpctl} set-mute @DEFAULT_SOURCE@ 1"
         ];
       };
     };
