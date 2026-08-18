@@ -25,6 +25,23 @@ lib.mkIf config.features.cli.neovim.enable {
     enable = true;
 
     settings = {
+      window = {
+        completion.border = "rounded";
+        documentation.border = "rounded";
+      };
+
+      formatting = {
+        fields = [ "kind" "abbr" "menu" ];
+        format = ''
+          function(entry, vim_item)
+            local kind_name = vim_item.kind
+            vim_item = require("lspkind").cmp_format({ mode = "symbol", maxwidth = 50 })(entry, vim_item)
+            vim_item.menu = kind_name
+            return vim_item
+          end
+        '';
+      };
+
       snippet.expand = ''
         function(args)
           require("luasnip").lsp_expand(args.body)
