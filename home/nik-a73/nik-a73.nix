@@ -23,6 +23,10 @@
                 userName = "nik-a73";
                 userEmail = "nick.kublashvili@gmail.com";
             };
+            ssh = {
+                enable = true;
+                onePasswordAgent.enable = true;
+            };
             misc = {
                 eza.enable = true;
                 bat.enable = true;

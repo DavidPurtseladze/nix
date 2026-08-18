@@ -9,6 +9,7 @@
         ./lazygit.nix
         ./claude-code.nix
         ./git.nix
+        ./ssh.nix
         ./misc.nix
         ./neovim.nix
     ];
