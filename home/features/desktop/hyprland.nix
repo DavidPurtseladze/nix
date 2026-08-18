@@ -7,6 +7,7 @@
 with lib; let
   cfg = config.features.desktop.hyprland;
   ptt = cfg.pushToTalk;
+  cursorCfg = config.features.desktop.cursor;
   wpctl = "${pkgs.wireplumber}/bin/wpctl";
   defaultWallpaper = config.features.desktop.awww.defaultWallpaper;
 in {
@@ -82,36 +83,64 @@ in {
           sensitivity = 0;
         };
 
-        env = [
-          "XCURSOR_SIZE,32"
-          "WLR_NO_HARDWARE_CURSORS,1"
+        env =
+          # Cursor theme and size. These have to be here and not only in
+          # home.pointerCursor: that writes home.sessionVariables, which land
+          # in hm-session-vars.sh and are only read by login shells, and
+          # greetd execs Hyprland directly. HYPRCURSOR_SIZE keeps the size
+          # consistent if a hyprcursor theme is ever installed, since
+          # Hyprland sizes that path separately from XCursor.
+          (
+            if cursorCfg.enable
+            then [
+              "XCURSOR_THEME,${cursorCfg.name}"
+              "XCURSOR_SIZE,${toString cursorCfg.size}"
+              "HYPRCURSOR_SIZE,${toString cursorCfg.size}"
+            ]
+            else ["XCURSOR_SIZE,32"]
+          )
+          ++ [
+            # Was "WLR_NO_HARDWARE_CURSORS,1" - a wlroots variable Hyprland
+            # has ignored since it moved to aquamarine, so it had been doing
+            # nothing. The working equivalent is cursor.no_hardware_cursors
+            # below, driven by features.desktop.cursor.softwareCursors.
 
-          # Was "GTK_THEME=Catppuccin-..." - Hyprland's env syntax splits on
-          # the first comma, so a line with no comma set nothing at all
-          # (confirmed: no GTK_THEME in the environment of anything Hyprland
-          # spawned). The value was also a theme name this config never
-          # builds; gtk.nix installs "catppuccin-mocha-blue-standard".
-          #
-          # Setting it here rather than relying on the home.sessionVariables
-          # entry in gtk.nix, because those land in hm-session-vars.sh, which
-          # only login shells source - greetd execs Hyprland directly, so
-          # apps launched from rofi or a keybind never saw them.
-          "GTK_THEME,catppuccin-mocha-blue-standard:dark"
+            # Was "GTK_THEME=Catppuccin-..." - Hyprland's env syntax splits
+            # on the first comma, so a line with no comma set nothing at all
+            # (confirmed: no GTK_THEME in the environment of anything
+            # Hyprland spawned). The value was also a theme name this config
+            # never builds; gtk.nix installs
+            # "catppuccin-mocha-blue-standard".
+            #
+            # Setting it here rather than relying on the
+            # home.sessionVariables entry in gtk.nix, because those land in
+            # hm-session-vars.sh, which only login shells source - greetd
+            # execs Hyprland directly, so apps launched from rofi or a
+            # keybind never saw them.
+            "GTK_THEME,catppuccin-mocha-blue-standard:dark"
 
-          # Native Wayland for Electron/Chromium apps (discord, slack,
-          # obsidian) instead of XWayland. On the 3440x1440 panel XWayland
-          # costs sharpness and gives these apps a stale idea of scale;
-          # native also fixes fractional-scale blur and IME.
-          #
-          # Two variables because the two families of app read different
-          # things: NIXOS_OZONE_WL is a nixpkgs convention that wrappers
-          # translate into --ozone-platform=wayland, while AppImages like
-          # hydralauncher have no such wrapper and only respond to Electron's
-          # own hint. "auto" rather than "wayland" so an app still starts on
-          # X11 if it is ever run outside a Wayland session.
-          "NIXOS_OZONE_WL,1"
-          "ELECTRON_OZONE_PLATFORM_HINT,auto"
-        ];
+            # Native Wayland for Electron/Chromium apps (discord, slack,
+            # obsidian) instead of XWayland. On the 3440x1440 panel XWayland
+            # costs sharpness and gives these apps a stale idea of scale;
+            # native also fixes fractional-scale blur and IME.
+            #
+            # Two variables because the two families of app read different
+            # things: NIXOS_OZONE_WL is a nixpkgs convention that wrappers
+            # translate into --ozone-platform=wayland, while AppImages like
+            # hydralauncher have no such wrapper and only respond to
+            # Electron's own hint. "auto" rather than "wayland" so an app
+            # still starts on X11 if it is ever run outside a Wayland
+            # session.
+            "NIXOS_OZONE_WL,1"
+            "ELECTRON_OZONE_PLATFORM_HINT,auto"
+          ];
+
+        # Emitted only when asked for, so hosts that do not need it keep
+        # Hyprland's own auto behaviour rather than being pinned to either
+        # answer. See the option for why nouveau needs this.
+        cursor = optionalAttrs cursorCfg.softwareCursors {
+          no_hardware_cursors = true;
+        };
 
         general = {
           layout = "dwindle";

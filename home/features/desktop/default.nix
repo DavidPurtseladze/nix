@@ -11,6 +11,7 @@
       ./swaync.nix
       ./thunar.nix
       ./gtk.nix
+      ./cursor.nix
       ./media.nix
     ];
 
