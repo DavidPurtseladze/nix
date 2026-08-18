@@ -140,6 +140,85 @@
   # Install firefox.
   programs.firefox.enable = true;
 
+  # NVIDIA (GeForce RTX 4070 SUPER).
+  #
+  # Both connected displays hang off the discrete card (card0-DP-4 and
+  # card0-HDMI-A-4 on 01:00.0); the Intel UHD 770 iGPU has no connected
+  # outputs. So this is a plain single-GPU desktop - no PRIME offload or
+  # sync, which is only needed when the iGPU drives the panel.
+  #
+  # Without this the kernel falls back to nouveau, which cannot reclock Ada
+  # cards: the GPU stays pinned near its boot clocks, so you get a fraction
+  # of the card's performance and no usable Vulkan.
+  #
+  # Setting videoDrivers is what wires the driver up even on Wayland - the
+  # NixOS module keys off it to install the kernel module, the libglvnd
+  # vendor files (including the 32-bit ones for Steam) and the udev rules,
+  # and to blacklist nouveau.
+  services.xserver.videoDrivers = [ "nvidia" ];
+
+  hardware.nvidia = {
+    # Required for any Wayland compositor. On driver 545+ this also passes
+    # nvidia-drm.modeset=1 and nvidia-drm.fbdev=1, so the card provides its
+    # own framebuffer device - that is what gives greetd/tuigreet a usable
+    # console on these outputs before Hyprland ever starts.
+    modesetting.enable = true;
+
+    # Ada is fully supported by the open kernel modules, and they are what
+    # NVIDIA develops against from 560 onwards. Not optional to omit: the
+    # module has no default for this above 560 and eval fails without it.
+    #
+    # This also turns on powerManagement.kernelSuspendNotifier by default
+    # (open modules + driver >= 595), which lets the driver handle
+    # suspend/hibernate through the kernel rather than through the older
+    # VRAM save/restore systemd services.
+    open = true;
+
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+    # The nvidia-settings GUI, for fan curves and per-display config.
+    nvidiaSettings = true;
+  };
+
+  # Load the display-side modules at boot ourselves.
+  #
+  # The nvidia module only adds these to boot.kernelModules when
+  # services.xserver.enable is true, and this host deliberately runs no
+  # Xorg (see the greetd comment above). Only nvidia_uvm ends up eager,
+  # which pulls in nvidia but not nvidia_modeset or nvidia_drm - and
+  # nvidia_drm.ko carries no PCI modalias, so udev will not autoload it
+  # either. Without it there is no DRM device and no framebuffer on the
+  # NVIDIA outputs, which is a black screen at tuigreet.
+  boot.kernelModules = [ "nvidia" "nvidia_modeset" "nvidia_drm" ];
+
+  # Steam.
+  #
+  # This has to be a NixOS option rather than a home-manager package: the
+  # module sets up the FHS environment Steam needs (it ships prebuilt
+  # binaries that expect /lib, /usr/lib and friends), pulls in the 32-bit
+  # driver stack, and installs the udev rules for Steam Input controllers.
+  #
+  # enable32Bit is what makes hardware acceleration work for the many
+  # 32-bit games and for Steam's own runtime; without it they fall back to
+  # software rendering or fail to start. hardware.graphics.enable itself is
+  # already turned on by programs.hyprland above.
+  hardware.graphics.enable32Bit = true;
+
+  programs.steam = {
+    enable = true;
+    # Opens 27031-27036/UDP+TCP for streaming to another machine on the LAN.
+    remotePlay.openFirewall = true;
+    # Opens 27015-27020 for hosting Source-engine dedicated servers.
+    dedicatedServer.openFirewall = true;
+    # Steam's own compositor - gives per-game resolution/upscaling and
+    # fixes fullscreen behaviour under Hyprland.
+    gamescopeSession.enable = true;
+  };
+
+  # Lets games ask the kernel for the performance CPU governor and higher
+  # I/O priority while they run, and drop back afterwards.
+  programs.gamemode.enable = true;
+
   # xfconf daemon, required by Thunar for saving its settings
   programs.xfconf.enable = true;
 
