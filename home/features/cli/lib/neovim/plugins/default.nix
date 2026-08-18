@@ -8,5 +8,15 @@
     ./undotree.nix
     ./indent-blankline.nix
     ./which-key.nix
+    ./lsp.nix
+    ./cmp.nix
+    ./treesitter.nix
+    ./gitsigns.nix
+    ./colorschemes.nix
+    ./px-to-rem.nix
+    ./ufo.nix
+    ./general.nix
+    ./lspkind.nix
+    ./toggleterm.nix
   ];
 }

@@ -49,6 +49,7 @@
         };
         apps = {
             kitty.enable = true;
+            phpstorm.enable = false;
             telegram.enable = true;
             slack.enable = true;
             obsidian.enable = true;

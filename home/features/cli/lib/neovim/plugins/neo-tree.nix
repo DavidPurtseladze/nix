@@ -40,8 +40,8 @@ lib.mkIf config.features.cli.neovim.enable {
     {
       mode = "n";
       key = "<leader>e";
-      action = "<cmd>Neotree focus<CR>";
-      options.desc = "neo-tree focus window";
+      action = "<cmd>Neotree toggle<CR>";
+      options.desc = "neo-tree toggle window";
     }
   ];
 }

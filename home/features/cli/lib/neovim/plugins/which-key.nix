@@ -6,6 +6,8 @@
 lib.mkIf config.features.cli.neovim.enable {
   programs.nixvim.plugins.which-key.enable = true;
 
+  programs.nixvim.plugins.which-key.settings.plugins.presets = false;
+
   programs.nixvim.keymaps = [
     {
       mode = "n";
