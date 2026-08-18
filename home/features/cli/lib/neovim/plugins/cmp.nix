@@ -9,7 +9,7 @@ lib.mkIf config.features.cli.neovim.enable {
   programs.nixvim.plugins.luasnip = {
     enable = true;
     settings.enable_autosnippets = true;
-    fromVscode = [{}]; # pulls in friendly-snippets
+    fromVscode = [{}]; 
   };
 
   # Auto-close (){}[]/quotes, and close them correctly on cmp confirm.
