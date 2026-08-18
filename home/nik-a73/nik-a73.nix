@@ -36,7 +36,10 @@
         };
         desktop = {
             wayland.enable = true;
-            hyprland.enable = true;
+            hyprland = {
+                enable = true;
+                pushToTalk.enable = true;
+            };
             fonts.enable = true;
             awww = {
                 enable = true;
@@ -57,6 +60,8 @@
             telegram.enable = true;
             slack.enable = true;
             obsidian.enable = true;
+            discord.enable = true;
+            hydralauncher.enable = true;
         };
     };
 }
