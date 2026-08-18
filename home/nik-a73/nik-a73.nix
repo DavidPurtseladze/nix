@@ -52,10 +52,20 @@
             swaync.enable = true;
             thunar.enable = true;
             gtk.enable = true;
+            cursor = {
+                enable = true;
+                # nouveau drops the cursor plane when the screen goes static.
+                # Retest after the reboot onto the NVIDIA driver.
+                softwareCursors = true;
+            };
             media.enable = true;
         };
         apps = {
-            kitty.enable = true;
+            kitty = {
+                enable = true;
+                # Default 3.0 was hiding the pointer while reading output.
+                mouseHideWait = "15.0";
+            };
             phpstorm.enable = false;
             telegram.enable = true;
             slack.enable = true;
