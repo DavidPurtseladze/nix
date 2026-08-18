@@ -56,9 +56,20 @@
         specialArgs = {inherit inputs outputs;};
         modules = [./hosts/zero];
       };
+
+      nik-a73 = nixpkgs.lib.nixosSystem {
+        specialArgs = {inherit inputs outputs;};
+        modules = [./hosts/nik-a73];
+      };
     };
     homeConfigurations = {
       "zero@zero" = home-manager.lib.homeManagerConfiguration {
+        pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        extraSpecialArgs = {inherit inputs outputs;};
+        modules = [./home/zero/zero.nix];
+      };
+
+      "nik-a73@nik-a73" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages."x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         modules = [./home/zero/zero.nix];
