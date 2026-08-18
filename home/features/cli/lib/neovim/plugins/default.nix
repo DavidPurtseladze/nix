@@ -8,5 +8,6 @@
     ./undotree.nix
     ./indent-blankline.nix
     ./which-key.nix
+    ./lsp.nix
   ];
 }

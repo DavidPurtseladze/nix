@@ -22,6 +22,9 @@ in {
       vimAlias = true;
       defaultEditor = true;
 
+      # NOTE: Reuse already configured pkgs, to allow unfree software  
+      nixpkgs.pkgs = pkgs;
+
       # Default/active colorscheme. Others below are just installed so the
       # runtime picker (<leader>tt) can switch to them.
       colorschemes.catppuccin = {
