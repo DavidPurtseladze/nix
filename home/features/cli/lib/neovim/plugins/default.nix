@@ -16,6 +16,7 @@
     ./px-to-rem.nix
     ./ufo.nix
     ./general.nix
+    ./colorizer.nix
     ./lspkind.nix
     ./toggleterm.nix
   ];

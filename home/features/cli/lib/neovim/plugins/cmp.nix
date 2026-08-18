@@ -35,7 +35,7 @@ lib.mkIf config.features.cli.neovim.enable {
         format = ''
           function(entry, vim_item)
             local kind_name = vim_item.kind
-            vim_item = require("lspkind").cmp_format({ mode = "symbol", maxwidth = 50 })(entry, vim_item)
+            vim_item.kind = require("lspkind").symbolic(kind_name) or kind_name
             vim_item.menu = kind_name
             return vim_item
           end
