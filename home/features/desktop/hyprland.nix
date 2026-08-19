@@ -44,6 +44,71 @@ in {
         '';
       };
     };
+
+    monitors = mkOption {
+      type = types.listOf (types.submodule {
+        options = {
+          output = mkOption {
+            type = types.str;
+            example = "desc:BNQ ZOWIE XL LCD EBV2R00681SL0";
+            description = ''
+              Which display this applies to: a connector name (`DP-4`) or a
+              `desc:` match against the EDID string `hyprctl monitors`
+              prints as "description".
+
+              Prefer `desc:`. Connector names are positional - moving a
+              cable from HDMI to DisplayPort renames the output and
+              silently drops the rule, which lands the panel back on its
+              preferred mode (60Hz on both panels here). A `desc:` match
+              follows the monitor across ports.
+            '';
+          };
+
+          mode = mkOption {
+            type = types.str;
+            default = "preferred";
+            example = "1920x1080@239.96";
+            description = ''
+              `WIDTHxHEIGHT@RATE`, or `preferred` / `highres` / `highrr`.
+
+              Spell the mode out rather than using `highrr`: that keyword
+              maximises refresh rate over every mode, resolution included,
+              so a panel offering 1024x768@240 and 1920x1080@239.96 gets
+              the 1024x768 one. Take the exact string from the
+              `availableModes` line of `hyprctl monitors all` - a mode the
+              display does not advertise makes Hyprland warn and fall back
+              to preferred, i.e. 60Hz.
+            '';
+          };
+
+          position = mkOption {
+            type = types.str;
+            default = "auto";
+            example = "1920x0";
+            description = ''
+              Top-left corner in layout space, `XxY`, or `auto` to have
+              Hyprland place it to the right of the others.
+            '';
+          };
+
+          scale = mkOption {
+            type = types.str;
+            default = "1";
+            description = "Scale factor, or `auto`.";
+          };
+        };
+      });
+      default = [];
+      description = ''
+        Per-display mode lines. Left empty, Hyprland picks each panel's
+        preferred mode, which for a high-refresh gaming monitor is the 60Hz
+        entry its EDID lists first - the refresh rate is only reached by
+        asking for it.
+
+        A catch-all rule is emitted ahead of these, so any display not
+        listed still comes up at its preferred mode instead of not at all.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -54,6 +119,14 @@ in {
         xwayland = {
           force_zero_scaling = true;
         };
+
+        # Wildcard first: rules are applied in order and the last match
+        # wins, so this only covers displays no entry below names.
+        monitor =
+          [",preferred,auto,1"]
+          ++ map
+          (m: "${m.output},${m.mode},${m.position},${m.scale}")
+          cfg.monitors;
 
         exec-once =
           [

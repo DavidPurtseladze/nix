@@ -39,6 +39,31 @@
             hyprland = {
                 enable = true;
                 pushToTalk.enable = true;
+                # Both panels were running at 60Hz: neither had a monitor
+                # rule, so Hyprland took the EDID's preferred mode.
+                #
+                # Matched by desc: rather than by connector, because the
+                # BenQ is expected to move ports - see below.
+                monitors = [
+                    {
+                        # ZOWIE XL, currently on HDMI-A-4. 239.96 is the
+                        # ceiling *on that port*, not the panel's: the EDID
+                        # reports a 600 MHz max TMDS rate (HDMI 2.0), and
+                        # 1080p360 needs more than that, so the 360Hz mode
+                        # is not even advertised over HDMI. Move it to a
+                        # free DisplayPort (DP-3 or DP-5 on the 4070) with
+                        # a DP 1.4 cable and raise this to 1920x1080@360.
+                        output = "desc:BNQ ZOWIE XL LCD EBV2R00681SL0";
+                        mode = "1920x1080@239.96";
+                        position = "0x0";
+                    }
+                    {
+                        # Alienware AW3425DWM on DP-4, at its full 180Hz.
+                        output = "desc:Dell Inc. AW3425DWM FSWB444";
+                        mode = "3440x1440@179.99";
+                        position = "1920x0";
+                    }
+                ];
             };
             fonts.enable = true;
             awww = {
