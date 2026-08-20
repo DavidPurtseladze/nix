@@ -12,4 +12,6 @@ in [
   (pkgs.writeShellScriptBin "screenshot-region" (builtins.readFile ./screenshot-region.sh))
   (pkgs.writeShellScriptBin "screenshot-full" (builtins.readFile ./screenshot-full.sh))
   (pkgs.writeShellScriptBin "clipboard-history" (builtins.readFile ./clipboard-history.sh))
+  (pkgs.writeShellScriptBin "volume" (builtins.readFile ./volume.sh))
+  (pkgs.writeShellScriptBin "brightness" (builtins.readFile ./brightness.sh))
 ]

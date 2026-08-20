@@ -72,6 +72,9 @@ config = mkIf cfg.enable {
     grim
     slurp
 
+    brightnessctl
+    libnotify
+
     pavucontrol
     playerctl
     qt6.qtwayland

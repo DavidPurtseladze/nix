@@ -325,6 +325,12 @@ in {
         ];
 
         binde = [
+          # Volume / brightness (repeat while held)
+          ", XF86AudioRaiseVolume, exec, volume up"
+          ", XF86AudioLowerVolume, exec, volume down"
+          ", XF86MonBrightnessUp, exec, brightness up"
+          ", XF86MonBrightnessDown, exec, brightness down"
+
           # Resize windows
           "$mainMod SHIFT, left, resizeactive, -50 0"
           "$mainMod SHIFT, right, resizeactive, 50 0"
@@ -344,6 +350,7 @@ in {
           ", XF86AudioPause, exec, playerctl play-pause"
           ", XF86AudioPlay, exec, playerctl play-pause"
           ", XF86AudioPrev, exec, playerctl previous"
+          ", XF86AudioMute, exec, volume mute"
         ];
 
         # Push-to-talk, release half. bindr fires on key up, so this re-mutes
