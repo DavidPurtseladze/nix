@@ -23,6 +23,11 @@
                 userName = "David Purtseladze";
                 userEmail = "dphurtseladze@gmail.com";
             };
+            # TODO: Activate Once 1password is set up
+            # ssh = {
+            #     enable = true;
+            #     onePasswordAgent.enable = true;
+            # };
             misc = {
                 eza.enable = true;
                 bat.enable = true;
@@ -32,7 +37,10 @@
         };
         desktop = {
             wayland.enable = true;
-            hyprland.enable = true;
+            hyprland = {
+                enable = true;
+                pushToTalk.enable = true;
+            };
             fonts.enable = true;
             awww = {
                 enable = true;
@@ -46,6 +54,10 @@
             thunar.enable = true;
             gtk.enable = true;
             media.enable = true;
+            cursor = {
+                enable = true;
+                softwareCursors = true;
+            };
         };
         apps = {
             kitty.enable = true;
@@ -53,6 +65,8 @@
             telegram.enable = true;
             slack.enable = true;
             obsidian.enable = true;
+            discord.enable = true;
+            hydralauncher.enable = true;
         };
     };
 }
