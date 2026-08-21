@@ -38,7 +38,6 @@
             wayland.enable = true;
             hyprland = {
                 enable = true;
-                pushToTalk.enable = true;
                 # Both panels were running at 60Hz: neither had a monitor
                 # rule, so Hyprland took the EDID's preferred mode.
                 #
