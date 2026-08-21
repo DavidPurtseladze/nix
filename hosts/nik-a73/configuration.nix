@@ -168,11 +168,31 @@
     # NVIDIA develops against from 560 onwards. Not optional to omit: the
     # module has no default for this above 560 and eval fails without it.
     #
-    # This also turns on powerManagement.kernelSuspendNotifier by default
-    # (open modules + driver >= 595), which lets the driver handle
-    # suspend/hibernate through the kernel rather than through the older
-    # VRAM save/restore systemd services.
+    # This also defaults powerManagement.kernelSuspendNotifier to true
+    # (open modules + driver >= 595), but that option is gated behind
+    # powerManagement.enable below - on its own it does nothing.
     open = true;
+
+    # Save and restore VRAM across suspend and hibernate.
+    #
+    # Without this the driver throws the card's video memory away on the
+    # way down, so on resume the GPU comes back with garbage shader state.
+    # That surfaces as `NVRM: Xid 13, Graphics Exception` in dmesg, and
+    # Hyprland dies on an assertion in CHyprOpenGLImpl::begin the first
+    # time it tries to render a frame. The whole session goes with it -
+    # hyprlock, xdg-desktop-portal-hyprland and awww all abort as their
+    # compositor disappears - which leaves nothing to unlock and no way
+    # back in short of a reboot.
+    #
+    # This sets NVreg_PreserveVideoMemoryAllocations=1, and because
+    # kernelSuspendNotifier is on it also sets
+    # NVreg_UseKernelSuspendNotifiers=1: the driver hooks the kernel's
+    # suspend notifiers directly instead of the older nvidia-sleep.sh
+    # systemd services, so no nvidia-suspend/hibernate/resume units are
+    # installed. VRAM is staged through NVreg_TemporaryFilePath, which
+    # defaults to /tmp - disk-backed here, since this host has no tmpfs
+    # /tmp, so the card's 12GB does not have to fit in RAM.
+    powerManagement.enable = true;
 
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
