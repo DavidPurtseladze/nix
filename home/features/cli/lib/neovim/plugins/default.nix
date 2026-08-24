@@ -18,6 +18,7 @@
     ./general.nix
     ./colorizer.nix
     ./lspkind.nix
+    ./conform.nix
     ./toggleterm.nix
   ];
 }
