@@ -7,6 +7,29 @@
 with lib;
 let 
     cfg = config.features.cli.tmux;
+
+    windowColors = [
+        "#f38ba8" # 1 red
+        "#fab387" # 2 peach
+        "#f9e2af" # 3 yellow
+        "#a6e3a1" # 4 green
+        "#94e2d5" # 5 teal
+        "#89dceb" # 6 sky
+        "#89b4fa" # 7 blue
+        "#b4befe" # 8 lavender
+        "#cba6f7" # 9 mauve
+        "#f5c2e7" # 10 pink
+    ];
+    windowColorExpr = foldr
+        (i: acc: "#{?#{==:#{window_index}," + toString i + "}," + elemAt windowColors (i - 1) + "," + acc + "}")
+        "#313244"
+        (range 1 10);
+
+    windowStatusFormat = "#[fg=${windowColorExpr},bg=default] #I:#W #[default]";
+    windowStyleCurrent = "#[fg=#11111b,bg=${windowColorExpr},bold]";
+    windowStatusCurrentFormat =
+        "${windowStyleCurrent}#{E:@catppuccin_window_current_left_separator}${windowStyleCurrent} #I:#W #{E:@catppuccin_window_current_right_separator}#[default]";
+
     catppuccin-v2 = pkgs.tmuxPlugins.catppuccin.overrideAttrs (_: rec {
         version = "2.1.3";
         src = pkgs.fetchFromGitHub {
@@ -40,8 +63,8 @@ in {
                 set -g pane-border-style "fg=#585b70"
                 set -g pane-active-border-style "fg=#89b4fa"
 
-                set -g window-status-format "#I:#W"
-                set -g window-status-current-format "#[fg=#89b4fa,bold] #I:#W "
+                set -g window-status-format "${windowStatusFormat}"
+                set -g window-status-current-format "${windowStatusCurrentFormat}"
 
                 # Pane movement (Colemak)
                 bind n select-pane -L
@@ -107,7 +130,7 @@ in {
                         set -g @catppuccin_window_number_position "left"
 
                         set -g @catppuccin_window_text " #W"
-                        set -g @catppuccin_window_current_text " #W"
+                        set -g @catppuccin_window_current_text "#[bold] #W"
 
                         set -g status-position bottom
                         set -g status-left ""
