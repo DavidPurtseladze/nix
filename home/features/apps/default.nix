@@ -6,6 +6,7 @@
     inputs.zen-browser.homeModules.beta
     ./kitty.nix
     ./phpstorm.nix
+    ./gdrive.nix
     ./misc.nix
   ];
 
