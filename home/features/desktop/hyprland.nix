@@ -380,6 +380,22 @@ in {
           "$mainMod, Escape, exec, wlogout -p layer-shell"
           "$mainMod, Space, exec, rofi -show drun"
           "$mainMod SHIFT, F, fullscreen"
+
+          # Omarchy's Super+J: flip the split the focused window sits in, so
+          # a side-by-side pair becomes stacked and back. dwindle stores the
+          # orientation on the parent node, so this re-orients the pair the
+          # window belongs to, not the whole workspace.
+          #
+          # `layoutmsg, togglesplit` rather than Omarchy's bare
+          # `togglesplit`: that stopped being a dispatcher, and 0.56.1
+          # answers `hyprctl dispatch togglesplit` with "Invalid
+          # dispatcher". Copied over as-is this would have been a dead key
+          # with nothing logged.
+          #
+          # A no-op on a lone window - there is no parent split to flip -
+          # and on a fullscreen one.
+          "$mainMod, J, layoutmsg, togglesplit"
+
           "$mainMod, B, exec, zen-beta"
 
           "$mainMod, C, exec, brave --app=https://chatgpt.com"
