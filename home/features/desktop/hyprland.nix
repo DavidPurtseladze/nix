@@ -132,6 +132,7 @@ in {
           [
             "waybar"
             "awww-daemon"
+            "hyprsunset" # night-mode daemon, starts neutral until toggled
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "wl-paste --type text --watch cliphist store"
             "wl-paste --type image --watch cliphist store"
@@ -324,7 +325,6 @@ in {
           "ignore_alpha 0.5, match:namespace waybar"
           "blur on, match:namespace logout_dialog"
           "blur on, match:namespace swaync-control-center"
-          "blur on, match:namespace swaync-notification-window"
         ];
 
         "$mainMod" = "SUPER";

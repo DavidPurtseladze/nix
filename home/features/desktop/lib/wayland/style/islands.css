@@ -143,6 +143,7 @@ tooltip label{
 #workspaces,
 #custom-backlight,
 #custom-browser,
+#custom-nightmode,
 #custom-cava_mviz,
 #custom-cycle_wall,
 #custom-dot_update,
@@ -187,6 +188,15 @@ tooltip label{
 #custom-hypridle.notactive,
 #idle_inhibitor.activated {
 	color: #39FF14;
+}
+
+#custom-nightmode.on {
+	color: #f9e2af;
+}
+
+#custom-nightmode {
+	min-width: 20px;
+	text-align: center;
 }
 
 #pulseaudio.muted {

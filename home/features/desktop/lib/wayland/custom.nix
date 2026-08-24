@@ -53,6 +53,14 @@
         "escape" = true;
     };
     
+    "custom/nightmode" = {
+        "return-type" = "json";
+        "exec" = "night-mode status";
+        "interval" = 5;
+        "on-click" = "night-mode toggle";
+        "tooltip" = true;
+    };
+
     "custom/separator#dot" = {
         "format" = "";
         "interval" = "once";

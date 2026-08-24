@@ -52,6 +52,8 @@ config = mkIf cfg.enable {
         modules-right = [
           "group/notify"
           "custom/separator#blank"
+          "custom/nightmode"
+          "custom/separator#blank"
           "battery"
           "custom/separator#blank"
           "group/audio"
@@ -74,6 +76,7 @@ config = mkIf cfg.enable {
 
     brightnessctl
     libnotify
+    hyprsunset
 
     pavucontrol
     playerctl
