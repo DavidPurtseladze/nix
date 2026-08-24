@@ -76,7 +76,8 @@ config = mkIf cfg.enable {
 
     brightnessctl
     libnotify
-    hyprsunset
+    # hyprsunset comes from services.hyprsunset in ./hyprland.nix now, so
+    # the binary and the unit that supervises it cannot drift apart.
 
     pavucontrol
     playerctl

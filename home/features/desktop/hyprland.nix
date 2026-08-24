@@ -113,6 +113,34 @@ in {
   };
 
   config = mkIf cfg.enable {
+    # Was `exec-once = hyprsunset`, which lost a startup race: it was
+    # spawned at login and exited immediately, so `hyprctl hyprsunset ...`
+    # had no socket to talk to and night-mode popped "hyprsunset isn't
+    # responding" every time. Spawned by hand once the session had settled
+    # it ran fine, which is what pointed at the race.
+    #
+    # hyprsunset gives up rather than waiting - init() bails the moment a
+    # wl_display_connect fails or the hyprland-ctm-control-v1 global is not
+    # in the first registry roundtrip, and exec-once neither retries nor
+    # keeps stderr, so nothing was ever recorded about why.
+    #
+    # A unit fixes both halves: ConditionEnvironment + After hold it until
+    # the session exists, Restart=always covers losing the race anyway, and
+    # failures land in `journalctl --user -u hyprsunset` instead of nowhere.
+    services.hyprsunset = {
+      enable = true;
+
+      # Starts neutral, which is what the exec-once comment always claimed
+      # but never did: bare `hyprsunset` defaults to 6000K, and that is a
+      # real CTM (green 0.965, blue 0.929), not a no-op. Since it has in
+      # practice been dead at login, the screen has been running untinted -
+      # so -i keeps today's appearance rather than quietly warming it.
+      #
+      # Only the starting point. ./lib/scripts/night-mode.sh still drives
+      # `temperature 4000` and back to `identity` over the IPC socket.
+      extraArgs = ["-i"];
+    };
+
     wayland.windowManager.hyprland = {
       enable = true;
       configType = "hyprlang";
@@ -133,7 +161,8 @@ in {
           [
             "waybar"
             "awww-daemon"
-            "hyprsunset" # night-mode daemon, starts neutral until toggled
+            # hyprsunset used to be here - it is a systemd user service now,
+            # see services.hyprsunset above for why.
             "${pkgs.hyprpolkitagent}/libexec/hyprpolkitagent"
             "wl-paste --type text --watch cliphist store"
             "wl-paste --type image --watch cliphist store"
