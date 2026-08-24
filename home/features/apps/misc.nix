@@ -12,6 +12,7 @@ with lib; {
     discord.enable = mkEnableOption "Discord";
     hydralauncher.enable = mkEnableOption "Hydra Launcher";
     iptvnator.enable = mkEnableOption "IPTVnator";
+    stremio.enable = mkEnableOption "Stremio";
   };
 
   config = mkMerge [
@@ -45,6 +46,14 @@ with lib; {
     # installed by ../desktop/media.nix.
     (mkIf config.features.apps.iptvnator.enable {
       home.packages = [pkgs.iptvnator];
+    })
+    # Not Electron: `stremio` (the old Qt5 shell) was dropped from nixpkgs
+    # over qt5-webengine CVEs, and upstream's replacement is a GTK4 shell,
+    # so Wayland is native and needs none of the Ozone env above. Playback
+    # is libmpv in-process, which is why this one does not shell out to the
+    # mpv from ../desktop/media.nix.
+    (mkIf config.features.apps.stremio.enable {
+      home.packages = [pkgs.stremio-linux-shell];
     })
   ];
 }
