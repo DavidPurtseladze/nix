@@ -66,6 +66,7 @@
             slack.enable = true;
             obsidian.enable = true;
             gdrive.enable = true;
+            brave.enable = true;
             discord.enable = true;
             hydralauncher.enable = true;
         };

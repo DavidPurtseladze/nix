@@ -303,21 +303,6 @@ in {
           "opacity 0.9 0.7 1, match:class ^(zen-beta)$"
           "float on, match:class ^(org.pulseaudio.pavucontrol)$"
           "no_focus on, match:class ^$, match:title ^$, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
-
-          # No "workspace N" rules here on purpose.
-          #
-          # Pinning apps to fixed workspaces (kitty -> 1, zen-beta -> 2,
-          # telegram/slack/discord -> 4) fights multi-monitor use: workspaces
-          # are claimed by whichever monitor is focused when they are first
-          # opened, so a rule sending kitty to workspace 1 drags it onto
-          # whatever monitor happens to own workspace 1 - not the one the
-          # cursor is on. Since those rules covered nearly every app that
-          # gets launched here, new windows almost always landed on the
-          # wrong screen.
-          #
-          # Without them a window opens on the active workspace, which
-          # follows the cursor via input.follow_mouse and
-          # misc.mouse_move_focuses_monitor.
         ];
 
         layerrule = [
@@ -335,11 +320,16 @@ in {
           "$mainMod, W, killactive"
           "$mainMod, P, pseudo"
           "$mainMod, M, exit"
-          "$mainMod, D, exec, rofi -show drun"
+          "$mainMod, F, togglefloating"
           "$mainMod, Escape, exec, wlogout -p layer-shell"
-          "$mainMod, Space, togglefloating"
-          "$mainMod, F, fullscreen"
+          "$mainMod, Space, exec, rofi -show drun"
+          "$mainMod SHIFT, F, fullscreen"
           "$mainMod, B, exec, zen-beta"
+
+          "$mainMod, C, exec, brave --app=https://chatgpt.com"
+          "$mainMod SHIFT, C, exec, brave --app=https://claude.ai"
+          "$mainMod, G, exec, brave --app=https://google.com"
+          "$mainMod SHIFT, G, exec, brave --app=https://duckduckgo.com"
           "$mainMod, L, exec, pidof hyprlock || hyprlock"
           "$mainMod, E, exec, thunar"
           "$mainMod SHIFT, S, exec, screenshot-region"

@@ -7,6 +7,7 @@
     ./kitty.nix
     ./phpstorm.nix
     ./gdrive.nix
+    ./brave.nix
     ./misc.nix
   ];
 
