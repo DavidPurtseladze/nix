@@ -20,5 +20,7 @@
     ./lspkind.nix
     ./conform.nix
     ./toggleterm.nix
+    ./noice.nix
+    ./harpoon.nix
   ];
 }
