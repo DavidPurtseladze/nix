@@ -96,6 +96,7 @@
             obsidian.enable = true;
             discord.enable = true;
             hydralauncher.enable = true;
+            iptvnator.enable = true;
         };
     };
 }

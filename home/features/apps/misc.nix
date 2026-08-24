@@ -11,6 +11,7 @@ with lib; {
     obsidian.enable = mkEnableOption "Obsidian";
     discord.enable = mkEnableOption "Discord";
     hydralauncher.enable = mkEnableOption "Hydra Launcher";
+    iptvnator.enable = mkEnableOption "IPTVnator";
   };
 
   config = mkMerge [
@@ -34,6 +35,16 @@ with lib; {
     # ELECTRON_OZONE_PLATFORM_HINT, set alongside it in the same env block.
     (mkIf config.features.apps.hydralauncher.enable {
       home.packages = [pkgs.hydralauncher];
+    })
+    # Same story as hydralauncher - an Electron AppImage, so Wayland comes
+    # from ELECTRON_OZONE_PLATFORM_HINT. Not from nixpkgs: this one is built
+    # locally out of ../../../pkgs/iptvnator and reaches pkgs through the
+    # `additions` overlay in ../../../overlays.
+    #
+    # Its "open in external player" mode shells out to mpv, which is already
+    # installed by ../desktop/media.nix.
+    (mkIf config.features.apps.iptvnator.enable {
+      home.packages = [pkgs.iptvnator];
     })
   ];
 }
