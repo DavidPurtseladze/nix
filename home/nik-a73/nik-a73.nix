@@ -83,6 +83,7 @@
                 softwareCursors = true;
             };
             media.enable = true;
+            flameshot.enable = true;
         };
         apps = {
             kitty = {

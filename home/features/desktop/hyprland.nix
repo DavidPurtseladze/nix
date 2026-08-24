@@ -8,6 +8,7 @@ with lib; let
   cfg = config.features.desktop.hyprland;
   ptt = cfg.pushToTalk;
   cursorCfg = config.features.desktop.cursor;
+  flameshotCfg = config.features.desktop.flameshot;
   wpctl = "${pkgs.wireplumber}/bin/wpctl";
   defaultWallpaper = config.features.desktop.awww.defaultWallpaper;
 in {
@@ -303,6 +304,32 @@ in {
           "opacity 0.9 0.7 1, match:class ^(zen-beta)$"
           "float on, match:class ^(org.pulseaudio.pavucontrol)$"
           "no_focus on, match:class ^$, match:title ^$, match:xwayland 1, match:float 1, match:fullscreen 0, match:pin 0"
+        ]
+        # Flameshot's selection overlay is a plain toplevel window, not a
+        # layer-shell surface, so without these dwindle tiles it into a
+        # corner and the region you drag lands nowhere near the region it
+        # captured. See ./flameshot.nix for the rest of the setup.
+        ++ optionals flameshotCfg.enable [
+          "float on, match:class ^(flameshot)$"
+          "move 0 0, match:class ^(flameshot)$"
+
+          # Has to survive a workspace switch: the overlay is spawned by a
+          # keybind, not by the focused app, and an unpinned one vanishes
+          # the moment anything else takes focus.
+          "pin on, match:class ^(flameshot)$"
+
+          # The overlay draws the frozen screenshot itself. Every global
+          # decoration set above would be applied on top of that image -
+          # inactive_opacity would fade it, blur would smear it, and
+          # rounding would clip the corners off the capture area - so the
+          # colours picked in the editor would not be the colours saved.
+          "opacity 1.0 1.0 1.0, match:class ^(flameshot)$"
+          "no_blur on, match:class ^(flameshot)$"
+          "rounding 0, match:class ^(flameshot)$"
+
+          # popin/bounce on a fullscreen overlay means dragging a
+          # selection while the window is still scaling up.
+          "no_anim on, match:class ^(flameshot)$"
         ];
 
         layerrule = [
@@ -332,8 +359,21 @@ in {
           "$mainMod SHIFT, G, exec, brave --app=https://duckduckgo.com"
           "$mainMod, L, exec, pidof hyprlock || hyprlock"
           "$mainMod, E, exec, thunar"
-          "$mainMod SHIFT, S, exec, screenshot-region"
-          ", Print, exec, screenshot-full"
+          # Was screenshot-region / screenshot-full, the grim+slurp pair in
+          # ./lib/scripts. Flameshot covers both: the region selector with
+          # the annotation toolbar, and the same unattended full grab the
+          # old Print key did.
+          #
+          # flameshot-monitor rather than `flameshot gui`, because with two
+          # monitors `gui` stops to ask which one to capture first. See
+          # ./flameshot.nix for why that prompt cannot be turned off from
+          # Flameshot's own settings.
+          #
+          # -c copies to the clipboard and -p writes the file, matching
+          # what the scripts did in one go; savePath comes from
+          # ./flameshot.nix so the two cannot drift.
+          "$mainMod SHIFT, S, exec, flameshot-monitor"
+          ", Print, exec, flameshot full -c -p ${flameshotCfg.savePath}"
           "$mainMod, R, exec, wallpaper-select"
           "$mainMod SHIFT, R, exec, wallpaper-random"
           "$mainMod, V, exec, clipboard-history"
