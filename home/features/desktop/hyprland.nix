@@ -376,10 +376,10 @@ in {
           "$mainMod, W, killactive"
           "$mainMod, P, pseudo"
           "$mainMod, M, exit"
-          "$mainMod, F, togglefloating"
+          "$mainMod, F, fullscreen"
           "$mainMod, Escape, exec, wlogout -p layer-shell"
           "$mainMod, Space, exec, rofi -show drun"
-          "$mainMod SHIFT, F, fullscreen"
+          "$mainMod SHIFT, F, togglefloating"
 
           # Omarchy's Super+J: flip the split the focused window sits in, so
           # a side-by-side pair becomes stacked and back. dwindle stores the
