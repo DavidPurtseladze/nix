@@ -45,6 +45,7 @@ in {
       home.packages = with pkgs; [
         coreutils
         fd
+        gnumake
         htop
         httpie
         jq
