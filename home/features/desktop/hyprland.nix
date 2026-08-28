@@ -404,19 +404,6 @@ in {
           "$mainMod SHIFT, G, exec, brave --app=https://duckduckgo.com"
           "$mainMod, L, exec, pidof hyprlock || hyprlock"
           "$mainMod, E, exec, thunar"
-          # Was screenshot-region / screenshot-full, the grim+slurp pair in
-          # ./lib/scripts. Flameshot covers both: the region selector with
-          # the annotation toolbar, and the same unattended full grab the
-          # old Print key did.
-          #
-          # flameshot-monitor rather than `flameshot gui`, because with two
-          # monitors `gui` stops to ask which one to capture first. See
-          # ./flameshot.nix for why that prompt cannot be turned off from
-          # Flameshot's own settings.
-          #
-          # -c copies to the clipboard and -p writes the file, matching
-          # what the scripts did in one go; savePath comes from
-          # ./flameshot.nix so the two cannot drift.
           "$mainMod SHIFT, S, exec, flameshot-monitor"
           ", Print, exec, flameshot full -c -p ${flameshotCfg.savePath}"
           "$mainMod, R, exec, wallpaper-select"

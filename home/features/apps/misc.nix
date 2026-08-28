@@ -13,6 +13,7 @@ with lib; {
     hydralauncher.enable = mkEnableOption "Hydra Launcher";
     iptvnator.enable = mkEnableOption "IPTVnator";
     stremio.enable = mkEnableOption "Stremio";
+    bitwarden.enable = mkEnableOption "Bitwarden";
   };
 
   config = mkMerge [
@@ -54,6 +55,9 @@ with lib; {
     # mpv from ../desktop/media.nix.
     (mkIf config.features.apps.stremio.enable {
       home.packages = [pkgs.stremio-linux-shell];
+    })
+    (mkIf config.features.apps.bitwarden.enable {
+      home.packages = [pkgs.bitwarden-desktop];
     })
   ];
 }

@@ -5,7 +5,9 @@
         ../features/cli
         ../features/desktop
         ../features/apps
-    ]; 
+        ./features/cli/projects.nix
+        ./features/cli/git.nix
+    ];
 
     features = {
         cli = {
@@ -69,6 +71,8 @@
             brave.enable = true;
             discord.enable = true;
             hydralauncher.enable = true;
+            stremio.enable = true;
+            bitwarden.enable = true;
         };
     };
 }
