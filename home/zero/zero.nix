@@ -7,6 +7,8 @@
         ../features/apps
         ./features/cli/projects.nix
         ./features/cli/git.nix
+        ./features/cli/ssh.nix
+        ./features/cli/powershell.nix
     ];
 
     features = {
@@ -20,16 +22,13 @@
             lazydocker.enable = true;
             claude-code.enable = true;
             neovim.enable = true;
+            powershell.enable = true;
             git = {
                 enable = true;
                 userName = "David Purtseladze";
                 userEmail = "dphurtseladze@gmail.com";
             };
-            # TODO: Activate Once 1password is set up
-            # ssh = {
-            #     enable = true;
-            #     onePasswordAgent.enable = true;
-            # };
+            ssh.enable = true;
             misc = {
                 eza.enable = true;
                 bat.enable = true;

@@ -10,6 +10,7 @@
         ./claude-code.nix
         ./git.nix
         ./ssh.nix
+        ./powershell.nix
         ./misc.nix
         ./neovim.nix
     ];

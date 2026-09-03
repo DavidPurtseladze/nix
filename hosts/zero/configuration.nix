@@ -88,8 +88,11 @@
   # service file for hyprlock to validate against).
   security.pam.services.hyprlock = {};
 
-  # Enable Docker   
+  # Enable Docker
   virtualisation.docker.enable = true;
+
+  # Resolve host.docker.internal to docker
+  networking.extraHosts = "127.0.0.1 host.docker.internal";
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."zero" = {

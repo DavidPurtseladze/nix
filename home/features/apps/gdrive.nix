@@ -25,8 +25,8 @@ with lib; let
     STATE_DIR="''${XDG_CACHE_HOME:-$HOME/.cache}/rclone/bisync"
     LOCAL_DIR="$HOME/Drive"
 
-    # bisync needs one baseline --resync run before it can diff normally.
-    if [ ! -d "$STATE_DIR" ] || [ -z "$(ls -A "$STATE_DIR" 2>/dev/null)" ]; then
+    # bisync needs one baseline --resync run before it can diff normally,
+    if ! compgen -G "$STATE_DIR"/*.lst >/dev/null 2>&1; then
       ${pkgs.rclone}/bin/rclone bisync gdrive: "$LOCAL_DIR" --resync -v
     else
       ${pkgs.rclone}/bin/rclone bisync gdrive: "$LOCAL_DIR" -v
