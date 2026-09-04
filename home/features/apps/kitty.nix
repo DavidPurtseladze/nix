@@ -32,6 +32,11 @@ in {
 
       themeFile = "Catppuccin-Mocha";
 
+      keybindings = {
+        "ctrl+c" = "copy_or_interrupt";
+        "ctrl+v" = "paste_from_clipboard";
+      };
+
       font = {
         name = "FiraCode Nerd Font";
         size = 12;
