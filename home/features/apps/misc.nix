@@ -14,6 +14,7 @@ with lib; {
     iptvnator.enable = mkEnableOption "IPTVnator";
     stremio.enable = mkEnableOption "Stremio";
     bitwarden.enable = mkEnableOption "Bitwarden";
+    dbeaver.enable = mkEnableOption "DBeaver Community (SQL client)";
   };
 
   config = mkMerge [
@@ -58,6 +59,9 @@ with lib; {
     })
     (mkIf config.features.apps.bitwarden.enable {
       home.packages = [pkgs.bitwarden-desktop];
+    })
+    (mkIf config.features.apps.dbeaver.enable {
+      home.packages = [pkgs.dbeaver-bin];
     })
   ];
 }

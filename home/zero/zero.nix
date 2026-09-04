@@ -5,6 +5,7 @@
         ../features/cli
         ../features/desktop
         ../features/apps
+        ../features/sdks
         ./features/cli/projects.nix
         ./features/cli/git.nix
         ./features/cli/ssh.nix
@@ -72,6 +73,10 @@
             hydralauncher.enable = true;
             stremio.enable = true;
             bitwarden.enable = true;
+            dbeaver.enable = true;
+        };
+        sdks = {
+            rust.enable = true;
         };
     };
 }

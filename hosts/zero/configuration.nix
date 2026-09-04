@@ -94,6 +94,9 @@
   # Resolve host.docker.internal to docker
   networking.extraHosts = "127.0.0.1 host.docker.internal";
 
+  # Let containers reach host services (e.g. MariaDB) past the firewall.
+  networking.firewall.trustedInterfaces = ["docker0"];
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."zero" = {
     isNormalUser = true;
