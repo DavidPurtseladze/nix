@@ -9,7 +9,8 @@ with lib; let
 in {
   options.features.sdks.rust.enable = mkEnableOption ''
     Rust toolchain - rustc, cargo, clippy, rustfmt, rust-analyzer - plus
-    pkg-config, needed by most crates that link against a native C library.
+    pkg-config, needed by most crates that link against a native C library,
+    and gcc, which supplies the cc linker rustc shells out to at link time.
   '';
 
   config = mkIf cfg.enable {
@@ -20,6 +21,7 @@ in {
       pkgs.rustfmt
       pkgs.rust-analyzer
       pkgs.pkg-config
+      pkgs.gcc
     ];
   };
 }
