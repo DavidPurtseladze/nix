@@ -7,7 +7,6 @@
     ./flash.nix
     ./undotree.nix
     ./indent-blankline.nix
-    ./which-key.nix
     ./lsp.nix
     ./cmp.nix
     ./treesitter.nix

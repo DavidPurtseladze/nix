@@ -53,6 +53,7 @@
             hyprlock.enable = true;
             hypridle.enable = true;
             swaync.enable = true;
+            flameshot.enable = true;
             thunar.enable = true;
             gtk.enable = true;
             media.enable = true;
