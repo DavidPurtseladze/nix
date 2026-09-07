@@ -52,6 +52,7 @@ in {
         procs
         ripgrep
         tldr
+        unrar
         unzip
         zip
       ];
