@@ -23,6 +23,8 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  # OpenVPN support in the NetworkManager applet/settings GUI.
+  networking.networkmanager.plugins = [ pkgs.networkmanager-openvpn ];
 
   # Set your time zone.
   time.timeZone = "Asia/Tbilisi";
