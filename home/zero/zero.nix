@@ -78,6 +78,7 @@
         };
         sdks = {
             rust.enable = true;
+            node.enable = true;
         };
     };
 }
