@@ -35,8 +35,16 @@ in {
                 "--bind 'ctrl-/:toggle-preview'"
             ];
 
-            defaultCommand = "fd -type f --exclude .git --follow --hidden";
+            defaultCommand = "fd --type f --exclude .git --follow --hidden";
             changeDirWidget.command = "fd --type d --exclude .git --follow --hidden";
         };
+
+        # `fe`: fuzzy-find a file (reusing defaultCommand/preview above) and open it in nvim
+        programs.zsh.initContent = mkAfter ''
+            fe() {
+                local file
+                file=$(fzf) && nvim -- "$file"
+            }
+        '';
     };
 }
