@@ -51,6 +51,7 @@ in {
         jq
         procs
         ripgrep
+        serpl
         sqlite
         tldr
         unrar
