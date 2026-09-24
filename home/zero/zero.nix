@@ -77,7 +77,10 @@
             dbeaver.enable = true;
         };
         sdks = {
-            rust.enable = true;
+            rust = {
+                enable = true;
+                enableNightly = true;
+            };
             node.enable = true;
         };
     };
