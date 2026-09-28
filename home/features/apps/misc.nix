@@ -15,6 +15,7 @@ with lib; {
     stremio.enable = mkEnableOption "Stremio";
     bitwarden.enable = mkEnableOption "Bitwarden";
     dbeaver.enable = mkEnableOption "DBeaver Community (SQL client)";
+    whatsapp.enable = mkEnableOption "WhatsApp (karere)";
   };
 
   config = mkMerge [
@@ -62,6 +63,9 @@ with lib; {
     })
     (mkIf config.features.apps.dbeaver.enable {
       home.packages = [pkgs.dbeaver-bin];
+    })
+    (mkIf config.features.apps.whatsapp.enable {
+      home.packages = [pkgs.karere];
     })
   ];
 }

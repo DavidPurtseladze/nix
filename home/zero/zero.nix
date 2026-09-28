@@ -75,6 +75,7 @@
             stremio.enable = true;
             bitwarden.enable = true;
             dbeaver.enable = true;
+            whatsapp.enable = true;
         };
         sdks = {
             rust = {
