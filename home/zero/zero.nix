@@ -82,6 +82,7 @@
                 enableNightly = true;
             };
             node.enable = true;
+            go.enable = true;
         };
     };
 }
