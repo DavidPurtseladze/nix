@@ -21,5 +21,6 @@
     ./toggleterm.nix
     ./noice.nix
     ./harpoon.nix
+    ./autosave.nix
   ];
 }
