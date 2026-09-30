@@ -53,6 +53,14 @@
         "escape" = true;
     };
     
+    "custom/caffeine" = {
+        "return-type" = "json";
+        "exec" = "caffeine status";
+        "interval" = 5;
+        "on-click" = "caffeine toggle";
+        "tooltip" = true;
+    };
+
     "custom/nightmode" = {
         "return-type" = "json";
         "exec" = "night-mode status";

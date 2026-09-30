@@ -52,6 +52,8 @@ config = mkIf cfg.enable {
         modules-right = [
           "group/notify"
           "custom/separator#blank"
+          "custom/caffeine"
+          "custom/separator#blank"
           "custom/nightmode"
           "custom/separator#blank"
           "battery"

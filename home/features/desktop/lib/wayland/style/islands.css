@@ -144,6 +144,7 @@ tooltip label{
 #custom-backlight,
 #custom-browser,
 #custom-nightmode,
+#custom-caffeine,
 #custom-cava_mviz,
 #custom-cycle_wall,
 #custom-dot_update,
@@ -188,6 +189,14 @@ tooltip label{
 #custom-hypridle.notactive,
 #idle_inhibitor.activated {
 	color: #39FF14;
+}
+
+#custom-caffeine.on {
+	color: #39FF14;
+}
+
+#custom-caffeine {
+	min-width: 20px;
 }
 
 #custom-nightmode.on {
