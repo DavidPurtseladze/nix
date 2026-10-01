@@ -6,6 +6,10 @@
   outputs,
   ...
 }: {
+  imports = [
+    ./features/qbittorrent.nix
+  ];
+
   nixpkgs = {
     # You can add overlays here
     overlays = [

@@ -125,6 +125,8 @@
   # xfconf daemon, required by Thunar for saving its settings
   programs.xfconf.enable = true;
 
+  features.system.qbittorrent.enable = true;
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 

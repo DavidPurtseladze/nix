@@ -16,7 +16,6 @@ with lib; {
     bitwarden.enable = mkEnableOption "Bitwarden";
     dbeaver.enable = mkEnableOption "DBeaver Community (SQL client)";
     whatsapp.enable = mkEnableOption "WhatsApp (karere)";
-    qbittorrent.enable = mkEnableOption "qBittorrent";
     protonvpn.enable = mkEnableOption "Proton VPN";
   };
 
@@ -68,9 +67,6 @@ with lib; {
     })
     (mkIf config.features.apps.whatsapp.enable {
       home.packages = [pkgs.karere];
-    })
-    (mkIf config.features.apps.qbittorrent.enable {
-      home.packages = [pkgs.qbittorrent];
     })
     (mkIf config.features.apps.protonvpn.enable {
       home.packages = [pkgs.protonvpn-gui];
