@@ -39,6 +39,23 @@ let
           hash = "sha256-Is0CQ1ZJMXIwpDjrI5MDNHJtq+R3jlNcd9NXQESUe2w=";   
         };
       });
+
+    tmux-flash = pkgs.tmuxPlugins.mkTmuxPlugin {
+        pluginName = "tmux-flash";
+        rtpFilePath = "flash.tmux";
+        version = "unstable-2026-09-24";
+        src = pkgs.fetchFromGitHub {
+            owner = "AndreVicencio";
+            repo = "tmux-flash";
+            rev = "fca00f887cd84a3386315e23c9d06d627cda9cd3";
+            hash = "sha256-lNi3JBzkvvV+SvF9uO4zqzyzayZGmOhgZx20HGoYdpc=";
+        };
+
+        postInstall = ''
+            substituteInPlace $target/flash.sh \
+                --replace-fail "/usr/bin/env python3" "${pkgs.python3}/bin/python3"
+        '';
+    };
 in {
     options.features.cli.tmux.enable = mkEnableOption "Enable Tmux and configure Tmux";
 
@@ -121,6 +138,12 @@ in {
                 }
                 {
                     plugin = yank;
+                }
+                {
+                    plugin = tmux-flash;
+                    extraConfig = ''
+                        set -g @flash-key "s"
+                    '';
                 }
                 {
                     plugin = catppuccin-v2;
