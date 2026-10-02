@@ -9,7 +9,7 @@ with lib; let
   cfg = config.features.cli.neovim;
 in {
   imports = [
-    inputs.nixvim.homeManagerModules.nixvim
+    inputs.nixvim.homeModules.nixvim
     ./lib/neovim/plugins
   ];
 

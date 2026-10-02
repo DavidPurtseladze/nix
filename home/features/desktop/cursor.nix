@@ -58,16 +58,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # Backend-independent settings plus the GTK and X11 generators. The
-    # dotIcons generator is on by default and writes ~/.icons/default with
-    # Inherits=<name>, which is what apps that ignore both GTK settings and
-    # the environment fall back to reading.
-    #
-    # hyprcursor generation is deliberately left off. It would export
-    # HYPRCURSOR_THEME, and there is no hyprcursor-format Adwaita theme to
-    # resolve it to - Hyprland would warn and fall back to XCursor anyway.
-    # Only HYPRCURSOR_SIZE is worth setting, which hyprland.nix does.
     home.pointerCursor = {
+      enable = true;
       inherit (cfg) package name size;
       gtk.enable = true;
       x11.enable = true;

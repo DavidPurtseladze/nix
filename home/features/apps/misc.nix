@@ -69,7 +69,7 @@ with lib; {
       home.packages = [pkgs.karere];
     })
     (mkIf config.features.apps.protonvpn.enable {
-      home.packages = [pkgs.protonvpn-gui];
+      home.packages = [pkgs.proton-vpn];
     })
   ];
 }
