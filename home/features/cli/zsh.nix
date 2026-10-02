@@ -37,6 +37,8 @@ in {
                 abbr -f grep='rg' >/dev/null
                 abbr -f ls='eza --icons' >/dev/null
                 abbr -f ll='eza -lah --icons' >/dev/null
+
+                bindkey '^H' backward-kill-word
             '';
         };
     };
