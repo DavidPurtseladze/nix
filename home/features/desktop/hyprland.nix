@@ -404,6 +404,7 @@ in {
           "$mainMod SHIFT, G, exec, brave --app=https://duckduckgo.com"
           "$mainMod, L, exec, pidof hyprlock || hyprlock"
           "$mainMod, E, exec, thunar"
+          "$mainMod SHIFT, I, exec, caffeine toggle"
           "$mainMod SHIFT, S, exec, flameshot-monitor"
           ", Print, exec, flameshot full -c -p ${flameshotCfg.savePath}"
           "$mainMod, R, exec, wallpaper-select"
