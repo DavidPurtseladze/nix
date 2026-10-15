@@ -159,7 +159,6 @@ in {
 
         exec-once =
           [
-            "waybar"
             "awww-daemon"
             # hyprsunset used to be here - it is a systemd user service now,
             # see services.hyprsunset above for why.

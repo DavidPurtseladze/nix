@@ -22,6 +22,7 @@ config = mkIf cfg.enable {
 
   programs.waybar = {
     enable = true;
+    systemd.enable = true;
     style = ./lib/wayland/style/islands.css;
 
     settings = {
@@ -69,6 +70,14 @@ config = mkIf cfg.enable {
       // import ./lib/wayland/modules.nix
       // import ./lib/wayland/groups.nix;
     };
+  };
+
+  systemd.user.services.waybar.Unit = {
+    "X-Reload-Triggers" = mkForce [ ];
+    "X-Restart-Triggers" = [
+      "${config.xdg.configFile."waybar/config".source}"
+      "${config.xdg.configFile."waybar/style.css".source}"
+    ];
   };
 
   home.packages = with pkgs; [
