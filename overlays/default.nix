@@ -11,6 +11,37 @@
       # ...
       # });
 
+      bun = prev.bun.overrideAttrs (finalAttrs: prevAttrs: {
+        version = "1.3.6";
+        __intentionallyOverridingVersion = true;
+
+        passthru = prevAttrs.passthru // {
+          sources = {
+            "x86_64-linux" = final.fetchurl {
+              url = "https://github.com/oven-sh/bun/releases/download/bun-v${finalAttrs.version}/bun-linux-x64-baseline.zip";
+              hash = "sha256-GVSr7giQDeYQqLRpL1//psaxXYr959HeTT+Iz8YOfV8=";
+            };
+          };
+        };
+      });
+
+      serpl = prev.serpl.overrideAttrs (finalAttrs: _prevAttrs: {
+        version = "0.3.10";
+
+        src = final.fetchFromGitHub {
+          owner = "yassinebridi";
+          repo = "serpl";
+          rev = finalAttrs.version;
+          hash = "sha256-M9hIHQfzrPjSSAPIfHbgaWzSz1yPaMIEabR33HjLHEU=";
+        };
+
+        cargoDeps = final.rustPlatform.fetchCargoVendor {
+          inherit (finalAttrs) src;
+          name = "serpl-${finalAttrs.version}-vendor";
+          hash = "sha256-9ZmBDMrChz4ZxthcFY25ldXpTFjnvaTp+taWdnHYNo8=";
+        };
+      });
+
       # Every screenshot on this machine goes through the portal, and the
       # portal shells out to grim - xdg-desktop-portal-hyprland runs a
       # literal `grim '<tmpfile>'` for the whole desktop, with no
