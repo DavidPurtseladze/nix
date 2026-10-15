@@ -43,6 +43,8 @@ in {
 
     (mkIf cfg.extras.enable {
       home.packages = with pkgs; [
+        ast-grep
+        bun
         coreutils
         fd
         gnumake
@@ -50,6 +52,7 @@ in {
         httpie
         jq
         procs
+        python3
         ripgrep
         serpl
         sqlite
