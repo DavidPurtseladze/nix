@@ -4,6 +4,16 @@
   pkgs,
   ...
 }:
+let
+  phpCsFixerDefaultConfig = pkgs.writeText "php-cs-fixer.default.php" ''
+    <?php
+
+    return (new PhpCsFixer\Config())
+        ->setRules([
+            '@PSR12' => true,
+        ]);
+  '';
+in
 lib.mkIf config.features.cli.neovim.enable {
   programs.nixvim.plugins.conform-nvim = {
     enable = true;
@@ -47,6 +57,19 @@ lib.mkIf config.features.cli.neovim.enable {
               end
             end
             return "rustfmt"
+          end
+        '';
+
+        php_cs_fixer.args.__raw = ''
+          function(self, ctx)
+            local has_config = vim.fs.find(
+              { ".php-cs-fixer.php", ".php-cs-fixer.dist.php", ".php_cs", ".php_cs.dist" },
+              { path = ctx.dirname, upward = true }
+            )[1]
+            if has_config then
+              return { "fix", "$FILENAME" }
+            end
+            return { "fix", "$FILENAME", "--config=${phpCsFixerDefaultConfig}" }
           end
         '';
       };
