@@ -24,6 +24,8 @@ lib.mkIf config.features.cli.neovim.enable {
         markdown = ["prettier"];
         blade = ["prettier-html"];
         php = ["php_cs_fixer"];
+
+        rust = ["rustfmt"];
       };
 
       formatters = {
@@ -31,6 +33,22 @@ lib.mkIf config.features.cli.neovim.enable {
           command = lib.getExe pkgs.prettier;
           args = ["--parser" "html" "--stdin-filepath" "$FILENAME"];
         };
+
+        rustfmt.command.__raw = ''
+          function(self, ctx)
+            local toolchain = vim.fs.find(
+              "rust-toolchain.toml",
+              { path = ctx.dirname, upward = true }
+            )[1]
+            if toolchain and vim.fn.executable("rustfmt-nightly") == 1 then
+              local pinned = table.concat(vim.fn.readfile(toolchain), "\n")
+              if pinned:match('channel%s*=%s*"nightly') then
+                return "rustfmt-nightly"
+              end
+            end
+            return "rustfmt"
+          end
+        '';
       };
 
       format_on_save = {

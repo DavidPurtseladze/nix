@@ -46,5 +46,30 @@ in {
         pkgs.gcc
       ]
       ++ optional cfg.enableNightly nightlyBins;
+
+    programs.zsh.initContent = mkIf cfg.enableNightly ''
+      cargo() {
+        local arg wants_fmt=0
+        for arg in "$@"; do
+          [[ "$arg" == "--" ]] && break
+          [[ "$arg" == fmt ]] && { wants_fmt=1; break }
+        done
+
+        if (( wants_fmt )); then
+          local dir="$PWD"
+          while true; do
+            if [[ -f "$dir/rust-toolchain.toml" ]] &&
+               grep -qE 'channel[[:space:]]*=[[:space:]]*"nightly' "$dir/rust-toolchain.toml"; then
+              RUSTFMT=rustfmt-nightly command cargo "$@"
+              return
+            fi
+            [[ "$dir" == "/" ]] && break
+            dir="''${dir:h}"
+          done
+        fi
+
+        command cargo "$@"
+      }
+    '';
   };
 }
