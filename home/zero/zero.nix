@@ -42,6 +42,7 @@
             hyprland = {
                 enable = true;
                 pushToTalk.enable = true;
+                lidSwitch.internalOutput = "eDP-1";
             };
             fonts.enable = true;
             awww = {
@@ -76,6 +77,7 @@
             bitwarden.enable = true;
             dbeaver.enable = true;
             whatsapp.enable = true;
+            protonvpn.enable = true;
         };
         sdks = {
             rust = {
