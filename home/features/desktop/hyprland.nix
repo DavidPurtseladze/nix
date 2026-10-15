@@ -110,6 +110,25 @@ in {
         listed still comes up at its preferred mode instead of not at all.
       '';
     };
+
+    lidSwitch.internalOutput = mkOption {
+      type = types.nullOr types.str;
+      default = null;
+      example = "eDP-1";
+      description = ''
+        Connector name of the built-in panel (from `hyprctl monitors`).
+        When set, closing the lid disables this output - migrating its
+        workspaces to whatever monitor is left - and opening it brings the
+        output back. logind's own lid handling suspends the machine only
+        when it thinks it's undocked; with an external monitor attached it
+        already treats the lid as docked and leaves the session running,
+        but Hyprland has no idea the panel just went dark, so without this
+        it keeps placing windows on a screen you can no longer see.
+
+        Left null (the default, right for desktops and any host with no
+        lid), lid open/close do nothing to outputs.
+      '';
+    };
   };
 
   config = mkIf cfg.enable {
@@ -479,14 +498,28 @@ in {
           "$mainMod, mouse:273, resizewindow"
         ];
 
-        bindl = [
-          # Handle Music Player
-          ", XF86AudioNext, exec, playerctl next"
-          ", XF86AudioPause, exec, playerctl play-pause"
-          ", XF86AudioPlay, exec, playerctl play-pause"
-          ", XF86AudioPrev, exec, playerctl previous"
-          ", XF86AudioMute, exec, volume mute"
-        ];
+        bindl =
+          [
+            # Handle Music Player
+            ", XF86AudioNext, exec, playerctl next"
+            ", XF86AudioPause, exec, playerctl play-pause"
+            ", XF86AudioPlay, exec, playerctl play-pause"
+            ", XF86AudioPrev, exec, playerctl previous"
+            ", XF86AudioMute, exec, volume mute"
+          ]
+          ++ optionals (cfg.lidSwitch.internalOutput != null) [
+            # Two things don't survive a monitor toggled via `hyprctl
+            # keyword monitor` (unlike a real hotplug), so both get
+            # repaired after every lid-triggered topology change instead
+            # of trusting them to notice on their own:
+            #  - waybar doesn't rebuild its per-output bars, so it just
+            #    loses the bar entirely.
+            #  - the output that came back is a blank new output to awww,
+            #    not the one it remembers, so it drifts from whatever the
+            #    other monitor is still showing until told to restore it.
+            ", switch:on:Lid Switch, exec, hyprctl keyword monitor \"${cfg.lidSwitch.internalOutput}, disable\"; systemctl --user restart waybar; awww restore"
+            ", switch:off:Lid Switch, exec, hyprctl keyword monitor \"${cfg.lidSwitch.internalOutput}, preferred, auto, 1\"; systemctl --user restart waybar; awww restore"
+          ];
 
         # Push-to-talk, release half. bindr fires on key up, so this re-mutes
         # the moment the key is let go; the press half lives at the end of
