@@ -13,5 +13,6 @@
         ./powershell.nix
         ./misc.nix
         ./neovim.nix
+        ./sing-box.nix
     ];
 }

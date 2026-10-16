@@ -30,6 +30,7 @@
                 userEmail = "dphurtseladze@gmail.com";
             };
             ssh.enable = true;
+            sing-box.enable = true;
             misc = {
                 eza.enable = true;
                 bat.enable = true;
@@ -58,6 +59,7 @@
             thunar.enable = true;
             gtk.enable = true;
             media.enable = true;
+            networkmanagerapplet.enable = true;
             cursor = {
                 enable = true;
                 softwareCursors = true;

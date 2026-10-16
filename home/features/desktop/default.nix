@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{...}: {
     imports = [
       ./wayland.nix
       ./hyprland.nix
@@ -14,9 +14,6 @@
       ./cursor.nix
       ./media.nix
       ./flameshot.nix
-    ];
-
-    home.packages = with pkgs; [
-
+      ./networkmanagerapplet.nix
     ];
 }
