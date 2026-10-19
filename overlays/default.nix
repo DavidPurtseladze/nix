@@ -25,6 +25,16 @@
         };
       });
 
+      codeium = prev.codeium.overrideAttrs (finalAttrs: _prevAttrs: {
+        version = "1.20.8";
+
+        src = final.fetchurl {
+          name = "codeium-${finalAttrs.version}.gz";
+          url = "https://github.com/Exafunction/codeium/releases/download/language-server-v${finalAttrs.version}/language_server_linux_x64.gz";
+          hash = "sha256-kPZDSGmn3YCfE/sAdPXqchekYqD3tV9c8Qzl1jitlyA=";
+        };
+      });
+
       serpl = prev.serpl.overrideAttrs (finalAttrs: _prevAttrs: {
         version = "0.3.10";
 

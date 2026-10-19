@@ -22,5 +22,6 @@
     ./noice.nix
     ./harpoon.nix
     ./autosave.nix
+    ./neocodeium.nix
   ];
 }
