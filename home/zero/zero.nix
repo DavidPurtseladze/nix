@@ -71,7 +71,7 @@
             telegram.enable = true;
             slack.enable = true;
             obsidian.enable = true;
-            gdrive.enable = true;
+            gdrive.enable = false;
             brave.enable = true;
             discord.enable = true;
             hydralauncher.enable = true;
