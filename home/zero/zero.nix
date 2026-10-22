@@ -10,6 +10,8 @@
         ./features/cli/git.nix
         ./features/cli/ssh.nix
         ./features/cli/powershell.nix
+        ./features/apps/kitty.nix
+        ./dotfiles.nix
     ];
 
     features = {
@@ -66,7 +68,7 @@
             };
         };
         apps = {
-            kitty.enable = true;
+            kitty.enable = false;
             phpstorm.enable = false;
             telegram.enable = true;
             slack.enable = true;
