@@ -11,6 +11,7 @@
         ./features/cli/ssh.nix
         ./features/cli/powershell.nix
         ./features/apps/kitty.nix
+        ./features/apps/fastfetch.nix
         ./dotfiles.nix
     ];
 
@@ -20,7 +21,7 @@
             starship.enable = true;
             tmux.enable = true;
             fzf.enable = true;
-            fastfetch.enable = true;
+            fastfetch.enable = false;
             lazygit.enable = true;
             lazydocker.enable = true;
             claude-code.enable = true;
