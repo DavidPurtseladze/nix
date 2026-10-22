@@ -5,4 +5,6 @@
 
   # Not in nixpkgs - see the comment at the top of ./iptvnator.
   iptvnator = pkgs.callPackage ./iptvnator {};
+
+  theme = pkgs.callPackage ./theme {};
 }

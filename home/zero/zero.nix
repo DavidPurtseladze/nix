@@ -12,6 +12,7 @@
         ./features/cli/powershell.nix
         ./features/apps/kitty.nix
         ./features/apps/fastfetch.nix
+        ./features/apps/theme.nix
         ./dotfiles.nix
     ];
 
