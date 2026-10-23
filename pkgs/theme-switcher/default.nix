@@ -4,7 +4,7 @@
   matugen,
 }:
 buildGoModule {
-  pname = "theme";
+  pname = "theme-switcher";
   version = "0.1.0";
 
   src = ./.;

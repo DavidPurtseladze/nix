@@ -164,8 +164,8 @@
 
     "custom/cycle_wall" = {
         "format" = " ";
-        "on-click" = "wallpaper-select";
-        "on-click-right" = "wallpaper-random";
+        "on-click" = "wallpaper-ui";
+        "on-click-right" = "wallpaper-ui random";
         "tooltip" = true;
         "tooltip-format" = "Left Click: Wallpaper Menu\nRight Click: Random Wallpaper";
     };

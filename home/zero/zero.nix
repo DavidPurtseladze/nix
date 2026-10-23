@@ -13,6 +13,7 @@
         ./features/apps/kitty.nix
         ./features/apps/fastfetch.nix
         ./features/apps/theme.nix
+        ./features/apps/wallpaper-ui.nix
         ./dotfiles.nix
     ];
 
@@ -52,7 +53,7 @@
             fonts.enable = true;
             awww = {
                 enable = true;
-                defaultWallpaper = ../features/desktop/assets/wallpapers/purple-tree.jpg;
+                defaultWallpaper = ../../config/assets/wallpapers/purple-tree.jpg;
             };
             wlogout.enable = true;
             rofi.enable = true;

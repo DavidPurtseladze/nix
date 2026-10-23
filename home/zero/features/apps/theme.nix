@@ -4,12 +4,12 @@
   ...
 }: {
   home.packages = [
-    pkgs.theme
+    pkgs.theme-switcher
     pkgs.matugen
     pkgs.base16-schemes
   ];
 
   home.activation.themeRestore = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD ${lib.getExe pkgs.theme} restore || true
+    $DRY_RUN_CMD ${lib.getExe pkgs.theme-switcher} restore || true
   '';
 }

@@ -67,7 +67,7 @@
             fonts.enable = true;
             awww = {
                 enable = true;
-                defaultWallpaper = ../features/desktop/assets/wallpapers/purple-tree.jpg;
+                defaultWallpaper = ../../config/assets/wallpapers/purple-tree.jpg;
             };
             wlogout.enable = true;
             rofi.enable = true;

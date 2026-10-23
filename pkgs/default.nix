@@ -6,5 +6,9 @@
   # Not in nixpkgs - see the comment at the top of ./iptvnator.
   iptvnator = pkgs.callPackage ./iptvnator {};
 
-  theme = pkgs.callPackage ./theme {};
+  theme-switcher = pkgs.callPackage ./theme-switcher {};
+
+  wallpaper-ui = pkgs.callPackage ./wallpaper-ui {};
+
+  theme-ui = pkgs.callPackage ./theme-ui {};
 }

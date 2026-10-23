@@ -2,6 +2,7 @@ package main
 
 import (
 	"embed"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io/fs"
@@ -20,6 +21,14 @@ const (
 	reloadProcess = "kitty"
 )
 
+// curated schemes offered by the picker; "palettes all" dumps every installed one
+var featured = []string{
+	"catppuccin-mocha", "catppuccin-macchiato", "catppuccin-frappe", "catppuccin-latte",
+	"gruvbox-dark-hard", "gruvbox-light-hard", "nord", "onedark", "dracula",
+	"tokyo-night-dark", "everforest", "rose-pine", "solarized-dark", "kanagawa",
+	"monokai", "ayu-dark",
+}
+
 // matugenBin is set at build time; falls back to PATH for go run.
 var matugenBin = "matugen"
 
@@ -27,12 +36,13 @@ var matugenBin = "matugen"
 var templates embed.FS
 
 var (
-	paletteRe = regexp.MustCompile(`(?m)^\s+(base[0-9A-F]{2}):\s*"?#?([0-9a-fA-F]{6})"?`)
-	nameRe    = regexp.MustCompile(`(?m)^name:\s*"?([^"\n]+?)"?\s*$`)
-	authorRe  = regexp.MustCompile(`(?m)^author:\s*"?([^"\n]+?)"?\s*$`)
-	imageRe   = regexp.MustCompile(`/[^\s]+\.(?:jpg|jpeg|png|gif)`)
-	modeRe    = regexp.MustCompile(`"mode":"([a-z]+)"`)
-	schemeRe  = regexp.MustCompile(`"scheme":"([^"]+)"`)
+	paletteRe    = regexp.MustCompile(`(?m)^\s+(base[0-9A-F]{2}):\s*"?#?([0-9a-fA-F]{6})"?`)
+	nameRe       = regexp.MustCompile(`(?m)^name:\s*"?([^"\n]+?)"?\s*$`)
+	authorRe     = regexp.MustCompile(`(?m)^author:\s*"?([^"\n]+?)"?\s*$`)
+	imageRe      = regexp.MustCompile(`/[^\s]+\.(?:jpg|jpeg|png|gif)`)
+	modeRe       = regexp.MustCompile(`"mode":"([a-z]+)"`)
+	schemeRe     = regexp.MustCompile(`"scheme":"([^"]+)"`)
+	kittyColorRe = regexp.MustCompile(`(?m)^(background|foreground|color\d+)\s+(#[0-9a-fA-F]{6})`)
 )
 
 var state = stateDir()
@@ -112,6 +122,7 @@ func setScheme(name string) error {
 	if err := os.WriteFile(statePath("kitty-colors.conf"), []byte(out), 0o644); err != nil {
 		return err
 	}
+	publishPalette(paletteFromKitty())
 	return apply(fmt.Sprintf(`{"mode":"static","scheme":"%s"}`, name), name)
 }
 
@@ -166,6 +177,7 @@ func setAuto(image string) error {
 	if err := cmd.Run(); err != nil {
 		return fmt.Errorf("matugen: %w", err)
 	}
+	publishPalette(paletteFromKitty())
 	return apply(fmt.Sprintf(`{"mode":"auto","wallpaper":"%s"}`, image), "auto from "+filepath.Base(image))
 }
 
@@ -186,6 +198,95 @@ func restore() error {
 		}
 	}
 	return setScheme(defaultScheme)
+}
+
+// paletteFromKitty reads the palette that is currently applied back out of the
+// generated kitty colours, so matugen output and base16 schemes look the same
+// to anything that consumes it.
+func paletteFromKitty() map[string]string {
+	kitty := map[string]string{}
+	data, err := os.ReadFile(statePath("kitty-colors.conf"))
+	if err == nil {
+		for _, m := range kittyColorRe.FindAllStringSubmatch(string(data), -1) {
+			kitty[m[1]] = strings.ToLower(m[2])
+		}
+	}
+	pick := func(key, fallback string) string {
+		if v, ok := kitty[key]; ok {
+			return v
+		}
+		return fallback
+	}
+	return map[string]string{
+		"base00": pick("background", "#1e1e2e"),
+		"base01": pick("color0", "#313244"),
+		"base02": pick("color8", "#45475a"),
+		"base03": pick("color8", "#6c7086"),
+		"base04": pick("color7", "#a6adc8"),
+		"base05": pick("foreground", "#cdd6f4"),
+		"base06": pick("foreground", "#f5e0dc"),
+		"base07": pick("color15", "#b4befe"),
+		"base08": pick("color1", "#f38ba8"),
+		"base09": pick("color9", "#fab387"),
+		"base0A": pick("color3", "#f9e2af"),
+		"base0B": pick("color2", "#a6e3a1"),
+		"base0C": pick("color6", "#94e2d5"),
+		"base0D": pick("color4", "#89b4fa"),
+		"base0E": pick("color5", "#f5c2e7"),
+		"base0F": pick("color14", "#94e2d5"),
+	}
+}
+
+// autoEntry is the picker's "follow the wallpaper" tile.
+func autoEntry() map[string]string {
+	p := paletteFromKitty()
+	p["scheme"] = "auto"
+	p["name"] = "Auto - matugen"
+	return p
+}
+
+// publishPalette writes the active colours where any UI can read them.
+func publishPalette(p map[string]string) {
+	data, err := json.MarshalIndent(p, "", " ")
+	if err == nil {
+		_ = os.WriteFile(statePath("palette.json"), append(data, '\n'), 0o644)
+	}
+}
+
+// palettes prints the schemes as JSON for the picker UI to render.
+func palettes(all bool) error {
+	names := featured
+	if all {
+		entries, err := os.ReadDir(schemesDir)
+		if err != nil {
+			return err
+		}
+		names = nil
+		for _, e := range entries {
+			if n, ok := strings.CutSuffix(e.Name(), ".yaml"); ok {
+				names = append(names, n)
+			}
+		}
+		slices.Sort(names)
+	}
+
+	out := make([]map[string]string, 0, len(names)+1)
+	out = append(out, autoEntry())
+	for _, name := range names {
+		data, err := os.ReadFile(filepath.Join(schemesDir, name+".yaml"))
+		if err != nil {
+			continue // a curated scheme missing from this nixpkgs is not fatal
+		}
+		p := map[string]string{"scheme": name, "name": firstMatch(nameRe, string(data))}
+		for _, m := range paletteRe.FindAllStringSubmatch(string(data), -1) {
+			p[m[1]] = "#" + strings.ToLower(m[2])
+		}
+		out = append(out, p)
+	}
+
+	enc := json.NewEncoder(os.Stdout)
+	enc.SetIndent("", " ")
+	return enc.Encode(out)
 }
 
 func list() error {
@@ -225,12 +326,14 @@ func run(args []string) error {
 		return setAuto(strings.Join(args, ""))
 	case cmd == "restore" && len(args) == 0:
 		return restore()
+	case cmd == "palettes" && len(args) <= 1:
+		return palettes(len(args) == 1 && args[0] == "all")
 	case cmd == "list" && len(args) == 0:
 		return list()
 	case cmd == "current" && len(args) == 0:
 		return current()
 	}
-	return errors.New("usage: theme set <scheme> | theme auto [image] | theme restore | theme list | theme current")
+	return errors.New("usage: theme set <scheme> | theme auto [image] | theme restore | theme list | theme palettes [all] | theme current")
 }
 
 func main() {
