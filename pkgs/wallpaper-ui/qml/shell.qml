@@ -80,9 +80,11 @@ ShellRoot {
       preferredHighlightBegin: (list.width - win.expandedW) / 2
       preferredHighlightEnd: (list.width + win.expandedW) / 2
       highlightRangeMode: ListView.StrictlyEnforceRange
+      highlightMoveVelocity: -1
       highlightMoveDuration: 260
-
       keyNavigationEnabled: false
+
+      Component.onCompleted: positionViewAtIndex(currentIndex, ListView.Center)
 
       delegate: Item {
         id: slice

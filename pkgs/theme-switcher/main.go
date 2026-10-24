@@ -106,6 +106,9 @@ func reload() {
 			_ = syscall.Kill(pid, syscall.SIGUSR1)
 		}
 	}
+
+	// hyprland re-reads its config, picking up palette.lua
+	_ = exec.Command("hyprctl", "reload").Run()
 }
 
 func setScheme(name string) error {
@@ -245,12 +248,26 @@ func autoEntry() map[string]string {
 	return p
 }
 
-// publishPalette writes the active colours where any UI can read them.
+// publishPalette writes the active colours where any UI can read them: JSON for
+// the Quickshell pickers, Lua for the Hyprland config.
 func publishPalette(p map[string]string) {
-	data, err := json.MarshalIndent(p, "", " ")
-	if err == nil {
+	if data, err := json.MarshalIndent(p, "", " "); err == nil {
 		_ = os.WriteFile(statePath("palette.json"), append(data, '\n'), 0o644)
 	}
+
+	keys := make([]string, 0, len(p))
+	for k := range p {
+		keys = append(keys, k)
+	}
+	slices.Sort(keys)
+
+	var lua strings.Builder
+	lua.WriteString("return {\n")
+	for _, k := range keys {
+		fmt.Fprintf(&lua, "  %s = %q,\n", k, p[k])
+	}
+	lua.WriteString("}\n")
+	_ = os.WriteFile(statePath("palette.lua"), []byte(lua.String()), 0o644)
 }
 
 // palettes prints the schemes as JSON for the picker UI to render.

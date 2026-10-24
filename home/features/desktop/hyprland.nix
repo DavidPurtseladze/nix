@@ -426,7 +426,7 @@ in {
           "$mainMod SHIFT, S, exec, flameshot-monitor"
           ", Print, exec, flameshot full -c -p ${flameshotCfg.savePath}"
           "$mainMod, R, exec, wallpaper-ui"
-          "$mainMod SHIFT, R, exec, wallpaper-ui random"
+          "$mainMod SHIFT, R, exec, theme-ui"
           "$mainMod, V, exec, clipboard-history"
 
           # Moving between workspaces

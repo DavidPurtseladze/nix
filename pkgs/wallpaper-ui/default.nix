@@ -1,5 +1,6 @@
 {
   writeShellApplication,
+  procps,
   quickshell,
   awww,
   theme-switcher,
@@ -7,7 +8,7 @@
 writeShellApplication {
   name = "wallpaper-ui";
 
-  runtimeInputs = [quickshell awww theme-switcher];
+  runtimeInputs = [quickshell awww theme-switcher procps];
 
   # "wallpaper-ui" opens the picker; "wallpaper-ui random" picks for you.
   text = ''
@@ -22,6 +23,8 @@ writeShellApplication {
       theme auto "$path"
       exit 0
     fi
+
+    if pkill -f "quickshell -p ${./qml}"; then exit 0; fi
 
     exec quickshell -p ${./qml} "$@"
   '';
