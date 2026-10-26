@@ -72,7 +72,11 @@ config = mkIf cfg.enable {
     };
   };
 
+  systemd.user.services.waybar.Service.RestartSec = 2;
   systemd.user.services.waybar.Unit = {
+    # Default 5 tries burn in under a second, before the compositor exports
+    # WAYLAND_DISPLAY; with RestartSec that is a ~40s window to come up.
+    StartLimitBurst = 20;
     "X-Reload-Triggers" = mkForce [ ];
     "X-Restart-Triggers" = [
       "${config.xdg.configFile."waybar/config".source}"

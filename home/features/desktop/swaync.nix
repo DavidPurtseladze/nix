@@ -9,6 +9,10 @@ in {
   options.features.desktop.swaync.enable = mkEnableOption "swaync notification center";
 
   config = mkIf cfg.enable {
+    # Same startup race as waybar; give it room to retry.
+    systemd.user.services.swaync.Service.RestartSec = 2;
+    systemd.user.services.swaync.Unit.StartLimitBurst = 20;
+
     services.swaync = {
       enable = true;
       style = ./lib/swaync/style.css;

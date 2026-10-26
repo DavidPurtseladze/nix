@@ -34,7 +34,8 @@ in {
         }
         {
           label = "logout";
-          action = "loginctl kill-session $XDG_SESSION_ID";
+          # Exit the compositor; $XDG_SESSION_ID goes stale across relogins.
+          action = "hyprctl eval 'hl.dispatch(hl.dsp.exit())'";
           text = "Logout";
           keybind = "e";
         }

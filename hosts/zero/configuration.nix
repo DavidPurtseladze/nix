@@ -53,8 +53,8 @@
     LC_TIME = "ka_GE.UTF-8";
   };
 
-  # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # Off: xsessions/ is empty, so this only ever pulled in LightDM.
+  services.xserver.enable = false;
 
   # Configure keymap in X11
   services.xserver.xkb = {
@@ -216,13 +216,22 @@
     xwayland.enable = true;
   };
 
-  # Lock only; sddm.enable would also replace LightDM as the greeter.
+  # Greeter and lock screen, same theme for both.
   programs.qylock = {
     enable = true;
     theme = "sword";
-    sddm.enable = false;
+    sddm.enable = true;
     quickshell.enable = true;
   };
+
+  # Wayland greeter; qylock sets .theme for us.
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+  };
+
+  # Pin the plain session; uwsm fights the units hyprland.lua starts itself.
+  services.displayManager.defaultSession = "hyprland";
 
   # The qylock module ships no PAM service of its own.
   security.pam.services.qylock = {};
