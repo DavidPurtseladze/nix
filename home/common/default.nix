@@ -5,6 +5,8 @@
   pkgs,
   ...
 }: {
+  imports = [./dotfiles.nix];
+
   # nixpkgs.overlays / nixpkgs.config are intentionally NOT set here.
   # home-manager.useGlobalPkgs = true (see hosts/zero/default.nix) makes it
   # reuse the system's pkgs instance, so overlays/config belong in

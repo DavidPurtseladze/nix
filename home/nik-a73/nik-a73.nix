@@ -56,7 +56,6 @@
                 enable = true;
                 # nouveau drops the cursor plane when the screen goes static.
                 # Retest after the reboot onto the NVIDIA driver.
-                softwareCursors = true;
             };
             media.enable = true;
             flameshot.enable = true;

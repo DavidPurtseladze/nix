@@ -14,7 +14,6 @@
         ./features/apps/fastfetch.nix
         ./features/apps/theme.nix
         ./features/apps/wallpaper-ui.nix
-        ./dotfiles.nix
     ];
 
     features = {
@@ -66,7 +65,6 @@
             networkmanagerapplet.enable = true;
             cursor = {
                 enable = true;
-                softwareCursors = true;
             };
         };
         apps = {

@@ -33,27 +33,6 @@ in {
       description = "Cursor size, in pixels.";
     };
 
-    softwareCursors = mkOption {
-      type = types.bool;
-      default = false;
-      description = ''
-        Composite the pointer into the frame instead of handing it to a DRM
-        overlay plane.
-
-        A hardware cursor is scanned out independently of the desktop image,
-        and on nouveau that plane stops being re-committed once the screen
-        goes static - so the pointer blanks the instant it stops moving and
-        returns as soon as motion forces a new commit. Compositing it into
-        the frame cannot fail that way.
-
-        Costs a full redraw per cursor movement, so leave it off unless the
-        driver actually needs it. Worth retesting after a GPU driver change:
-        this is a nouveau defect, not a Hyprland one.
-
-        Note this supersedes WLR_NO_HARDWARE_CURSORS, which was a wlroots
-        variable that Hyprland has ignored since it moved to aquamarine.
-      '';
-    };
   };
 
   config = mkIf cfg.enable {

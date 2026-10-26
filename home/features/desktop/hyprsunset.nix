@@ -9,9 +9,7 @@ in {
   options.features.desktop.hyprsunset.enable = mkEnableOption "hyprsunset colour temperature daemon";
 
   config = mkIf cfg.enable {
-    services.hyprsunset = {
-      enable = true;
-      extraArgs = ["-i"];
-    };
+    # Unit only; the profiles live in config/hypr/hyprsunset.conf.
+    services.hyprsunset.enable = true;
   };
 }
