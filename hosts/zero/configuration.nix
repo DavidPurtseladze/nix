@@ -94,11 +94,6 @@
     { device = "/swapfile"; size = 16384; }
   ];
 
-  # Required for hyprlock to actually authenticate - without this, typing
-  # your password on the lock screen never unlocks anything (PAM has no
-  # service file for hyprlock to validate against).
-  security.pam.services.hyprlock = {};
-
   # Enable Docker
   virtualisation.docker.enable = true;
 
@@ -134,6 +129,9 @@
   #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
   #  wget
     dhcpcd
+
+    # Multimedia backends for qylock's video themes; see QT_PLUGIN_PATH below.
+    qt6.qtmultimedia
 
     (writeShellApplication {
       name = "vpn-up";
@@ -217,6 +215,20 @@
     enable = true;
     xwayland.enable = true;
   };
+
+  # Lock only; sddm.enable would also replace LightDM as the greeter.
+  programs.qylock = {
+    enable = true;
+    theme = "sword";
+    sddm.enable = false;
+    quickshell.enable = true;
+  };
+
+  # The qylock module ships no PAM service of its own.
+  security.pam.services.qylock = {};
+
+  # qylock's wrapper omits this, so Qt finds no media backend; env.lua sets it too.
+  environment.sessionVariables.QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
 
   # Enables screen sharing and file picker dialogs under Hyprland.
   xdg.portal = {

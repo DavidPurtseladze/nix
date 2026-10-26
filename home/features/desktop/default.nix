@@ -6,7 +6,6 @@
       ./awww.nix
       ./wlogout.nix
       ./rofi.nix
-      ./hyprlock.nix
       ./hypridle.nix
       ./hyprsunset.nix
       ./swaync.nix

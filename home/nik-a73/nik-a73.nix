@@ -46,7 +46,6 @@
             };
             wlogout.enable = true;
             rofi.enable = true;
-            hyprlock.enable = true;
             hypridle.enable = true;
             hyprsunset.enable = true;
             swaync.enable = true;

@@ -9,8 +9,8 @@
     format = "{icon}";
     show-special = false;
     on-click = "activate";
-    on-scroll-up = "hyprctl dispatch workspace e+1";
-    on-scroll-down = "hyprctl dispatch workspace e-1";
+    on-scroll-up = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e+1\"}))'";
+    on-scroll-down = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e-1\"}))'";
     persistent-workspaces = {
       "*" = 5;
     };
@@ -27,8 +27,8 @@
     format = "{icon}";
     show-special = false;
     on-click = "activate";
-    on-scroll-up = "hyprctl dispatch workspace e+1";
-    on-scroll-down = "hyprctl dispatch workspace e-1";
+    on-scroll-up = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e+1\"}))'";
+    on-scroll-down = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e-1\"}))'";
     persistent-workspaces = {
       "*" = 5;
     };
@@ -52,8 +52,8 @@
     all-outputs = true;
     format = "{icon}";
     on-click = "activate";
-    on-scroll-up = "hyprctl dispatch workspace e+1";
-    on-scroll-down = "hyprctl dispatch workspace e-1";
+    on-scroll-up = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e+1\"}))'";
+    on-scroll-down = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e-1\"}))'";
     show-special = false;
     persistent-workspaces = {
       "*" = 5;
@@ -95,8 +95,8 @@
     format = "{icon}";
     show-special = false;
     on-click = "activate";
-    on-scroll-up = "hyprctl dispatch workspace e+1";
-    on-scroll-down = "hyprctl dispatch workspace e-1";
+    on-scroll-up = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e+1\"}))'";
+    on-scroll-down = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e-1\"}))'";
     persistent-workspaces = {
       "*" = 5;
     };
@@ -122,8 +122,8 @@
     sort-by-number = true;
     show-special = false;
     on-click = "activate";
-    on-scroll-up = "hyprctl dispatch workspace e+1";
-    on-scroll-down = "hyprctl dispatch workspace e-1";
+    on-scroll-up = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e+1\"}))'";
+    on-scroll-down = "hyprctl eval 'hl.dispatch(hl.dsp.focus({workspace=\"e-1\"}))'";
     persistent-workspaces = {
       "*" = 5;
     };

@@ -61,7 +61,7 @@ function M.rgba(key, alpha)
 end
 
 function M.gradient(from, to, alpha, angle)
-	return M.rgba(from, alpha) .. " " .. M.rgba(to, alpha) .. " " .. angle .. "deg"
+	return { colors = { M.rgba(from, alpha), M.rgba(to, alpha) }, angle = angle }
 end
 
 return M

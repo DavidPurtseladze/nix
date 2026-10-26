@@ -26,7 +26,7 @@
         
     "custom/quit" = {
         "format" = "󰗼";
-        "on-click" = "hyprctl dispatch exit";
+        "on-click" = "hyprctl eval 'hl.dispatch(hl.dsp.exit())'";
         "tooltip" = true;
         "tooltip-format" = "Left Click: Exit Hyprland";
     };

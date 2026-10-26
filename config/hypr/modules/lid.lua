@@ -1,14 +1,16 @@
 local internal = "eDP-1"
 
-local repair = "systemctl --user restart waybar; awww restore"
+local function repair()
+	hl.exec_cmd("systemctl --user restart waybar")
+	hl.exec_cmd("awww restore")
+end
 
-hl.bind(
-	"switch:on:Lid Switch",
-	hl.dsp.exec_cmd('hyprctl keyword monitor "' .. internal .. ', disable"; ' .. repair),
-	{ locked = true }
-)
-hl.bind(
-	"switch:off:Lid Switch",
-	hl.dsp.exec_cmd('hyprctl keyword monitor "' .. internal .. ', preferred, auto, 1"; ' .. repair),
-	{ locked = true }
-)
+hl.bind("switch:on:Lid Switch", function()
+	hl.monitor({ output = internal, disabled = true })
+	repair()
+end, { locked = true })
+
+hl.bind("switch:off:Lid Switch", function()
+	hl.monitor({ output = internal, mode = "preferred", position = "auto", scale = 1 })
+	repair()
+end, { locked = true })

@@ -41,6 +41,7 @@
     ../common
     ./configuration.nix
     inputs.home-manager.nixosModules.home-manager
+    inputs.qylock.nixosModules.default
   ];
 
   home-manager = {

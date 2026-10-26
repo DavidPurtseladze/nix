@@ -70,11 +70,11 @@ in {
               }
               {
                 label = "󰌾";
-                command = "hyprlock";
+                command = "qylock-lock";
               }
               {
                 label = "󰍃";
-                command = "hyprctl dispatch exit";
+                command = "hyprctl eval 'hl.dispatch(hl.dsp.exit())'";
               }
               {
                 label = "󰝟";
