@@ -1,24 +1,13 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, lib, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
+    [ ./hardware-configuration.nix
     ];
 
-  networking.hostName = "zero"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+  networking.hostName = "zero";
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # SoftEther VPN client (staging VPN access) - CLI-managed via vpncmd,
-  # there is no GUI "Client Manager" on Linux like on Windows.
+  # SoftEther VPN (staging) - CLI-only via vpncmd, no GUI on Linux.
   services.softether.enable = true;
   services.softether.vpnclient.enable = true;
   systemd.services.vpnclient.serviceConfig = {
@@ -29,17 +18,12 @@
   # Off: xsessions/ is empty, so this only ever pulled in LightDM.
   services.xserver.enable = false;
 
-  # Configure keymap in X11
   services.xserver.xkb = {
     layout = "us";
     variant = "";
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Swap file on / (NVMe SSD per hardware-configuration.nix) - sized to RAM
-  # (16GB) so hibernate has somewhere to write the memory snapshot.
+  # Sized to RAM so hibernate has somewhere to write.
   swapDevices = [
     { device = "/swapfile"; size = 16384; }
   ];
@@ -50,25 +34,18 @@
   # Let containers reach host services (e.g. MariaDB) past the firewall.
   networking.firewall.trustedInterfaces = ["docker0"];
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."zero" = {
     isNormalUser = true;
     description = "Zero";
-    # "docker" lets zero run docker commands without sudo.
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
-    #  thunderbird
     ];
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-  #  wget
     dhcpcd
 
-    # Multimedia backends for qylock's video themes; see QT_PLUGIN_PATH below.
+    # Media backends for qylock's video themes; see QT_PLUGIN_PATH below.
     qt6.qtmultimedia
 
     (writeShellApplication {
@@ -132,16 +109,6 @@
     })
   ];
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
   # Greeter and lock screen, same theme for both.
   programs.qylock = {
     enable = true;
@@ -165,12 +132,7 @@
   # qylock's wrapper omits this, so Qt finds no media backend; env.lua sets it too.
   environment.sessionVariables.QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "26.05"; # Did you read the comment?
+  # Release of the first install; leave as-is.
+  system.stateVersion = "26.05";
 
 }
