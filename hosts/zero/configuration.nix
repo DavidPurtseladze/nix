@@ -10,21 +10,12 @@
       ./hardware-configuration.nix
     ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  
   networking.hostName = "zero"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-  # OpenVPN support in the NetworkManager applet/settings GUI.
-  networking.networkmanager.plugins = [ pkgs.networkmanager-openvpn ];
 
   # SoftEther VPN client (staging VPN access) - CLI-managed via vpncmd,
   # there is no GUI "Client Manager" on Linux like on Windows.
@@ -151,13 +142,6 @@
 
   # List services that you want to enable:
 
-  # Enable the OpenSSH daemon.
-  services.openssh = {
-    enable = true;
-    allowSFTP = true;
-    settings.PermitRootLogin = "no";
-  };
-
   # Greeter and lock screen, same theme for both.
   programs.qylock = {
     enable = true;
@@ -180,12 +164,6 @@
 
   # qylock's wrapper omits this, so Qt finds no media backend; env.lua sets it too.
   environment.sessionVariables.QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
-
-  # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 22 ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
