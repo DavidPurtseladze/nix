@@ -6,16 +6,6 @@
   outputs,
   ...
 }: {
-  imports = [
-    ./modules/audio.nix
-    ./modules/bluetooth.nix
-    ./modules/boot.nix
-    ./modules/desktop.nix
-    ./modules/general.nix
-    ./modules/locale.nix
-    ./modules/networking.nix
-  ];
-
   nixpkgs = {
     overlays = [
       outputs.overlays.additions
