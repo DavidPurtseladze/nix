@@ -13,7 +13,9 @@
     ../common/modules/system/networking.nix
     ../common/modules/programs/desktop.nix
     ../common/modules/programs/general.nix
+    ../common/modules/programs/qylock.nix
     inputs.home-manager.nixosModules.home-manager
+    inputs.qylock.nixosModules.default
   ];
 
   home-manager = {

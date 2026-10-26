@@ -34,11 +34,6 @@
     ];
   };
 
-  environment.systemPackages = with pkgs; [
-    # Media backends for qylock's video themes; see QT_PLUGIN_PATH below.
-    qt6.qtmultimedia
-  ];
-
   # Release of the first install; leave as-is.
   system.stateVersion = "26.05";
 }

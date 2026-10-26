@@ -7,22 +7,10 @@
 
   networking.hostName = "nik-a73";
 
-  # greetd over a display manager: no Xorg in between, and Hyprland starts
-  # only after login, by which point udev has settled the USB input devices.
-  services.greetd = {
-    enable = true;
-    settings.default_session = {
-      command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --remember-session --sessions ${config.services.displayManager.sessionData.desktops}/share/wayland-sessions";
-      user = "greeter";
-    };
-  };
-
   # Sized to RAM so hibernate has somewhere to write.
   swapDevices = [
     { device = "/swapfile"; size = 16384; }
   ];
-
-  security.pam.services.hyprlock = {};
 
   users.users."nik-a73" = {
     isNormalUser = true;

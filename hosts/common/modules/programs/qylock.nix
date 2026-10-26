@@ -1,5 +1,9 @@
 # Greeter and lock screen. theme is mkDefault so a host can override it.
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.qylock = {
     enable = true;
     theme = lib.mkDefault "sword";
@@ -20,4 +24,5 @@
 
   # qylock's wrapper omits this, so Qt finds no media backend; env.lua sets it too.
   environment.sessionVariables.QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
+  environment.systemPackages = [pkgs.qt6.qtmultimedia];
 }
