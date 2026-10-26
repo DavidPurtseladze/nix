@@ -6,6 +6,12 @@
   outputs,
   ...
 }: {
+  imports = [
+    ./modules/audio.nix
+    ./modules/bluetooth.nix
+    ./modules/locale.nix
+  ];
+
   nixpkgs = {
     # You can add overlays here
     overlays = [
