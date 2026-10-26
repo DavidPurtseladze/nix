@@ -47,8 +47,6 @@
             wayland.enable = true;
             hyprland = {
                 enable = true;
-                pushToTalk.enable = true;
-                lidSwitch.internalOutput = "eDP-1";
             };
             fonts.enable = true;
             awww = {
@@ -59,6 +57,7 @@
             rofi.enable = true;
             hyprlock.enable = true;
             hypridle.enable = true;
+            hyprsunset.enable = true;
             swaync.enable = true;
             flameshot.enable = true;
             thunar.enable = true;

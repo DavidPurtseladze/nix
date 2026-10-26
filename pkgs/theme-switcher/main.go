@@ -248,8 +248,23 @@ func autoEntry() map[string]string {
 	return p
 }
 
+// writeGtkCSS renders the palette into the stylesheet that gtk.nix imports
+// from both gtk-3.0/gtk.css and gtk-4.0/gtk.css.
+func writeGtkCSS(p map[string]string) {
+	tmpl, err := templates.ReadFile("templates/gtk.css")
+	if err != nil {
+		return
+	}
+	pairs := make([]string, 0, len(p)*2)
+	for k, v := range p {
+		pairs = append(pairs, "{{"+k+"}}", v)
+	}
+	out := strings.NewReplacer(pairs...).Replace(string(tmpl))
+	_ = os.WriteFile(statePath("gtk-colors.css"), []byte(out), 0o644)
+}
+
 // publishPalette writes the active colours where any UI can read them: JSON for
-// the Quickshell pickers, Lua for the Hyprland config.
+// the Quickshell pickers, Lua for the Hyprland config, CSS for GTK apps.
 func publishPalette(p map[string]string) {
 	if data, err := json.MarshalIndent(p, "", " "); err == nil {
 		_ = os.WriteFile(statePath("palette.json"), append(data, '\n'), 0o644)
@@ -268,6 +283,8 @@ func publishPalette(p map[string]string) {
 	}
 	lua.WriteString("}\n")
 	_ = os.WriteFile(statePath("palette.lua"), []byte(lua.String()), 0o644)
+
+	writeGtkCSS(p)
 }
 
 // palettes prints the schemes as JSON for the picker UI to render.

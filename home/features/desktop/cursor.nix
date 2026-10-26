@@ -12,19 +12,18 @@ in {
 
     package = mkOption {
       type = types.package;
-      default = pkgs.adwaita-icon-theme;
-      defaultText = literalExpression "pkgs.adwaita-icon-theme";
+      default = pkgs.bibata-cursors;
+      defaultText = literalExpression "pkgs.bibata-cursors";
       description = ''
-        Package providing the cursor theme. adwaita-icon-theme ships the
-        cursors under share/icons/Adwaita/cursors; nothing in this config
-        pulled it in before, so the session was falling back to whatever
-        stray theme happened to be on the icon path.
+        Package providing the cursor theme. bibata-cursors ships twelve
+        variants under share/icons (Modern/Original x Ice/Classic/Amber,
+        each with a -Right mirror), so {option}`name` picks one.
       '';
     };
 
     name = mkOption {
       type = types.str;
-      default = "Adwaita";
+      default = "Bibata-Modern-Ice";
       description = "Cursor theme name inside {option}`package`.";
     };
 

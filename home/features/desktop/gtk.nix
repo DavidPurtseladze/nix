@@ -6,19 +6,22 @@
 }:
 with lib; let
   cfg = config.features.desktop.gtk;
+
+  # Written by theme-switcher on every palette change; loaded after the theme.
+  paletteCss = ''
+    @import url("file://${config.home.homeDirectory}/.local/state/theme/gtk-colors.css");
+  '';
 in {
-  options.features.desktop.gtk.enable = mkEnableOption "Catppuccin Mocha GTK theming (used by Thunar and other GTK apps)";
+  options.features.desktop.gtk.enable = mkEnableOption "GTK theming (used by Thunar and other GTK apps)";
 
   config = mkIf cfg.enable {
     gtk = {
       enable = true;
 
+      # Derives from GTK's named colours, so gtk.css overrides reach GTK3.
       theme = {
-        name = "catppuccin-mocha-blue-standard";
-        package = pkgs.catppuccin-gtk.override {
-          variant = "mocha";
-          accents = ["blue"];
-        };
+        name = "adw-gtk3-dark";
+        package = pkgs.adw-gtk3;
       };
 
       # Keep GTK4 apps on the same theme as GTK3 (this used to be the
@@ -37,10 +40,11 @@ in {
       gtk4.extraConfig = {
         gtk-application-prefer-dark-theme = 1;
       };
+
+      gtk3.extraCss = paletteCss;
+      gtk4.extraCss = paletteCss;
     };
 
-    home.sessionVariables = {
-      GTK_THEME = "catppuccin-mocha-blue-standard:dark";
-    };
+    dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
   };
 }
