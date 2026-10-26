@@ -9,6 +9,8 @@
   imports = [
     ./modules/audio.nix
     ./modules/bluetooth.nix
+    ./modules/desktop.nix
+    ./modules/general.nix
     ./modules/locale.nix
   ];
 

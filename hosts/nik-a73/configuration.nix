@@ -54,9 +54,6 @@
     };
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -70,9 +67,6 @@
   # your password on the lock screen never unlocks anything (PAM has no
   # service file for hyprlock to validate against).
   security.pam.services.hyprlock = {};
-
-  # Enable Docker   
-  virtualisation.docker.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users."nik-a73" = {
@@ -100,9 +94,6 @@
     enable = true;
     polkitPolicyOwners = [ "nik-a73" ];
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
 
   # NVIDIA (GeForce RTX 4070 SUPER).
   #
@@ -203,12 +194,6 @@
   # I/O priority while they run, and drop back afterwards.
   programs.gamemode.enable = true;
 
-  # xfconf daemon, required by Thunar for saving its settings
-  programs.xfconf.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -232,20 +217,6 @@
     allowSFTP = true;
     settings.PermitRootLogin = "no";
   };
-
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
-  # Enables screen sharing and file picker dialogs under Hyprland.
-  xdg.portal = {
-    enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
-    config.common.default = ["hyprland" "gtk"];
-  };
-
-  programs.zsh.enable = true;
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 22 ];

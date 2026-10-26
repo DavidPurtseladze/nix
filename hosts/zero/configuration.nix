@@ -44,9 +44,6 @@
     variant = "";
   };
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
-
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -55,9 +52,6 @@
   swapDevices = [
     { device = "/swapfile"; size = 16384; }
   ];
-
-  # Enable Docker
-  virtualisation.docker.enable = true;
 
   # Resolve host.docker.internal to docker
   networking.extraHosts = "127.0.0.1 host.docker.internal";
@@ -75,15 +69,6 @@
     #  thunderbird
     ];
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
-
-  # xfconf daemon, required by Thunar for saving its settings
-  programs.xfconf.enable = true;
-
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -173,11 +158,6 @@
     settings.PermitRootLogin = "no";
   };
 
-  programs.hyprland = {
-    enable = true;
-    xwayland.enable = true;
-  };
-
   # Greeter and lock screen, same theme for both.
   programs.qylock = {
     enable = true;
@@ -200,15 +180,6 @@
 
   # qylock's wrapper omits this, so Qt finds no media backend; env.lua sets it too.
   environment.sessionVariables.QT_PLUGIN_PATH = "/run/current-system/sw/lib/qt-6/plugins";
-
-  # Enables screen sharing and file picker dialogs under Hyprland.
-  xdg.portal = {
-    enable = true;
-    extraPortals = [pkgs.xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk];
-    config.common.default = ["hyprland" "gtk"];
-  };
-
-  programs.zsh.enable = true;
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 22 ];
