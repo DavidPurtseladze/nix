@@ -8,6 +8,7 @@
       ./rofi.nix
       ./hyprlock.nix
       ./hypridle.nix
+      ./hyprsunset.nix
       ./swaync.nix
       ./thunar.nix
       ./gtk.nix
