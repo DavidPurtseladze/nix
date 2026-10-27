@@ -69,6 +69,12 @@ PanelWindow {
                 opacity: name === Shell.notchState ? 1 : 0
                 visible: opacity > 0
             }
+
+            Audio {
+                anchors.fill: parent
+                opacity: name === Shell.notchState ? 1 : 0
+                visible: opacity > 0
+            }
         }
     }
 }
