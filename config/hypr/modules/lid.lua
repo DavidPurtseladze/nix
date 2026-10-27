@@ -7,10 +7,11 @@ end
 
 hl.bind("switch:on:Lid Switch", function()
 	hl.monitor({ output = internal, disabled = true })
+	hl.exec_cmd("flock -n /tmp/qylock.lock qylock-lock")
 	repair()
 end, { locked = true })
 
 hl.bind("switch:off:Lid Switch", function()
-	hl.monitor({ output = internal, mode = "preferred", position = "auto", scale = 1 })
+	hl.monitor({ output = internal, disabled = false })
 	repair()
 end, { locked = true })
