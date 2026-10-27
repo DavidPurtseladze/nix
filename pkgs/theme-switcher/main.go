@@ -109,6 +109,9 @@ func reload() {
 
 	// hyprland re-reads its config, picking up palette.lua
 	_ = exec.Command("hyprctl", "reload").Run()
+
+	// tmux re-sources the generated fragment; a no-op with no server running
+	_ = exec.Command("tmux", "source-file", statePath("tmux-colors.conf")).Run()
 }
 
 func setScheme(name string) error {
@@ -263,8 +266,23 @@ func writeGtkCSS(p map[string]string) {
 	_ = os.WriteFile(statePath("gtk-colors.css"), []byte(out), 0o644)
 }
 
+// renderTemplate substitutes {{baseXX}} placeholders and writes the result to
+// the theme state dir, where each consumer sources it.
+func renderTemplate(p map[string]string, templateFile, out string) {
+	tmpl, err := templates.ReadFile(templateFile)
+	if err != nil {
+		return
+	}
+	pairs := make([]string, 0, len(p)*2)
+	for k, v := range p {
+		pairs = append(pairs, "{{"+k+"}}", v)
+	}
+	_ = os.WriteFile(statePath(out), []byte(strings.NewReplacer(pairs...).Replace(string(tmpl))), 0o644)
+}
+
 // publishPalette writes the active colours where any UI can read them: JSON for
-// the Quickshell pickers, Lua for the Hyprland config, CSS for GTK apps.
+// the Quickshell pickers, Lua for the Hyprland config, CSS for GTK apps, plus a
+// sourced fragment each for fzf and tmux.
 func publishPalette(p map[string]string) {
 	if data, err := json.MarshalIndent(p, "", " "); err == nil {
 		_ = os.WriteFile(statePath("palette.json"), append(data, '\n'), 0o644)
@@ -285,6 +303,8 @@ func publishPalette(p map[string]string) {
 	_ = os.WriteFile(statePath("palette.lua"), []byte(lua.String()), 0o644)
 
 	writeGtkCSS(p)
+	renderTemplate(p, "templates/fzf-colors.sh", "fzf-colors.sh")
+	renderTemplate(p, "templates/tmux-colors.conf", "tmux-colors.conf")
 }
 
 // palettes prints the schemes as JSON for the picker UI to render.

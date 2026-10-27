@@ -1,0 +1,9 @@
+--preview='bat --color=always --style=numbers {}'
+--preview-window='right:60%:border-left'
+--bind='ctrl-/:toggle-preview'
+--bind='ctrl-u:preview-half-page-up'
+--bind='ctrl-d:preview-half-page-down'
+--height=80%
+--layout=reverse
+--border=rounded
+--info=inline
