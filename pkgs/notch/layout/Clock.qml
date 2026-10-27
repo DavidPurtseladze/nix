@@ -24,7 +24,7 @@ Item {
         anchors.centerIn: parent
         text: Qt.formatDateTime(clock.now, "HH:mm")
         color: Theme.text
-        font.family: "FiraCode Nerd Font Mono"
+        font.family: Theme.fontMono
         font.pixelSize: 13
         font.weight: Font.Bold
     }

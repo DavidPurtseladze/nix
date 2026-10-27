@@ -59,7 +59,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             text: audio.muted ? "󰖁" : "󰕾"
             color: Theme.text
-            font.family: "FiraCode Nerd Font"
+            font.family: Theme.font
             font.pixelSize: 14
         }
 
@@ -90,7 +90,7 @@ Item {
             horizontalAlignment: Text.AlignRight
             text: audio.percent
             color: Theme.text
-            font.family: "FiraCode Nerd Font Mono"
+            font.family: Theme.fontMono
             font.pixelSize: 13
         }
     }
