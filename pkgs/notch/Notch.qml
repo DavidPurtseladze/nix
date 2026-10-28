@@ -1,9 +1,11 @@
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Widgets
+import Quickshell.Hyprland
 import "state"
 import "theme"
-import "layout"
+import "organisms"
 
 PanelWindow {
     id: win
@@ -22,11 +24,21 @@ PanelWindow {
     WlrLayershell.layer: WlrLayer.Overlay
     WlrLayershell.namespace: "notch"
 
-    // The shape whose name matches global state. Its implicit size is the box.
+    // Only shapes that ask for it can take the keyboard
+    WlrLayershell.keyboardFocus: shape && shape.focusable
+        ? WlrKeyboardFocus.OnDemand
+        : WlrKeyboardFocus.None
+
+    // Only the focused output expands. Every other screen keeps the clock
+        && Hyprland.focusedMonitor.name === win.screen.name
+
+    readonly property string currentState: focused ? Shell.notchState : "default"
+
+    // The shape whose name matches state. Its implicit size is the box.
     readonly property Item shape: {
         for (let i = 0; i < shapes.children.length; i++) {
             const c = shapes.children[i];
-            if (c.name === Shell.notchState)
+            if (c.name === win.currentState)
                 return c;
         }
         return null;
@@ -36,13 +48,12 @@ PanelWindow {
         item: box
     }
 
-    Rectangle {
+    ClippingRectangle {
         id: box
 
         anchors.horizontalCenter: parent.horizontalCenter
         y: 0
         color: Theme.background
-        clip: true
 
         width: win.shape ? win.shape.implicitWidth : 0
         height: win.shape ? win.shape.implicitHeight : 0
@@ -59,6 +70,13 @@ PanelWindow {
             NumberAnimation { duration: 340; easing.type: Easing.OutCubic }
         }
 
+        Item {
+            anchors.fill: parent
+            focus: true
+
+            Keys.onEscapePressed: Shell.clear()
+        }
+
         // Every shape lives here. Add one file, add one line.
         Item {
             id: shapes
@@ -66,13 +84,25 @@ PanelWindow {
 
             Clock {
                 anchors.fill: parent
-                opacity: name === Shell.notchState ? 1 : 0
+                opacity: name === win.currentState ? 1 : 0
                 visible: opacity > 0
             }
 
             Audio {
                 anchors.fill: parent
-                opacity: name === Shell.notchState ? 1 : 0
+                opacity: name === win.currentState ? 1 : 0
+                visible: opacity > 0
+            }
+
+            Notification {
+                anchors.fill: parent
+                opacity: name === win.currentState ? 1 : 0
+                visible: opacity > 0
+            }
+
+            NotificationList {
+                anchors.fill: parent
+                opacity: name === win.currentState ? 1 : 0
                 visible: opacity > 0
             }
         }

@@ -36,7 +36,7 @@ Item {
     function show() {
         if (!ready)
             return;
-        Shell.notchState = "audio";
+        Shell.wantsAudio = true;
         hide.restart();
     }
 
@@ -46,7 +46,7 @@ Item {
     Timer {
         id: hide
         interval: 1400
-        onTriggered: Shell.notchState = "default"
+        onTriggered: if (audio.visible) Shell.wantsAudio = false
     }
 
     Row {
