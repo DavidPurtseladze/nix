@@ -35,6 +35,8 @@
             };
             ssh.enable = true;
             sing-box.enable = true;
+            kubectl.enable = true;
+            postgresql.enable = true;
             misc = {
                 eza.enable = true;
                 bat.enable = true;
