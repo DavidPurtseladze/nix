@@ -14,5 +14,7 @@
         ./misc.nix
         ./neovim.nix
         ./sing-box.nix
+        ./kubectl.nix
+        ./postgresql.nix
     ];
 }

@@ -20,7 +20,7 @@ hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd("flameshot-monitor"))
 hl.bind("Print", hl.dsp.exec_cmd("flameshot full -c -p /home/zero/Pictures/Screenshots"))
 
 -- Window management
-hl.bind(mod .. " + W", hl.dsp.window.kill())
+hl.bind(mod .. " + W", hl.dsp.window.close())
 hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
 hl.bind(mod .. " + SHIFT + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mod .. " + P", hl.dsp.window.pseudo())

@@ -100,6 +100,7 @@ config = mkIf cfg.enable {
     waypipe
     wf-recorder
     wl-mirror
+    wl-clip-persist
     wl-clipboard
     wtype
     ydotool
