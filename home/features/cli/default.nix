@@ -16,5 +16,6 @@
         ./sing-box.nix
         ./kubectl.nix
         ./postgresql.nix
+        ./lazysql.nix
     ];
 }

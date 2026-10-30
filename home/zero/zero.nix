@@ -37,6 +37,7 @@
             sing-box.enable = true;
             kubectl.enable = true;
             postgresql.enable = true;
+            lazysql.enable = true;
             misc = {
                 eza.enable = true;
                 bat.enable = true;
