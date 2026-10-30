@@ -92,6 +92,7 @@
             };
             node.enable = true;
             go.enable = true;
+            zig.enable = true;
         };
     };
 }
