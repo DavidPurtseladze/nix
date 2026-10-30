@@ -23,5 +23,6 @@
     ./harpoon.nix
     ./autosave.nix
     ./neocodeium.nix
+    ./ninetynine.nix
   ];
 }
