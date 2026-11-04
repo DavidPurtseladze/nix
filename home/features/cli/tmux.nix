@@ -77,8 +77,8 @@ in {
                 set -g allow-rename off
                 set -g renumber-windows on
 
-                set -g pane-border-style "fg=#585b70"
-                set -g pane-active-border-style "fg=#89b4fa"
+                # Colours from theme-switcher; re-sourced on every theme change.
+                source-file -q "${config.home.homeDirectory}/.local/state/theme/tmux-colors.conf"
 
                 set -g window-status-format "${windowStatusFormat}"
                 set -g window-status-current-format "${windowStatusCurrentFormat}"
