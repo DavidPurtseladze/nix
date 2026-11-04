@@ -43,6 +43,11 @@ lib.mkIf config.features.cli.neovim.enable {
         installCargo = false;
         installRustc = false;
       };
+      zls = {
+        enable = true;
+        package = null;
+        cmd = ["${config.home.homeDirectory}/Documents/Projects/OpenSource/zls/zig-out/bin/zls"];
+      };
     };
   };
 
