@@ -15,9 +15,9 @@
     variant = "";
   };
 
-  # Sized to RAM so hibernate has somewhere to write.
+  # 2x RAM so hibernate has somewhere to write.
   swapDevices = [
-    { device = "/swapfile"; size = 16384; }
+    { device = "/swapfile"; size = 32768; }
   ];
 
   # Resolve host.docker.internal to docker
