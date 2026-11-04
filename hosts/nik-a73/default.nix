@@ -11,6 +11,7 @@
     ../common/modules/system/boot.nix
     ../common/modules/system/locale.nix
     ../common/modules/system/networking.nix
+    ../common/modules/system/power.nix
     ../common/modules/programs/desktop.nix
     ../common/modules/programs/general.nix
     ../common/modules/programs/qylock.nix
