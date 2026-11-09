@@ -11,7 +11,11 @@ PanelWindow {
     id: win
 
     color: "transparent"
-    implicitHeight: 440
+    readonly property real targetHeight: win.shape
+        ? win.shape.implicitHeight * Theme.scale
+        : 0
+
+    implicitHeight: Math.max(440 * Theme.scale, targetHeight + 40)
     exclusiveZone: 0
     exclusionMode: ExclusionMode.Ignore
 
@@ -29,7 +33,8 @@ PanelWindow {
         ? WlrKeyboardFocus.OnDemand
         : WlrKeyboardFocus.None
 
-    // Only the focused output expands. Every other screen keeps the clock
+    // Only the focused output expands. Every other screen keeps the clock.
+    readonly property bool focused: Hyprland.focusedMonitor
         && Hyprland.focusedMonitor.name === win.screen.name
 
     readonly property string currentState: focused ? Shell.notchState : "default"
@@ -55,12 +60,12 @@ PanelWindow {
         y: 0
         color: Theme.background
 
-        width: win.shape ? win.shape.implicitWidth : 0
-        height: win.shape ? win.shape.implicitHeight : 0
+        width: win.shape ? win.shape.implicitWidth * Theme.scale : 0
+        height: win.shape ? win.shape.implicitHeight * Theme.scale : 0
 
         topLeftRadius: 0
         topRightRadius: 0
-        bottomLeftRadius: win.shape ? win.shape.radius : 0
+        bottomLeftRadius: win.shape ? win.shape.radius * Theme.scale : 0
         bottomRightRadius: bottomLeftRadius
 
         Behavior on width {
@@ -74,13 +79,17 @@ PanelWindow {
             anchors.fill: parent
             focus: true
 
-            Keys.onEscapePressed: Shell.clear()
+            Keys.onEscapePressed: Shell.back()
         }
 
         // Every shape lives here. Add one file, add one line.
         Item {
             id: shapes
-            anchors.fill: parent
+
+            width: box.width / Theme.scale
+            height: box.height / Theme.scale
+            transformOrigin: Item.TopLeft
+            scale: Theme.scale
 
             Clock {
                 anchors.fill: parent
@@ -100,11 +109,37 @@ PanelWindow {
                 visible: opacity > 0
             }
 
-            NotificationList {
+
+            Settings {
                 anchors.fill: parent
                 opacity: name === win.currentState ? 1 : 0
                 visible: opacity > 0
             }
+
+            WifiPage {
+                anchors.fill: parent
+                opacity: name === win.currentState ? 1 : 0
+                visible: opacity > 0
+            }
+
+            BluetoothPage {
+                anchors.fill: parent
+                opacity: name === win.currentState ? 1 : 0
+                visible: opacity > 0
+            }
+
+            OutputPage {
+                anchors.fill: parent
+                opacity: name === win.currentState ? 1 : 0
+                visible: opacity > 0
+            }
+
+            InputPage {
+                anchors.fill: parent
+                opacity: name === win.currentState ? 1 : 0
+                visible: opacity > 0
+            }
+
         }
     }
 }
