@@ -36,6 +36,8 @@ Item {
     function show() {
         if (!ready)
             return;
+        if (Shell.settingsOpen)
+            return;
         Shell.wantsAudio = true;
         hide.restart();
     }

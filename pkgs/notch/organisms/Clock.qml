@@ -1,4 +1,5 @@
 import QtQuick
+import "../state"
 import "../theme"
 
 // Default state, Just a simple block 
@@ -27,5 +28,19 @@ Item {
         font.family: Theme.fontMono
         font.pixelSize: 13
         font.weight: Font.Bold
+        opacity: pointer.hovered ? 0.7 : 1
+
+        Behavior on opacity {
+            NumberAnimation { duration: 110 }
+        }
+    }
+
+    HoverHandler {
+        id: pointer
+        cursorShape: Qt.PointingHandCursor
+    }
+
+    TapHandler {
+        onTapped: Shell.settingsOpen = true
     }
 }

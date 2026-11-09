@@ -116,7 +116,7 @@ Item {
         }
 
         TapHandler {
-            onTapped: Shell.listOpen = true
+            onTapped: Shell.open("alerts")
         }
     }
 }

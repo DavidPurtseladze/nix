@@ -10,6 +10,8 @@ Singleton {
 
     property var latest: null
 
+    property bool dnd: false
+
     readonly property var list: server.trackedNotifications
         ? server.trackedNotifications.values
         : []
@@ -30,6 +32,11 @@ Singleton {
             // OSD-style notifications are dropped on the floor
             if (root.isOsd(n))
                 return;
+
+            if (root.dnd) {
+                n.tracked = true;
+                return;
+            }
 
             // Without this the notification is dropped the moment we return.
             n.tracked = true;
