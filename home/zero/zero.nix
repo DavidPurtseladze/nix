@@ -76,7 +76,7 @@
             slack.enable = true;
             obsidian.enable = true;
             gdrive.enable = false;
-            brave.enable = true;
+            brave.enable = false;
             discord.enable = true;
             hydralauncher.enable = true;
             stremio.enable = true;
