@@ -1,4 +1,5 @@
 local mod = "SUPER"
+local home = os.getenv("HOME")
 
 -- Applications
 hl.bind(mod .. " + T", hl.dsp.exec_cmd("kitty -e zsh -c 'fastfetch; exec zsh'"))
@@ -17,7 +18,7 @@ hl.bind(mod .. " + V", hl.dsp.exec_cmd("clipboard-history"))
 hl.bind(mod .. " + SHIFT + I", hl.dsp.exec_cmd("caffeine toggle"))
 hl.bind(mod .. " + SHIFT + N", hl.dsp.exec_cmd("night-mode toggle"))
 hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd("flameshot-monitor"))
-hl.bind("Print", hl.dsp.exec_cmd("flameshot full -c -p /home/zero/Pictures/Screenshots"))
+hl.bind("Print", hl.dsp.exec_cmd("flameshot full -c -p " .. home .. "/Pictures/Screenshots"))
 
 -- Window management
 hl.bind(mod .. " + W", hl.dsp.window.close())
