@@ -12,13 +12,14 @@ in {
   config = mkIf cfg.enable {
     programs.rofi = {
       enable = true;
-      terminal = "${pkgs.kitty}/bin/kitty";
-      font = "FiraCode Nerd Font 11";
-      location = "center";
-      modes = ["window" "run" "drun"];
       theme = ./lib/rofi/style/rofi-theme.rasi;
 
-      extraConfig = {
+      settings = {
+        terminal = "${pkgs.kitty}/bin/kitty";
+        font = "FiraCode Nerd Font 11";
+        location = 0;
+        modes = ["window" "run" "drun"];
+
         show-icons = true;
         display-drun = "Applications";
         display-window = "Windows";
