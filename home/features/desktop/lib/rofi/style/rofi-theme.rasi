@@ -1,7 +1,6 @@
 /*
  * Rofi visual layout + colors.
- * Palette matches the rest of the desktop (see wayland.nix's waybar
- * colors.css) instead of matugen's wallpaper-driven colors on the
+ * Fixed palette instead of matugen's wallpaper-driven colors on the
  * unstable branch, since this config doesn't run matugen.
  */
 

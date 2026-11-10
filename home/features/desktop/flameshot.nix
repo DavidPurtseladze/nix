@@ -105,8 +105,7 @@ in {
 
       # Enabling the service is what gets the tray icon, and the tray icon
       # is the only place the config GUI, capture history and "Take
-      # screenshot" live once the old scripts are gone. It lands in the
-      # waybar tray module (./lib/wayland/modules.nix).
+      # screenshot" live once the old scripts are gone.
       #
       # Note that Home Manager owns flameshot.ini once `settings` is
       # non-empty - it symlinks it out of the store, so it is read-only

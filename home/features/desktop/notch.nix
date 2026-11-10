@@ -18,7 +18,6 @@ in {
         Description = "notch quickshell panel";
         PartOf = ["hyprland-session.target"];
         After = ["hyprland-session.target"];
-        # Same startup race as waybar; give it room to retry.
         StartLimitBurst = 20;
       };
 

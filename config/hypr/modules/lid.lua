@@ -1,7 +1,6 @@
 local internal = "eDP-1"
 
 local function repair()
-	hl.exec_cmd("systemctl --user restart waybar")
 	hl.exec_cmd("awww restore")
 end
 

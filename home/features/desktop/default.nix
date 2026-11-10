@@ -1,6 +1,5 @@
 {...}: {
     imports = [
-      ./wayland.nix
       ./hyprland.nix
       ./fonts.nix
       ./awww.nix
@@ -8,7 +7,6 @@
       ./rofi.nix
       ./hypridle.nix
       ./hyprsunset.nix
-      ./swaync.nix
       ./notch.nix
       ./thunar.nix
       ./gtk.nix

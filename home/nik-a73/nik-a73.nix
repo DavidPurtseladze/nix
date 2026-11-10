@@ -35,7 +35,6 @@
             };
         };
         desktop = {
-            wayland.enable = true;
             hyprland = {
                 enable = true;
             };
@@ -48,7 +47,6 @@
             rofi.enable = true;
             hypridle.enable = true;
             hyprsunset.enable = true;
-            swaync.enable = true;
             thunar.enable = true;
             gtk.enable = true;
             cursor = {
