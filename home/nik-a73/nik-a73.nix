@@ -44,7 +44,7 @@
                 defaultWallpaper = ../../config/assets/wallpapers/purple-tree.jpg;
             };
             wlogout.enable = true;
-            rofi.enable = true;
+            launcher.enable = true;
             hypridle.enable = true;
             hyprsunset.enable = true;
             thunar.enable = true;

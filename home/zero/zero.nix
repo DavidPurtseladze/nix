@@ -55,7 +55,6 @@
                 defaultWallpaper = ../../config/assets/wallpapers/purple-tree.jpg;
             };
             wlogout.enable = true;
-            rofi.enable = true;
             hypridle.enable = true;
             hyprsunset.enable = true;
             notch.enable = true;

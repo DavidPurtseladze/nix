@@ -4,7 +4,6 @@
       ./fonts.nix
       ./awww.nix
       ./wlogout.nix
-      ./rofi.nix
       ./hypridle.nix
       ./hyprsunset.nix
       ./notch.nix

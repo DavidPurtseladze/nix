@@ -10,7 +10,7 @@ in {
   options.features.desktop.networkmanagerapplet.enable = mkEnableOption ''
     nm-connection-editor and nm-applet, the NetworkManager GUI - including
     OpenVPN connections, through the networkmanager-openvpn plugin enabled in
-    hosts/*/configuration.nix. Shows up in rofi's app launcher.
+    hosts/*/configuration.nix.
   '';
 
   config = mkIf cfg.enable {
