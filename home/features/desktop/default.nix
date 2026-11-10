@@ -9,6 +9,7 @@
       ./hypridle.nix
       ./hyprsunset.nix
       ./swaync.nix
+      ./notch.nix
       ./thunar.nix
       ./gtk.nix
       ./cursor.nix

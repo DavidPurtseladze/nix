@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Effects
 import Quickshell
 import Quickshell.Wayland
 import Quickshell.Widgets
@@ -51,6 +52,37 @@ PanelWindow {
 
     mask: Region {
         item: box
+    }
+
+    Rectangle {
+        id: shadowShape
+
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: box.y
+        width: box.width
+        height: box.height
+        color: Theme.background
+
+        topLeftRadius: box.topLeftRadius
+        topRightRadius: box.topRightRadius
+        bottomLeftRadius: box.bottomLeftRadius
+        bottomRightRadius: box.bottomRightRadius
+
+        visible: false
+    }
+
+    MultiEffect {
+        source: shadowShape
+        anchors.fill: shadowShape
+        z: -1
+
+        autoPaddingEnabled: true
+        shadowEnabled: true
+        shadowColor: Theme.shadow
+        shadowOpacity: Theme.shadowOpacity
+        shadowBlur: Theme.shadowBlur
+        blurMax: Theme.shadowBlurMax
+        shadowVerticalOffset: Theme.shadowOffset
     }
 
     ClippingRectangle {

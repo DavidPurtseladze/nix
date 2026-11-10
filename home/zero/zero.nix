@@ -46,7 +46,7 @@
             };
         };
         desktop = {
-            wayland.enable = true;
+            wayland.enable = false; # TODO: needs to be fully removed
             hyprland = {
                 enable = true;
             };
@@ -59,7 +59,8 @@
             rofi.enable = true;
             hypridle.enable = true;
             hyprsunset.enable = true;
-            swaync.enable = true;
+            swaync.enable = false; # TODO: needs to be fully removed
+            notch.enable = true;
             flameshot.enable = true;
             thunar.enable = true;
             gtk.enable = true;

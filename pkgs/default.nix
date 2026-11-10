@@ -11,4 +11,6 @@
   wallpaper-ui = pkgs.callPackage ./wallpaper-ui {};
 
   theme-ui = pkgs.callPackage ./theme-ui {};
+
+  notch = pkgs.callPackage ./notch {};
 }

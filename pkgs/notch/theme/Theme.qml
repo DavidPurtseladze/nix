@@ -15,6 +15,12 @@ Singleton {
 
     readonly property real scale: 1.25
 
+    readonly property color shadow: "#000000"
+    readonly property real shadowOpacity: 0.22
+    readonly property real shadowBlur: 1.0
+    readonly property int shadowBlurMax: 72
+    readonly property int shadowOffset: 2
+
     readonly property int panelWidth: 520
     readonly property int panelPad: 14
     readonly property int tileSpacing: 7
