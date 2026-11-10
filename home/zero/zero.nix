@@ -59,6 +59,7 @@
             hypridle.enable = true;
             hyprsunset.enable = true;
             notch.enable = true;
+            launcher.enable = true;
             flameshot.enable = true;
             thunar.enable = true;
             gtk.enable = true;

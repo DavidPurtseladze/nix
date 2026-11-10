@@ -7,7 +7,7 @@ hl.bind(mod .. " + E", hl.dsp.exec_cmd("thunar"))
 hl.bind(mod .. " + B", hl.dsp.exec_cmd("zen-beta"))
 
 -- Launchers and session
-hl.bind(mod .. " + Space", hl.dsp.exec_cmd("rofi -show drun"))
+hl.bind(mod .. " + Space", hl.dsp.exec_cmd("launcher toggle"))
 hl.bind(mod .. " + Escape", hl.dsp.exec_cmd("wlogout -p layer-shell"))
 hl.bind(mod .. " + L", hl.dsp.exec_cmd("flock -n /tmp/qylock.lock qylock-lock"))
 
