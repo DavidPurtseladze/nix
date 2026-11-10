@@ -1,7 +1,6 @@
 {
     config,
     lib,
-    pkgs,
     ...
 }:
 with lib; 
@@ -10,17 +9,6 @@ in {
     options.features.cli.fastfetch.enable = mkEnableOption "Enable fastfetch";
 
     config = mkIf cfg.enable {
-        programs.fastfetch = {
-            enable = true;
-
-            settings = {
-                logo = {
-                    source = "nixos_small";
-                    padding = {
-                        right = 1;
-                    };
-                };
-            };
-        };
+        programs.fastfetch.enable = true;
     };
 }
