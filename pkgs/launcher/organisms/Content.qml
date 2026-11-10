@@ -56,6 +56,8 @@ Item {
                         currentItem.onClicked();
                     else if (Themes.prefixFor(text))
                         Themes.apply(currentItem.modelData.scheme);
+                    else if (Clipboard.prefixFor(text))
+                        Clipboard.copy(currentItem.modelData);
                     else
                         currentItem.modelData.onClicked(list.currentList);
                 } else {
@@ -91,14 +93,23 @@ Item {
             }
         }
 
-        Component.onCompleted: forceActiveFocus()
+        Component.onCompleted: {
+            text = Shell.initialText;
+            Shell.initialText = "";
+            forceActiveFocus();
+        }
 
         Connections {
             function onOpenChanged(): void {
-                if (!Shell.open)
+                if (!Shell.open) {
                     search.text = "";
-                else
+                } else {
+                    if (Shell.initialText) {
+                        search.text = Shell.initialText;
+                        Shell.initialText = "";
+                    }
                     search.forceActiveFocus();
+                }
             }
 
             target: Shell

@@ -1,0 +1,68 @@
+import QtQuick
+import "../service"
+import "../theme"
+import "../atoms"
+
+Item {
+    id: root
+
+    required property var modelData
+    required property var list
+
+    implicitHeight: Tokens.sizes.itemHeight
+
+    anchors.left: parent?.left
+    anchors.right: parent?.right
+
+    StateLayer {
+        radius: Tokens.rounding.large
+        onClicked: Clipboard.copy(root.modelData)
+    }
+
+    Item {
+        anchors.fill: parent
+        anchors.leftMargin: Tokens.padding.medium
+        anchors.rightMargin: Tokens.padding.medium
+        anchors.margins: Tokens.padding.small
+
+        MaterialIcon {
+            id: icon
+
+            anchors.verticalCenter: parent.verticalCenter
+            text: root.modelData?.image ? "image" : "content_paste"
+            color: Colours.palette.m3onSurfaceVariant
+            size: Math.round(Tokens.font.icon.large * 1.3)
+        }
+
+        Item {
+            anchors.left: icon.right
+            anchors.leftMargin: Tokens.spacing.medium
+            anchors.verticalCenter: icon.verticalCenter
+
+            implicitWidth: parent.width - icon.width
+            implicitHeight: name.implicitHeight + desc.implicitHeight
+
+            StyledText {
+                id: name
+
+                text: root.modelData?.image ? "Image" : (root.modelData?.text ?? "").replace(/\s+/g, " ").trim()
+                font: Tokens.font.body.medium
+                elide: Text.ElideRight
+                width: root.width - icon.width - Tokens.rounding.extraLargeIncreased
+            }
+
+            StyledText {
+                id: desc
+
+                text: root.modelData?.detail ?? ""
+                font: Tokens.font.body.small
+                color: Colours.palette.m3outline
+
+                elide: Text.ElideRight
+                width: root.width - icon.width - Tokens.rounding.extraLargeIncreased
+
+                anchors.top: name.bottom
+            }
+        }
+    }
+}

@@ -12,5 +12,11 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = [pkgs.launcher];
+
+    services.cliphist = {
+      enable = true;
+      allowImages = true;
+      systemdTargets = ["hyprland-session.target"];
+    };
   };
 }

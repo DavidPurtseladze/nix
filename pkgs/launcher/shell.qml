@@ -27,5 +27,9 @@ ShellRoot {
         function close(): void {
             Shell.open = false;
         }
+
+        function clipboard(): void {
+            Shell.openWith(`${Config.actionPrefix}clip `);
+        }
     }
 }

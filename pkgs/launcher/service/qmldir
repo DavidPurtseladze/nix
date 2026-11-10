@@ -4,3 +4,4 @@ singleton Calc 1.0 Calc.qml
 singleton Themes 1.0 Themes.qml
 singleton Strings 1.0 Strings.qml
 Searcher 1.0 Searcher.qml
+singleton Clipboard 1.0 Clipboard.qml

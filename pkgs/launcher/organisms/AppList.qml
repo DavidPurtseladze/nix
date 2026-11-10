@@ -30,6 +30,8 @@ ListView {
                 return "calc";
             if (Themes.prefixFor(text))
                 return "theme";
+            if (Clipboard.prefixFor(text))
+                return "clipboard";
 
             return "actions";
         }
@@ -45,6 +47,8 @@ ListView {
             return [0];
         case "theme":
             return Themes.query(text);
+        case "clipboard":
+            return Clipboard.query(text);
         default:
             return Apps.search(text);
         }
@@ -110,6 +114,13 @@ ListView {
 
             PropertyChanges {
                 root.delegate: themeItem
+            }
+        },
+        State {
+            name: "clipboard"
+
+            PropertyChanges {
+                root.delegate: clipItem
             }
         }
     ]
@@ -249,6 +260,16 @@ ListView {
     onStateChanged: {
         if (state === "theme")
             Themes.reload();
+        else if (state === "clipboard")
+            Clipboard.reload();
+    }
+
+    Component {
+        id: clipItem
+
+        ClipItem {
+            list: root
+        }
     }
 
     Component {

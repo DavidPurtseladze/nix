@@ -15,6 +15,7 @@ Singleton {
     readonly property bool useFuzzyActions: false
     readonly property bool useFuzzyThemes: true
     readonly property list<string> themePrefixes: ["theme", "color", "colors"]
+    readonly property list<string> clipboardPrefixes: ["clip", "clipboard"]
     readonly property list<string> terminal: ["kitty"]
 
     readonly property var actions: [
@@ -29,6 +30,12 @@ Singleton {
             icon: "palette",
             description: "Change the colour scheme",
             command: ["autocomplete", "theme"]
+        },
+        {
+            name: "Clipboard",
+            icon: "content_paste",
+            description: "Search clipboard history",
+            command: ["autocomplete", "clip"]
         },
         {
             name: "Lock",

@@ -14,7 +14,7 @@ hl.bind(mod .. " + L", hl.dsp.exec_cmd("flock -n /tmp/qylock.lock qylock-lock"))
 -- Tools
 hl.bind(mod .. " + R", hl.dsp.exec_cmd("wallpaper-ui"))
 hl.bind(mod .. " + SHIFT + R", hl.dsp.exec_cmd("theme-ui"))
-hl.bind(mod .. " + V", hl.dsp.exec_cmd("clipboard-history"))
+hl.bind(mod .. " + V", hl.dsp.exec_cmd("launcher clipboard"))
 hl.bind(mod .. " + SHIFT + I", hl.dsp.exec_cmd("caffeine toggle"))
 hl.bind(mod .. " + SHIFT + N", hl.dsp.exec_cmd("night-mode toggle"))
 hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd("flameshot-monitor"))

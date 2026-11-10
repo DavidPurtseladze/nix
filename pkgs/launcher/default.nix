@@ -3,12 +3,13 @@
   quickshell,
   material-symbols,
   libqalculate,
+  cliphist,
   theme-switcher,
   wl-clipboard,
 }:
 writeShellApplication {
   name = "launcher";
-  runtimeInputs = [quickshell libqalculate wl-clipboard theme-switcher];
+  runtimeInputs = [quickshell libqalculate wl-clipboard cliphist theme-switcher];
   text = ''
     export LAUNCHER_ICON_FONT="${material-symbols}/share/fonts/truetype/MaterialSymbolsRounded[FILL,GRAD,opsz,wght].ttf"
     config=${./.}
@@ -20,11 +21,16 @@ writeShellApplication {
           LAUNCHER_OPEN=1 exec quickshell -p "$config" -d
         fi
         ;;
+      clipboard)
+        if ! quickshell ipc -p "$config" call launcher clipboard >/dev/null 2>&1; then
+          LAUNCHER_OPEN=1 LAUNCHER_TEXT=">clip " exec quickshell -p "$config" -d
+        fi
+        ;;
       "")
         exec quickshell -p "$config"
         ;;
       *)
-        echo "usage: launcher [toggle|open|close]" >&2
+        echo "usage: launcher [toggle|open|close|clipboard]" >&2
         exit 1
         ;;
     esac
