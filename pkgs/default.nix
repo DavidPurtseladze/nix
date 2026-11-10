@@ -1,5 +1,5 @@
 { pkgs, ... }:
-{
+rec {
   # Define your custom packages here
   #  my-package = pkgs.callPackage ./my-package {};
 
@@ -13,4 +13,6 @@
   theme-ui = pkgs.callPackage ./theme-ui {};
 
   notch = pkgs.callPackage ./notch {};
+
+  launcher = pkgs.callPackage ./launcher {inherit theme-switcher;};
 }

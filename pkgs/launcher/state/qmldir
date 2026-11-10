@@ -1,0 +1,2 @@
+singleton Shell 1.0 Shell.qml
+singleton Config 1.0 Config.qml
