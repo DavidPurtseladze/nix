@@ -15,8 +15,9 @@ with lib; let
   };
 in {
   options.features.sdks.node.enable = mkEnableOption ''
-    Node.js toolchain - nodejs (with npm bundled), yarn, and nvm for
-    switching between Node versions outside of what Nix pins.
+    Node.js toolchain - nodejs (with npm bundled), yarn, pnpm, nvm for
+    switching between Node versions outside of what Nix pins, and the
+    frontend language servers (html, css, tailwind, typescript).
   '';
 
   config = mkIf cfg.enable {
@@ -24,6 +25,9 @@ in {
       pkgs.nodejs
       pkgs.yarn
       pkgs.pnpm
+      pkgs.vscode-langservers-extracted
+      pkgs.tailwindcss-language-server
+      pkgs.typescript-language-server
     ];
 
     programs.zsh.initContent = ''

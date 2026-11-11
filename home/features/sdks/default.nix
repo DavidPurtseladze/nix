@@ -4,5 +4,6 @@
         ./node.nix
         ./go.nix
         ./zig.nix
+        ./php.nix
     ];
 }

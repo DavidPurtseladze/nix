@@ -58,11 +58,7 @@
             flameshot.enable = true;
         };
         apps = {
-            kitty = {
-                enable = true;
-                # Default 3.0 was hiding the pointer while reading output.
-                mouseHideWait = "15.0";
-            };
+            kitty.enable = true;
             phpstorm.enable = false;
             telegram.enable = true;
             slack.enable = true;
