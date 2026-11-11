@@ -46,7 +46,7 @@ in {
   config = mkIf cfg.enable {
     xdg.dataFile."nvim-nix/nvim-treesitter".source = treesitterBundle;
 
-    home.packages = [pkgs.stylua];
+    home.packages = [pkgs.stylua pkgs.codeium];
 
     programs.nixvim = {
       enable = true;
