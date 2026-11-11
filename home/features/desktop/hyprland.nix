@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }:
 with lib; let
@@ -11,6 +12,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.packages = import ./lib/scripts {inherit pkgs;};
+
     systemd.user.targets.hyprland-session = {
       Unit = {
         Description = "Hyprland compositor session";

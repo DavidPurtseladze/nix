@@ -1,8 +1,13 @@
-{pkgs, ...}: [
-  # screenshot-region / screenshot-full lived here until Flameshot took
-  # over both keybinds - see ../../flameshot.nix.
-  (pkgs.writeShellScriptBin "volume" (builtins.readFile ./volume.sh))
-  (pkgs.writeShellScriptBin "brightness" (builtins.readFile ./brightness.sh))
-  (pkgs.writeShellScriptBin "night-mode" (builtins.readFile ./night-mode.sh))
-  (pkgs.writeShellScriptBin "caffeine" (builtins.readFile ./caffeine.sh))
+{pkgs, ...}: let
+  script = name: runtimeInputs:
+    pkgs.writeShellApplication {
+      inherit name runtimeInputs;
+      bashOptions = ["nounset" "pipefail"];
+      text = builtins.readFile ./${name}.sh;
+    };
+in [
+  (script "volume" [pkgs.wireplumber pkgs.gawk pkgs.gnugrep pkgs.libnotify])
+  (script "brightness" [pkgs.brightnessctl pkgs.gawk pkgs.libnotify])
+  (script "night-mode" [pkgs.libnotify])
+  (script "caffeine" [pkgs.libnotify])
 ]

@@ -21,7 +21,7 @@ Singleton {
 
     function toggle() {
         root.active = !root.active;
-        Quickshell.execDetached(["caffeine", root.active ? "on" : "off"]);
+        Quickshell.execDetached(["systemctl", "--user", root.active ? "stop" : "start", root.unit]);
         settle.restart();
     }
 
