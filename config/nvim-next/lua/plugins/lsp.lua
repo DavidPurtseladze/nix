@@ -45,9 +45,6 @@ return {
                 map("<leader>lh", vim.lsp.buf.hover, "lsp: hover")
                 map("<leader>ls", vim.lsp.buf.signature_help, "lsp: signature help")
                 map("<leader>ld", vim.diagnostic.open_float, "lsp: line diagnostics")
-                map("<leader>lf", function()
-                    vim.lsp.buf.format({ async = true })
-                end, "lsp: format")
 
                 map("[d", function()
                     vim.diagnostic.jump({ count = -1, float = true })
