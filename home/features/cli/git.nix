@@ -36,5 +36,7 @@ in {
         email = cfg.userEmail;
       };
     };
+
+    programs.gh.enable = true;
   };
 }
